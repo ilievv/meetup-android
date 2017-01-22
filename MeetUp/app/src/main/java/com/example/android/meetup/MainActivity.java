@@ -9,17 +9,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private Toolbar toolbar;
     private GoogleApiClient googleApiClient;
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (this.googleApiClient == null) {
             this.buildGoogleApiClient();
         }
+
+        Log.v("Check", "In onCreate");
     }
 
     @Override
@@ -59,31 +64,35 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "onConnected", Toast.LENGTH_SHORT);
-        if(checkPermission()){
-            this.lastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    googleApiClient);
+        Toast.makeText(this, "onConnected", Toast.LENGTH_SHORT).show();
+
+        if (checkPermission()) {
+            this.lastLocation = LocationServices.FusedLocationApi
+                    .getLastLocation(googleApiClient);
+
             if (this.lastLocation != null) {
                 this.latitudeText = String.valueOf(lastLocation.getLatitude());
                 this.longitudeText = String.valueOf(lastLocation.getLongitude());
 
                 TextView latitudeTextView = (TextView) findViewById(R.id.latitude);
-                latitudeTextView.setText("" + this.latitudeText);
+                latitudeTextView.setText(this.latitudeText);
 
                 TextView longitudeTextView = (TextView) findViewById(R.id.longitude);
-                longitudeTextView.setText("" + this.longitudeText);
+                longitudeTextView.setText(this.longitudeText);
             }
         }
+
+        Log.v("Check", "In onConnected");
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "onConnectionSuspended", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "onConnectionSuspended", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "onConnectionFailed", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "onConnectionFailed", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
@@ -91,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (googleApiClient != null) {
             this.googleApiClient.connect();
         }
+
+        Log.v("Check", "In OnStart");
     }
 
     protected void onStop() {
@@ -98,20 +109,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onStop();
     }
 
-    private boolean checkPermission(){
+    private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-        if(result != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return result != 0;
     }
 
-    protected void buildGoogleApiClient() {
+    protected synchronized void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
                 .build();
     }
 }
