@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -57,9 +58,9 @@ public class MainActivity extends AppCompatActivity
 
         if (R.id.action_settings == id) {
             return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+
         Log.v("Check", "In onConnected");
     }
 
@@ -92,6 +95,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.e("Connection failed: ", Integer.toString(connectionResult.getErrorCode()));
+        Log.e("Connection failed: ", connectionResult.getErrorMessage());
+
         Toast.makeText(this, "onConnectionFailed", Toast.LENGTH_SHORT).show();
     }
 
