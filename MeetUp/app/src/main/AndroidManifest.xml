@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.android.meetup">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -16,5 +17,8 @@
             </intent-filter>
         </activity>
     </application>
-
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBrroD61OWIuyWFz0xjXXVreiQ8kkgYysA"/>
 </manifest>
+
