@@ -1,7 +1,7 @@
 package com.example.android.meetup;
 
-import android.*;
 import android.Manifest;
+import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,18 +12,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.*;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    private final int PLACE_PICKER_REQUEST = 1;
 
     private Toolbar toolbar;
     private GoogleApiClient googleApiClient;
@@ -43,7 +46,31 @@ public class MainActivity extends AppCompatActivity
             this.buildGoogleApiClient();
         }
 
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+        try {
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            Log.e("Error: ", e.getMessage());
+
+        }
+
+        Button button = (Button) findViewById(R.id.button_test);
+        button.setOnClickListener((View view) -> Toast.makeText(MainActivity.this, "Testing arrow func", Toast.LENGTH_SHORT).show());
+
         Log.v("Check", "In onCreate");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                Toast.makeText(this, "Place is: " + place.getName(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -55,12 +82,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (R.id.action_settings == id) {
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
+        return R.id.action_settings == id || super.onOptionsItemSelected(item);
     }
 
     @Override
