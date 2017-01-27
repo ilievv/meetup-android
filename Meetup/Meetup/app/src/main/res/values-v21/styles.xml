@@ -26,7 +26,7 @@
 
     <style name="PopupStyle" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/secondaryText</item>
-        <item name="android:background">@color/colorBackground</item>
+        <item name="android:background">#f9f9f9</item>
     </style>
 
 </resources>
