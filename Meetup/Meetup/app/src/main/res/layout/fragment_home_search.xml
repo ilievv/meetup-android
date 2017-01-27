@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.telerikacademy.meetup.fragments.HomeSearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="30dp"
+        android:background="@color/colorPrimary">
+
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_solid_pub"
+            android:tint="@color/colorAccent"/>
+
+</FrameLayout>
