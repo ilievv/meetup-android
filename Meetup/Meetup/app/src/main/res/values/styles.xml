@@ -21,6 +21,21 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
+    <style name="AppTheme.Button.Borderless" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="AppTheme.Button.Colored" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/tertiaryText</item>
+    </style>
+
+    <style name="AppTheme.Button.Borderless.Colored" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="AppTheme.EditText" parent="Base.Widget.AppCompat.EditText">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/primaryText</item>
