@@ -6,25 +6,25 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
-        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextView</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+    <style name="AppTheme.TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="RobotoButtonStyle" parent="android:Widget.Button">
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="ToolbarStyle" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.ToolBar" parent="Theme.AppCompat.Light">
         <item name="android:textColorPrimary">@color/colorPrimaryLight</item>
         <item name="android:textColorSecondary">@color/colorPrimaryLight</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="PopupStyle" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.PopUp" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@color/secondaryText</item>
         <item name="android:background">@color/colorBackground</item>
     </style>
