@@ -26,15 +26,26 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
-    <style name="AppTheme.ToolBar" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.ToolBar">
+        <item name="theme">@style/AppTheme.ToolBarTheme</item>
+        <item name="popupTheme">@style/AppTheme.PopUpTheme</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="AppTheme.ToolBarTheme" parent="Theme.AppCompat.Light">
         <item name="android:textColorPrimary">@color/tertiaryText</item>
         <item name="android:textColorSecondary">@color/tertiaryText</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.PopUp" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/secondaryText</item>
-        <item name="android:background">@color/colorBackground</item>
+    <style name="AppTheme.PopUpTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.FloatingActionButton" parent="Base.Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/tertiaryText</item>
+        <item name="elevation">@dimen/button_raised_elevation</item>
     </style>
 
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.telerikacademy.meetup.MainActivity"
         android:id="@+id/activity_main"
@@ -15,8 +14,8 @@
             android:orientation="vertical">
 
         <include
-                android:id="@+id/tool_bar"
                 layout="@layout/tool_bar"
+                android:id="@+id/tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -27,13 +26,10 @@
                 android:layout_height="wrap_content"/>
 
         <android.support.design.widget.FloatingActionButton
-                app:elevation="@dimen/button_raised_elevation"
-                app:borderWidth="0dp"
-                app:theme="@style/Base.Widget.AppCompat.ImageButton"
+                style="@style/AppTheme.FloatingActionButton"
                 android:id="@+id/your_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="@color/tertiaryText"
                 android:src="@drawable/ic_line_fast_food"/>
 
     </LinearLayout>
