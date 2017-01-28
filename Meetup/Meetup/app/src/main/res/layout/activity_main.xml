@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+        android:id="@+id/activity_main"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.telerikacademy.meetup.MainActivity"
-        android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -14,20 +14,20 @@
             android:orientation="vertical">
 
         <include
-                layout="@layout/tool_bar"
                 android:id="@+id/tool_bar"
+                layout="@layout/tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <fragment
-                android:name="com.telerikacademy.meetup.fragments.HomeSearchFragment"
                 android:id="@+id/search_fragment"
+                android:name="com.telerikacademy.meetup.fragments.HomeSearchFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <android.support.design.widget.FloatingActionButton
-                style="@style/AppTheme.FloatingActionButton"
                 android:id="@+id/your_id"
+                style="@style/AppTheme.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_line_fast_food"/>
