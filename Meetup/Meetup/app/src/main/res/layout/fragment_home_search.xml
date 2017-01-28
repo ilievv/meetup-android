@@ -6,17 +6,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="30dp"
-        android:background="@color/colorPrimary">
+        android:background="@android:color/white"
+        android:elevation="4dp">
 
 
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    <ImageButton
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_solid_pub"
-            android:tint="@color/colorAccent"/>
+            android:elevation="@dimen/button_raised_elevation"
+            android:text="@string/action_settings"/>
 
 </FrameLayout>
