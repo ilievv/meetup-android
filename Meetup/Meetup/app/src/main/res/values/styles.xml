@@ -8,19 +8,27 @@
 
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText</item>
     </style>
 
     <style name="AppTheme.TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="AppTheme.EditText" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style name="AppTheme.ToolBar" parent="Theme.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorPrimaryLight</item>
-        <item name="android:textColorSecondary">@color/colorPrimaryLight</item>
+        <item name="android:textColorPrimary">@color/tertiaryText</item>
+        <item name="android:textColorSecondary">@color/tertiaryText</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 

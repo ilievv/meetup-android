@@ -27,17 +27,14 @@
                 android:layout_height="wrap_content"/>
 
         <android.support.design.widget.FloatingActionButton
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+                app:elevation="@dimen/button_raised_elevation"
+                app:borderWidth="0dp"
+                app:theme="@style/Base.Widget.AppCompat.ImageButton"
                 android:id="@+id/your_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:elevation="@dimen/button_raised_elevation"
-                app:borderWidth="0dp"
-                app:rippleColor="@color/colorPrimary"
-                app:theme="@style/Base.Widget.AppCompat.ImageButton"
-                android:tint="@color/colorPrimaryDark"
-                android:src="@drawable/ic_line_fast_food"
-                app:backgroundTint="@android:color/white"/>
+                android:tint="@color/tertiaryText"
+                android:src="@drawable/ic_line_fast_food"/>
 
     </LinearLayout>
 
