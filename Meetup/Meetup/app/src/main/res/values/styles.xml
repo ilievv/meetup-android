@@ -6,27 +6,61 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
-        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:textViewStyle">@style/AppTheme.TextView</item>
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="android:editTextStyle">@style/AppTheme.EditText</item>
     </style>
 
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+    <style name="AppTheme.TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
-    <style name="RobotoButtonStyle" parent="android:Widget.Button">
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
     </style>
 
-    <style name="ToolbarStyle" parent="Theme.AppCompat.Light">
-        <item name="android:textColorPrimary">@color/colorPrimaryLight</item>
-        <item name="android:textColorSecondary">@color/colorPrimaryLight</item>
+    <style name="AppTheme.Button.Borderless" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="AppTheme.Button.Colored" parent="Base.Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/tertiaryText</item>
+    </style>
+
+    <style name="AppTheme.Button.Borderless.Colored" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.EditText" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="AppTheme.ToolBar">
+        <item name="theme">@style/AppTheme.ToolBarTheme</item>
+        <item name="popupTheme">@style/AppTheme.PopUpTheme</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="AppTheme.ToolBarTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/tertiaryText</item>
+        <item name="android:textColorSecondary">@color/tertiaryText</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <style name="PopupStyle" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/secondaryText</item>
-        <item name="android:background">@color/colorBackground</item>
+    <style name="AppTheme.PopUpTheme" parent="Theme.AppCompat.Light">
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.FloatingActionButton" parent="Base.Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/tertiaryText</item>
+        <item name="elevation">@dimen/button_raised_elevation</item>
     </style>
 
 </resources>

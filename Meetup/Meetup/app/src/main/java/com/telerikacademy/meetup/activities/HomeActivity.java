@@ -54,17 +54,14 @@ public class HomeActivity extends AppCompatActivity
                 .setInterval(10 * 1000)
                 .setFastestInterval(1 * 1000);
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        menu.clear();
+        this.getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return R.id.action_settings == id || super.onOptionsItemSelected(item);
     }
 
     @Override
