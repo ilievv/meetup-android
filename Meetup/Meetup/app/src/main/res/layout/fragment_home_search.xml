@@ -13,9 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-<Button
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/AppTheme.Button.Borderless.Colored"
             android:elevation="@dimen/button_raised_elevation"
-            android:text="@string/action_settings"/></FrameLayout>
+            android:text="@string/action_settings"/>
+</FrameLayout>

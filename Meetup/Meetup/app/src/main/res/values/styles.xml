@@ -13,7 +13,7 @@
 
     <style name="AppTheme.TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColor">@color/secondaryText</item>
     </style>
 
     <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
@@ -54,7 +54,7 @@
     </style>
 
     <style name="AppTheme.PopUpTheme" parent="Theme.AppCompat.Light">
-        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColor">@color/secondaryText</item>
         <item name="android:background">@android:color/white</item>
     </style>
 

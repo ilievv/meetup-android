@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,5 +148,10 @@ public class HomeActivity extends AppCompatActivity
 
         TextView longitudeTextView = (TextView) findViewById(R.id.address);
         longitudeTextView.setText("Current address: " + address);
+    }
+
+    public void secretIntent(View view) {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        this.startActivity(intent);
     }
 }
