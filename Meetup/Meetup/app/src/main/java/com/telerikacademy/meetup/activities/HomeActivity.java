@@ -33,7 +33,6 @@ import java.util.Locale;
 public class HomeActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    private Toolbar toolbar;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
@@ -42,7 +41,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
 
         if (this.googleApiClient == null) {
@@ -52,8 +51,9 @@ public class HomeActivity extends AppCompatActivity
         this.locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
-                .setFastestInterval(1 * 1000);
+                .setFastestInterval(1000);
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Toast.makeText(this, "onConnected", Toast.LENGTH_SHORT).show();
-        if(this.googleApiClient == null){
+        if (this.googleApiClient == null) {
             Log.v("", "");
         }
         if (checkPermission()) {
@@ -128,11 +128,10 @@ public class HomeActivity extends AppCompatActivity
 
     private boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        boolean res = result == 0;
-        return res;
+        return result == 0;
     }
 
-    private void handleNewLocation(Location location){
+    private void handleNewLocation(Location location) {
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
@@ -140,8 +139,7 @@ public class HomeActivity extends AppCompatActivity
         List<Address> addresses = new ArrayList<>();
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -149,6 +147,5 @@ public class HomeActivity extends AppCompatActivity
 
         TextView longitudeTextView = (TextView) findViewById(R.id.address);
         longitudeTextView.setText("Current address: " + address);
-
     }
 }
