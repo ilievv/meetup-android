@@ -60,6 +60,7 @@ public class NearbyVenuesRecyclerAdapter extends RecyclerView.Adapter<NearbyVenu
             itemView.setOnClickListener(this);
         }
 
+        // TODO: Fix accordingly
         @Override
         public void onClick(View v) {
             Context context = itemView.getContext();

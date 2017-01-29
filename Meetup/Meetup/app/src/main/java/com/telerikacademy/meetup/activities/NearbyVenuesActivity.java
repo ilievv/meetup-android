@@ -26,17 +26,12 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         List<Venue> venues = new ArrayList<>();
 
         // TODO: Delete
-        Venue venue1 = new Venue();
-        venue1.setName("Pri iliyo");
-        venue1.setAddress("Lyulin");
-
-        Venue venue2 = new Venue();
-        venue2.setName("Pri joreto");
-        venue2.setAddress("Irak");
-
-        venues.add(venue1);
-        venues.add(venue2);
-        //
+        for (int i = 0; i < 100; i++) {
+            Venue venue = new Venue();
+            venue.setName("Pri Ilyo #" + i);
+            venue.setAddress("zh.k. Lyulin " + i + 1);
+            venues.add(venue);
+        }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.venues_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
