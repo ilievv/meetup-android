@@ -28,6 +28,8 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         venue1.setName("Pri iliyo");
         venue1.setAddress("Lyulin");
 
+        venues.add(venue1);
+
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.venues_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         NearbyVenuesRecyclerAdapter recyclerAdapter = new NearbyVenuesRecyclerAdapter(venues);

@@ -56,6 +56,7 @@ public class NearbyVenuesRecyclerAdapter extends RecyclerView.Adapter<NearbyVenu
 
             this.venueName = (TextView) itemView.findViewById(R.id.venue_name);
             this.venueAddress = (TextView) itemView.findViewById(R.id.venue_address);
+
             itemView.setOnClickListener(this);
         }
 
@@ -64,7 +65,7 @@ public class NearbyVenuesRecyclerAdapter extends RecyclerView.Adapter<NearbyVenu
             Context context = itemView.getContext();
 
             Intent showVenueIntent = new Intent(context, NearbyVenuesActivity.class);
-            showVenueIntent.putExtra(VENUE_KEY, (Serializable) this.venue);
+            showVenueIntent.putExtra(VENUE_KEY, this.venue);
             context.startActivity(showVenueIntent);
         }
 

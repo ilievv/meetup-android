@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.models;
 
-public class Venue {
+import java.io.Serializable;
+
+public class Venue implements Serializable {
 
     private String id;
     private String name;
