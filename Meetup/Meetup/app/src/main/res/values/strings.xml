@@ -5,4 +5,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="restaurant_btn_description">Search for nearby restaurants</string>
+    <string name="select_place">Select a place</string>
+    <string-array name="placesNames">
+        <item>Restaurant1</item>
+        <item>Restaurant2</item>
+        <item>Restaurant3</item>
+        <item>Restaurant4</item>
+        <item>Restaurant5</item>
+        <item>Restaurant6</item>
+    </string-array>
 </resources>
