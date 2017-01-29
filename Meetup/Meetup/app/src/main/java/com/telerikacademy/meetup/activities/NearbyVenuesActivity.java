@@ -24,11 +24,19 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         List<Venue> venues = new ArrayList<>();
+
+        // TODO: Delete
         Venue venue1 = new Venue();
         venue1.setName("Pri iliyo");
         venue1.setAddress("Lyulin");
 
+        Venue venue2 = new Venue();
+        venue2.setName("Pri joreto");
+        venue2.setAddress("Irak");
+
         venues.add(venue1);
+        venues.add(venue2);
+        //
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.venues_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
