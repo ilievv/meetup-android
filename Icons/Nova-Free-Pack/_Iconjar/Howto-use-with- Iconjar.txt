@@ -1,0 +1,16 @@
+
+//////////
+
+How to use Nova Icons with Iconjar
+
+//////////
+
+
+
+If you have at least Mac OS X Yosemite installed on your computer, you can use Iconjar to get the most of the Nova icons. It’s the easiest way to browse all the icons and find the icon that you need in seconds. Each icon got multiple tags for an efficient search. 
+
+1- Download and install the Iconjar application here: http://geticonjar.com/
+2- In the Iconjar app, go to “File > Import Jar” and import the Iconjar archives: “Line-Icons.iconjar” and “Solid-Icons.iconjar” provided with the pack.
+
+That’s it! All your icons are imported, organized by categories, and can you search the icon that you need.
+
