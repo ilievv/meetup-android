@@ -11,12 +11,12 @@ import android.view.*;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
 
-public class ToolBarFragment extends Fragment
+public class ToolbarFragment extends Fragment
         implements IMenuInflater {
 
     private AppCompatActivity currentActivity;
 
-    public ToolBarFragment() {
+    public ToolbarFragment() {
     }
 
     @Override
