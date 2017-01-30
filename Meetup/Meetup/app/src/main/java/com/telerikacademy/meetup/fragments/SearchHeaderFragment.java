@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.Filterable;
 import android.widget.Toast;
 import com.telerikacademy.meetup.R;
@@ -19,9 +20,8 @@ public class SearchHeaderFragment extends Fragment {
     public SearchHeaderFragment() {
     }
 
-    public void setFilter(final Activity activity, final Filterable filterable) {
-        AutoCompleteTextView input = (AutoCompleteTextView) activity.findViewById(R.id.et_search);
-        input.addTextChangedListener(new TextWatcher() {
+    public void setFilter(final EditText inputField, final Filterable filterable) {
+        inputField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }

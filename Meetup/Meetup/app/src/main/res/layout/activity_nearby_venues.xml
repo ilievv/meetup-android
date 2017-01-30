@@ -9,20 +9,20 @@
         android:background="@android:color/white"
         tools:context="com.telerikacademy.meetup.activities.NearbyVenuesActivity">
 
-    <include
-            android:id="@+id/tool_bar"
-            layout="@layout/tool_bar"
+    <fragment
+            android:id="@+id/fragment_tool_bar"
+            android:name="com.telerikacademy.meetup.fragments.ToolBarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <fragment
-            android:id="@+id/search_header"
+            android:id="@+id/fragment_search_header"
             android:name="com.telerikacademy.meetup.fragments.SearchHeaderFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/venues_list"
+            android:id="@+id/rv_venues"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
