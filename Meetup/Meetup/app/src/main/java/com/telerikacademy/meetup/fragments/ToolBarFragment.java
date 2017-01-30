@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.*;
 
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.interfaces.IMenuInflater;
 
-public class ToolBarFragment extends Fragment {
+public class ToolBarFragment extends Fragment
+        implements IMenuInflater {
 
     private AppCompatActivity currentActivity;
 
@@ -33,10 +35,11 @@ public class ToolBarFragment extends Fragment {
         this.currentActivity.setSupportActionBar(toolbar);
     }
 
-    public void inflateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void inflateMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         menu.clear();
+
         this.currentActivity.getMenuInflater().inflate(R.menu.main, menu);
     }
 }

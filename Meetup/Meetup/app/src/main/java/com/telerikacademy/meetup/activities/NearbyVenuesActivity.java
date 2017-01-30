@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
 import com.telerikacademy.meetup.fragments.ToolBarFragment;
+import com.telerikacademy.meetup.interfaces.IMenuInflater;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
 
@@ -46,11 +47,11 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        ToolBarFragment toolBarFragment = (ToolBarFragment)
+        IMenuInflater toolBarFragment = (IMenuInflater)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_tool_bar);
 
         if (toolBarFragment != null) {
-            toolBarFragment.inflateOptionsMenu(menu, getMenuInflater());
+            toolBarFragment.inflateMenu(menu, getMenuInflater());
         }
 
         return true;
