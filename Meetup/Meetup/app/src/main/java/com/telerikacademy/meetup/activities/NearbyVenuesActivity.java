@@ -29,15 +29,13 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         // TODO: Delete
         for (int i = 0; i < 4; i++) {
-            Venue venue = new Venue();
-            venue.setName("Pri Ilyo #" + i);
-            venue.setAddress("zh.k. Lyulin " + i + 1);
+            Venue venue = new Venue(Integer.toString(i),
+                    "Pri Ilyo #" + i, "zh.k. Lyulin " + i + 1, null, 0);
             venues.add(venue);
         }
-
-        Venue someVen = new Venue();
-        someVen.setName("Gosho");
+        Venue someVen = new Venue("123", "Gosho", "Kostinbrod", null, 0);
         venues.add(someVen);
+        // ----
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.venues_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

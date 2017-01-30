@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
+import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.models.Venue;
 
 import java.io.Serializable;
@@ -78,12 +79,11 @@ public class NearbyVenuesRecyclerAdapter
             itemView.setOnClickListener(this);
         }
 
-        // TODO: Fix accordingly
         @Override
         public void onClick(View v) {
             Context context = itemView.getContext();
 
-            Intent showVenueIntent = new Intent(context, NearbyVenuesActivity.class);
+            Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
             showVenueIntent.putExtra(VENUE_KEY, this.venue);
             context.startActivity(showVenueIntent);
         }

@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".activities.NearbyVenuesActivity">
         </activity>
+        <activity android:name=".activities.VenueDetailsActivity">
+        </activity>
     </application>
 
 </manifest>
