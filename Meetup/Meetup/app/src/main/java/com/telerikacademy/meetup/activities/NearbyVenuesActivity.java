@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
-import com.telerikacademy.meetup.views.decorators.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +28,16 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         List<Venue> venues = new ArrayList<>();
 
         // TODO: Delete
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 4; i++) {
             Venue venue = new Venue();
             venue.setName("Pri Ilyo #" + i);
             venue.setAddress("zh.k. Lyulin " + i + 1);
             venues.add(venue);
         }
+
+        Venue someVen = new Venue();
+        someVen.setName("Gosho");
+        venues.add(someVen);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.venues_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -43,6 +47,11 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 linearLayoutManager.getOrientation()));
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
+
+        SearchHeaderFragment filter = (SearchHeaderFragment)
+                getSupportFragmentManager().findFragmentById(R.id.search_header);
+
+        filter.setFilter(this, recyclerAdapter);
     }
 
     @Override

@@ -51,6 +51,7 @@
         <item name="theme">@style/AppTheme.ToolBarTheme</item>
         <item name="popupTheme">@style/AppTheme.PopUpTheme</item>
         <item name="android:elevation">4dp</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
     </style>
 
     <style name="AppTheme.ToolBarTheme" parent="Theme.AppCompat.Light">

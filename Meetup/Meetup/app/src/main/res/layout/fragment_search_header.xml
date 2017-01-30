@@ -21,6 +21,8 @@
             android:id="@+id/et_search"
             style="@style/AppTheme.AutoCompleteTextView"
             android:ems="10"
+            android:maxLines="1"
+            android:singleLine="true"
             android:hint="@string/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
