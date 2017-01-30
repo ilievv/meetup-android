@@ -22,7 +22,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
                 getSupportFragmentManager().findFragmentById(R.id.fragment_tool_bar);
 
         if (menuInflater != null) {
-            menuInflater.inflateMenu(menu, getMenuInflater());
+            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
         }
 
         return true;

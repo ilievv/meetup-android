@@ -1,6 +1,7 @@
 package com.telerikacademy.meetup.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -35,11 +36,11 @@ public class ToolBarFragment extends Fragment
         this.currentActivity.setSupportActionBar(toolbar);
     }
 
-    public void inflateMenu(Menu menu, MenuInflater inflater) {
+    public void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
         menu.clear();
 
-        this.currentActivity.getMenuInflater().inflate(R.menu.main, menu);
+        this.currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 }
