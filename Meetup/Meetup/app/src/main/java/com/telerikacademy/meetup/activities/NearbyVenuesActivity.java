@@ -32,10 +32,10 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
+        AutoCompleteTextView searchInput = (AutoCompleteTextView) findViewById(R.id.et_search);
+
         SearchHeaderFragment searchFragment = (SearchHeaderFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_search_header);
-
-        AutoCompleteTextView searchInput = (AutoCompleteTextView) findViewById(R.id.et_search);
 
         if (searchFragment != null) {
             searchFragment.setFilter(searchInput, recyclerAdapter);
