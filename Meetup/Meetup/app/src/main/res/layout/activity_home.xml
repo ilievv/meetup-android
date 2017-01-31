@@ -9,127 +9,108 @@
         android:orientation="vertical"
         android:weightSum="1">
 
+    <fragment
+            android:id="@+id/fragment_tool_bar"
+            android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:id="@+id/address"
+            android:layout_margin="10dp"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/address"/>
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        <fragment
-                android:id="@+id/fragment_tool_bar"
-                android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
         <TextView
-                android:id="@+id/address"
-                android:layout_margin="10dp"
-                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/address"/>
+                android:text="@string/select_a_place"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+
+        <View
+                style="@style/AppTheme.TextView"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/secondaryText"/>
     </LinearLayout>
 
-    <LinearLayout
+    <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:stretchColumns="*">
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TableRow>
 
-            <TextView
+            <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/select_a_place"
-                    android:textSize="16sp"
-                    android:layout_marginStart="10dp"/>
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/restaurant"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_restaurant"
+                    android:drawablePadding="8dp"/>
 
-            <View
-                    style="@style/AppTheme.TextView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@color/secondaryText"/>
-        </LinearLayout>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/cafe"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_coffee_mug"
+                    android:drawablePadding="8dp"/>
 
-        <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:stretchColumns="*">
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/pub"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_pub"
+                    android:drawablePadding="8dp"/>
+        </TableRow>
 
-            <TableRow>
+        <TableRow>
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/restaurant"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_restaurant"
-                        android:drawablePadding="8dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/fast_food"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_fast_food"
+                    android:drawablePadding="8dp"/>
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/cafe"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_coffee_mug"
-                        android:drawablePadding="8dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/favourite"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_pub"
+                    android:drawablePadding="8dp"/>
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/pub"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_pub"
-                        android:drawablePadding="8dp"/>
-            </TableRow>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.Button.Borderless"
+                    android:text="@string/other"
+                    android:textAllCaps="false"
+                    android:drawableTop="@drawable/ic_solid_pub"
+                    android:drawablePadding="8dp"/>
+        </TableRow>
 
-            <TableRow>
-
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/fast_food"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_fast_food"
-                        android:drawablePadding="8dp"/>
-
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/favourite"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_pub"
-                        android:drawablePadding="8dp"/>
-
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/AppTheme.Button.Borderless"
-                        android:text="@string/other"
-                        android:textAllCaps="false"
-                        android:drawableTop="@drawable/ic_solid_pub"
-                        android:drawablePadding="8dp"/>
-            </TableRow>
-
-        </TableLayout>
-
-    </LinearLayout>
+    </TableLayout>
 
 </LinearLayout>
