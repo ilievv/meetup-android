@@ -26,7 +26,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_venues);
 
-        fragmentManager = getSupportFragmentManager();
+        this.fragmentManager = getSupportFragmentManager();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_venues);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -62,7 +62,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                boolean hasChanged = dy > 0 || dy < 0;
+                boolean hasChanged = dy > 100 || dy < -100;
                 boolean isVisible = searchFragment != null && searchFragment.isVisible();
                 if (hasChanged && isVisible) {
                     fragmentManager

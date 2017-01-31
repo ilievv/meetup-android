@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.interfaces.IMenuInflater;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +36,8 @@ import java.util.Locale;
 public class HomeActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private FragmentManager fragmentManager;
+
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
@@ -42,8 +46,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
+        this.fragmentManager = getSupportFragmentManager();
 
         if (this.googleApiClient == null) {
             this.buildGoogleApiClient();
@@ -59,15 +62,18 @@ public class HomeActivity extends AppCompatActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        menu.clear();
-        this.getMenuInflater().inflate(R.menu.main, menu);
+        IMenuInflater menuInflater = (IMenuInflater)
+                this.fragmentManager.findFragmentById(R.id.fragment_tool_bar);
+
+        if (menuInflater != null) {
+            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
+        }
 
         return true;
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "onConnected", Toast.LENGTH_SHORT).show();
         if (this.googleApiClient == null) {
             Log.v("", "");
         }
@@ -83,13 +89,10 @@ public class HomeActivity extends AppCompatActivity
         }
 
         GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-
-        Log.v("Check", "In onConnected");
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "onConnectionSuspended", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -110,8 +113,6 @@ public class HomeActivity extends AppCompatActivity
         if (googleApiClient != null) {
             this.googleApiClient.connect();
         }
-
-        Log.v("Check", "In OnStart");
     }
 
     protected void onStop() {
@@ -147,7 +148,7 @@ public class HomeActivity extends AppCompatActivity
         String address = addresses.get(0).getAddressLine(0);
 
         TextView longitudeTextView = (TextView) findViewById(R.id.address);
-        longitudeTextView.setText("Current address: " + address);
+        longitudeTextView.setText("Current address " + address);
     }
 
     public void secretIntent(View view) {

@@ -14,9 +14,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <include
-                android:id="@+id/tool_bar"
-                layout="@layout/tool_bar"
+        <fragment
+                android:id="@+id/fragment_tool_bar"
+                android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -29,10 +29,10 @@
         <TextView
                 android:id="@+id/address"
                 android:layout_margin="10dp"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address: "/>
+                android:text="Address"/>
     </LinearLayout>
 
     <LinearLayout
@@ -49,8 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Select a place"
-                    android:textSize="16dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:textSize="16sp"
+                    android:layout_marginStart="10dp"/>
 
             <View
                     style="@style/AppTheme.TextView"
@@ -193,6 +193,9 @@
                         android:layout_height="wrap_content"
                         android:text="Other"/>
             </LinearLayout>
+            
         </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>
