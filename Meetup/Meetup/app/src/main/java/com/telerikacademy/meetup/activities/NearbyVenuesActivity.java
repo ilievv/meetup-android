@@ -52,7 +52,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fragmentManager
                             .beginTransaction()
-                            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                            .setCustomAnimations(R.anim.slide_down, R.anim.slide_out)
                             .show(searchFragment)
                             .commit();
                 }
@@ -67,7 +67,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 if (hasChanged && isVisible) {
                     fragmentManager
                             .beginTransaction()
-                            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                            .setCustomAnimations(R.anim.slide_down, R.anim.slide_out)
                             .hide(searchFragment)
                             .commit();
                 }
