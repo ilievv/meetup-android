@@ -3,19 +3,17 @@ package com.telerikacademy.meetup.views.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
 import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.models.Venue;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,12 +67,14 @@ public class NearbyVenuesRecyclerAdapter
         private Venue venue;
         private TextView venueName;
         private TextView venueAddress;
+        private RatingBar venueRating;
 
         private VenueHolder(View itemView) {
             super(itemView);
 
             this.venueName = (TextView) itemView.findViewById(R.id.venue_name);
             this.venueAddress = (TextView) itemView.findViewById(R.id.venue_address);
+            this.venueRating = (RatingBar) itemView.findViewById(R.id.venue_rating);
 
             itemView.setOnClickListener(this);
         }
@@ -92,6 +92,7 @@ public class NearbyVenuesRecyclerAdapter
             this.venue = venue;
             this.venueName.setText(venue.getName());
             this.venueAddress.setText(venue.getAddress());
+            this.venueRating.setRating(venue.getRating());
         }
     }
 

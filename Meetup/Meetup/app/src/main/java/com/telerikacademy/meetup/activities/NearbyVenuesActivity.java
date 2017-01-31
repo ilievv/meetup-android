@@ -97,10 +97,10 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         for (int i = 0; i < 100; i++) {
             Venue venue = new Venue(Integer.toString(i),
-                    "Pri Ilyo #" + i, "zh.k. Lyulin " + i + 1, null, 0);
+                    "Pri Ilyo #" + i, "zh.k. Lyulin " + i + 1, null, i % 5f);
             venues.add(venue);
         }
-        Venue someVen = new Venue("123", "Gosho", "Kostinbrod", null, 0);
+        Venue someVen = new Venue("123", "Gosho", "Kostinbrod", null, 3.2f);
         venues.add(someVen);
 
         return venues;

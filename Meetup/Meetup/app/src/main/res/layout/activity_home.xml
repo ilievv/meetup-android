@@ -6,8 +6,7 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+        android:orientation="vertical">
 
     <fragment
             android:id="@+id/fragment_tool_bar"
@@ -108,7 +107,8 @@
                     android:text="@string/other"
                     android:textAllCaps="false"
                     android:drawableTop="@drawable/ic_solid_pub"
-                    android:drawablePadding="8dp"/>
+                    android:drawablePadding="8dp"
+                    android:onClick="secretIntent"/>
         </TableRow>
 
     </TableLayout>
