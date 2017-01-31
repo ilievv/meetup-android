@@ -23,6 +23,10 @@ public class Venue implements IVenue {
     }
 
     private void setId(String id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Venues.setId parameter cannot be null");
+        }
+
         this.id = id;
     }
 
@@ -31,6 +35,10 @@ public class Venue implements IVenue {
     }
 
     private void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Venue.setName parameter cannot be null.");
+        }
+
         this.name = name;
     }
 

@@ -3,6 +3,7 @@ package com.telerikacademy.meetup.views.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class NearbyVenuesRecyclerAdapter
 
         private Venue venue;
         private TextView venueName;
+        private TextView venueTypes;
         private TextView venueAddress;
         private RatingBar venueRating;
 
@@ -73,6 +75,7 @@ public class NearbyVenuesRecyclerAdapter
             super(itemView);
 
             this.venueName = (TextView) itemView.findViewById(R.id.venue_name);
+            this.venueTypes = (TextView) itemView.findViewById(R.id.venue_types);
             this.venueAddress = (TextView) itemView.findViewById(R.id.venue_address);
             this.venueRating = (RatingBar) itemView.findViewById(R.id.venue_rating);
 
@@ -93,6 +96,10 @@ public class NearbyVenuesRecyclerAdapter
             this.venueName.setText(venue.getName());
             this.venueAddress.setText(venue.getAddress());
             this.venueRating.setRating(venue.getRating());
+
+            if (venue.getTypes() != null) {
+                this.venueTypes.setText(TextUtils.join(", ", venue.getTypes()));
+            }
         }
     }
 
@@ -122,7 +129,9 @@ public class NearbyVenuesRecyclerAdapter
                 final String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (final Venue venue : originalList) {
-                    if (venue.getName().toLowerCase().contains(filterPattern)) {
+                    String venueName = venue.getName();
+                    if (venueName != null &&
+                            venueName.toLowerCase().contains(filterPattern)) {
                         filteredList.add(venue);
                     }
                 }
