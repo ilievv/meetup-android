@@ -2,11 +2,16 @@ package com.telerikacademy.meetup.activities;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +39,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private FragmentManager fragmentManager;
 
@@ -74,18 +80,17 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (this.googleApiClient == null) {
-            Log.v("", "");
-        }
-        if (checkPermission()) {
+        this.requestPermissions();
+
+        if (this.googleApiClient != null &&
+                this.checkPermission(Manifest.permission.INTERNET) &&
+                this.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+
             Location location = LocationServices.FusedLocationApi
                     .getLastLocation(googleApiClient);
 
-            if (location == null) {
-                LocationServices.FusedLocationApi.requestLocationUpdates(this.googleApiClient, locationRequest, this);
-            } else {
-                this.handleNewLocation(location);
-            }
+            LocationServices.FusedLocationApi
+                    .requestLocationUpdates(this.googleApiClient, locationRequest, this);
         }
 
         GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
@@ -100,12 +105,13 @@ public class HomeActivity extends AppCompatActivity
         Log.e("Connection failed: ", Integer.toString(connectionResult.getErrorCode()));
         Log.e("Connection failed: ", connectionResult.getErrorMessage());
 
-        Toast.makeText(this, "onConnectionFailed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Make sure you are connected to the internet.", Toast.LENGTH_SHORT)
+                .show();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        handleNewLocation(location);
+        this.handleLocation(location);
     }
 
     protected void onStart() {
@@ -116,8 +122,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     protected void onStop() {
-        this.googleApiClient.disconnect();
         super.onStop();
+        this.googleApiClient.disconnect();
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -128,17 +134,35 @@ public class HomeActivity extends AppCompatActivity
                 .build();
     }
 
-    private boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        return result == 0;
+    @RequiresPermission(anyOf = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION})
+    private boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(this, permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void handleNewLocation(Location location) {
+    private void requestPermissions() {
+        int accessFineLocationResult = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if (accessFineLocationResult != 0) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
+        int internetLocationResult = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET);
+        if (internetLocationResult != 0) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.INTERNET}, 2);
+        }
+    }
+
+    private void handleLocation(Location location) {
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = new ArrayList<>();
+
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
         } catch (IOException e) {

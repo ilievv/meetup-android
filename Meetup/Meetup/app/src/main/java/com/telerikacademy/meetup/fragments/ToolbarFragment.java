@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 
-import android.widget.Toast;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
 
@@ -32,15 +30,14 @@ public class ToolbarFragment extends Fragment
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        if (!(context instanceof AppCompatActivity)) {
+        if (!(getActivity() instanceof AppCompatActivity)) {
             throw new ClassCastException("Activity must be of type AppCompatActivity in order to support custom Toolbar.");
         }
 
-        this.currentActivity = (AppCompatActivity) context;
-
+        this.currentActivity = (AppCompatActivity) getActivity();
         this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.tool_bar);
         this.currentActivity.setSupportActionBar(toolbar);
         this.actionBar = this.currentActivity.getSupportActionBar();
