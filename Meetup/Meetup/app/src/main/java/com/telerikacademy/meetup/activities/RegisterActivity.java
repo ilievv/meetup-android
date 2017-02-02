@@ -12,6 +12,6 @@ import com.telerikacademy.meetup.R;
 public class RegisterActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_register);
     }
 }
