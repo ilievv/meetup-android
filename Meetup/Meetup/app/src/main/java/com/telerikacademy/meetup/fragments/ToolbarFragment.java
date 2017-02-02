@@ -76,16 +76,15 @@ public class ToolbarFragment extends Fragment
 
     private void setDrawer(){
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName("Register");
-        
+        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
+
         Drawer result = new DrawerBuilder()
                 .withActivity(this.currentActivity)
                 .withToolbar(this.toolbar)
                 .addDrawerItems(
                         item1,
                         new DividerDrawerItem(),
-                        item2,
-                        new SecondaryDrawerItem().withName("Something")
+                        item2
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
