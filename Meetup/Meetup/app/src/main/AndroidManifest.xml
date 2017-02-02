@@ -17,18 +17,22 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
 
-        <activity android:name=".activities.HomeActivity">
+        <activity
+                android:name=".activities.HomeActivity"
+                android:label="@string/home_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NearbyVenuesActivity">
+        <activity
+                android:name=".activities.NearbyVenuesActivity"
+                android:label="@string/local_venues_label"
+                android:parentActivityName=".activities.HomeActivity">
         </activity>
-        <activity android:name=".activities.VenueDetailsActivity">
-        </activity>
-        <activity android:name=".activities.base.ToolbarActivity">
+        <activity
+                android:name=".activities.VenueDetailsActivity"
+                android:parentActivityName=".activities.NearbyVenuesActivity">
         </activity>
     </application>
 

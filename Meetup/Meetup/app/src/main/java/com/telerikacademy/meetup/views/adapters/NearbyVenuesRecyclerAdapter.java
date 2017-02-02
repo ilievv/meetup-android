@@ -22,7 +22,7 @@ public class NearbyVenuesRecyclerAdapter
         extends RecyclerView.Adapter<NearbyVenuesRecyclerAdapter.VenueHolder>
         implements Filterable {
 
-    private static String VENUE_KEY = "Venue";
+    private static String VENUE_KEY = "venue";
 
     private List<Venue> venues;
     private List<Venue> filteredVenues;

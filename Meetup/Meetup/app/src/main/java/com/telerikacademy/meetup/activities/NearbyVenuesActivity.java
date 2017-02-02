@@ -1,15 +1,20 @@
 package com.telerikacademy.meetup.activities;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
+import com.telerikacademy.meetup.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
@@ -19,6 +24,7 @@ import java.util.List;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
 
+    private Activity currActivity;
     private FragmentManager fragmentManager;
 
     @Override
@@ -26,6 +32,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_venues);
 
+        this.currActivity = this;
         this.fragmentManager = getSupportFragmentManager();
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_venues);
@@ -86,6 +93,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
+            menuInflater.setNavigationOnClickListener();
         }
 
         return true;
