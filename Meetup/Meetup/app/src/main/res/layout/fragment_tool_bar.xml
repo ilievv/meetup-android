@@ -7,12 +7,8 @@
              android:background="@color/colorPrimary"
              tools:context="com.telerikacademy.meetup.fragments.ToolbarFragment">
 
-    <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
+    <include
             android:id="@+id/tool_bar"
-            style="@style/AppTheme.ToolBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    </android.support.v7.widget.Toolbar>
+            layout="@layout/tool_bar"/>
 
 </FrameLayout>
