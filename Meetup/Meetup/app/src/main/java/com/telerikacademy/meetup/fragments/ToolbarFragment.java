@@ -10,6 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
 
@@ -42,6 +48,7 @@ public class ToolbarFragment extends Fragment
         this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.tool_bar);
         this.currentActivity.setSupportActionBar(toolbar);
         this.actionBar = this.currentActivity.getSupportActionBar();
+        this.setDrawer();
     }
 
     public void setNavigationOnClickListener() {
@@ -65,5 +72,27 @@ public class ToolbarFragment extends Fragment
         menu.clear();
 
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
+    }
+
+    private void setDrawer(){
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
+        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName("Register");
+        
+        Drawer result = new DrawerBuilder()
+                .withActivity(this.currentActivity)
+                .withToolbar(this.toolbar)
+                .addDrawerItems(
+                        item1,
+                        new DividerDrawerItem(),
+                        item2,
+                        new SecondaryDrawerItem().withName("Something")
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        return true;
+                    }
+                })
+                .build();
     }
 }
