@@ -16,9 +16,9 @@ import com.telerikacademy.meetup.interfaces.IMenuInflater;
 public class ToolbarFragment extends Fragment
         implements IMenuInflater {
 
+    private Toolbar toolbar;
     private ActionBar actionBar;
     private AppCompatActivity currentActivity;
-    private Toolbar toolbar;
 
     public ToolbarFragment() {
     }

@@ -6,20 +6,17 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresPermission;
-import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +44,15 @@ public class HomeActivity extends AppCompatActivity
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
+    private TextView currLocationTextView;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         this.fragmentManager = getSupportFragmentManager();
+        this.currLocationTextView = (TextView) findViewById(R.id.tv_location);
 
         if (this.googleApiClient == null) {
             this.buildGoogleApiClient();
@@ -62,6 +62,31 @@ public class HomeActivity extends AppCompatActivity
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
                 .setFastestInterval(1000);
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        this.requestPermissions();
+
+        if (this.googleApiClient != null &&
+                this.checkPermission(Manifest.permission.INTERNET) &&
+                this.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            Location location = LocationServices.FusedLocationApi
+                    .getLastLocation(googleApiClient);
+
+            this.handleLocation(location);
+
+            LocationServices.FusedLocationApi
+                    .requestLocationUpdates(this.googleApiClient, locationRequest, this);
+        }
+
+        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        this.handleLocation(location);
     }
 
     @Override
@@ -79,28 +104,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        this.requestPermissions();
-
-        if (this.googleApiClient != null &&
-                this.checkPermission(Manifest.permission.INTERNET) &&
-                this.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            Location location = LocationServices.FusedLocationApi
-                    .getLastLocation(googleApiClient);
-
-            LocationServices.FusedLocationApi
-                    .requestLocationUpdates(this.googleApiClient, locationRequest, this);
-        }
-
-        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e("Connection failed: ", Integer.toString(connectionResult.getErrorCode()));
         Log.e("Connection failed: ", connectionResult.getErrorMessage());
@@ -110,8 +113,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        this.handleLocation(location);
+    public void onConnectionSuspended(int i) {
     }
 
     protected void onStart() {
@@ -169,10 +171,11 @@ public class HomeActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        String address = addresses.get(0).getAddressLine(0);
+        String address = addresses.size() > 0 ?
+                addresses.get(0).getAddressLine(0) :
+                "unknown";
 
-        TextView longitudeTextView = (TextView) findViewById(R.id.address);
-        longitudeTextView.setText("Current address " + address);
+        this.currLocationTextView.setText(address);
     }
 
     public void secretIntent(View view) {
