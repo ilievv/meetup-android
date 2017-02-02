@@ -27,7 +27,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
 
         IMenuInflater menuInflater = (IMenuInflater)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_tool_bar);
+                getSupportFragmentManager().findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());

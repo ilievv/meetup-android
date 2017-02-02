@@ -10,9 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
@@ -34,7 +35,7 @@ public class ToolbarFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_tool_bar, container, false);
+        return inflater.inflate(R.layout.fragment_toolbar, container, false);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ToolbarFragment extends Fragment
         }
 
         this.currentActivity = (AppCompatActivity) getActivity();
-        this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.tool_bar);
+        this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.toolbar);
         this.currentActivity.setSupportActionBar(toolbar);
         this.actionBar = this.currentActivity.getSupportActionBar();
         this.setDrawer();
@@ -76,17 +77,28 @@ public class ToolbarFragment extends Fragment
     }
 
     private void setDrawer() {
-        PrimaryDrawerItem itemLogin = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
-        PrimaryDrawerItem itemRegister = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
+        PrimaryDrawerItem itemLogin = new PrimaryDrawerItem()
+                .withIdentifier(1)
+                .withName("Sign in")
+                .withIcon(FontAwesome.Icon.faw_sign_in);
 
-        new DrawerBuilder()
-                .withActivity(this.currentActivity)
+        PrimaryDrawerItem itemRegister = new PrimaryDrawerItem()
+                .withIdentifier(2)
+                .withName("Register")
+                .withIcon(GoogleMaterial.Icon.gmd_person_add);
+
+        new DrawerBuilder(this.currentActivity)
+//                .withRootView(R.id.fl_drawer_container)
+//                .withDisplayBelowStatusBar(false)
                 .withToolbar(this.toolbar)
+                .withActionBarDrawerToggleAnimated(true)
+                .withTranslucentStatusBar(false)
+                .withDrawerWidthDp(260)
                 .addDrawerItems(
-                        itemLogin, //position 0
-                        new DividerDrawerItem(),//position 1
-                        itemRegister//position 2
+                        itemLogin,
+                        itemRegister
                 )
+                .withSelectedItem(1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -95,11 +107,10 @@ public class ToolbarFragment extends Fragment
                                 Intent loginIntent = new Intent(currentActivity, LoginActivity.class);
                                 startActivity(loginIntent);
                                 break;
-                            case 2:
+                            case 1:
                                 Intent registerIntent = new Intent(currentActivity, RegisterActivity.class);
                                 startActivity(registerIntent);
                                 break;
-                            default:
                         }
 
                         return true;

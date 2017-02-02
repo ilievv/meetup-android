@@ -9,7 +9,7 @@
         tools:context="com.telerikacademy.meetup.activities.NearbyVenuesActivity">
 
     <fragment
-            android:id="@+id/fragment_tool_bar"
+            android:id="@+id/fragment_toolbar"
             android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

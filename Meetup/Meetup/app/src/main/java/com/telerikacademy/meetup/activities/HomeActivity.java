@@ -8,13 +8,11 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -94,7 +92,7 @@ public class HomeActivity extends AppCompatActivity
         super.onPrepareOptionsMenu(menu);
 
         IMenuInflater menuInflater = (IMenuInflater)
-                this.fragmentManager.findFragmentById(R.id.fragment_tool_bar);
+                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());

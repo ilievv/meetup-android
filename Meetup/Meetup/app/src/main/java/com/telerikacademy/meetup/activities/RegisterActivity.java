@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
 
         IMenuInflater menuInflater = (IMenuInflater)
-                this.fragmentManager.findFragmentById(R.id.fragment_tool_bar);
+                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());

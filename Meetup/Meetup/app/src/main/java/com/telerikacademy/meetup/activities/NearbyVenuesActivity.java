@@ -1,7 +1,6 @@
 package com.telerikacademy.meetup.activities;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -83,7 +82,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
 
         IMenuInflater menuInflater = (IMenuInflater)
-                this.fragmentManager.findFragmentById(R.id.fragment_tool_bar);
+                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
