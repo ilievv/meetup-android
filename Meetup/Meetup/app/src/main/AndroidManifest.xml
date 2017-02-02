@@ -19,8 +19,7 @@
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
 
         <activity
-                android:name=".activities.HomeActivity"
-                android:label="@string/home_label">
+                android:name=".activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

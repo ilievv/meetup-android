@@ -160,6 +160,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void handleLocation(Location location) {
+        if (location == null) {
+            return;
+        }
+
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
@@ -187,6 +191,14 @@ public class HomeActivity extends AppCompatActivity
         String secondaryAddress = TextUtils.join(", ", addressComponents);
 
         if (primaryAddress != null) {
+            if (!address.getSubThoroughfare().isEmpty()) {
+                primaryAddress += " " + address.getSubThoroughfare();
+            }
+
+            if (!address.getLocality().isEmpty()) {
+                primaryAddress += ", " + address.getLocality();
+            }
+
             this.currLocationTextView.setText(primaryAddress);
         } else if (secondaryAddress != null) {
             this.currLocationTextView.setText(secondaryAddress);
