@@ -167,7 +167,7 @@ public class HomeActivity extends AppCompatActivity
         List<Address> addresses = new ArrayList<>();
 
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 5);
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
