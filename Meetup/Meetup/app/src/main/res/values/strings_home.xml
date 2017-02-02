@@ -8,4 +8,5 @@
     <string name="fast_food">Fast food</string>
     <string name="favourite">Favourite</string>
     <string name="other">Other</string>
+    <string name="unknown_location">unknown</string>
 </resources>

@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -166,16 +167,32 @@ public class HomeActivity extends AppCompatActivity
         List<Address> addresses = new ArrayList<>();
 
         try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            addresses = geocoder.getFromLocation(latitude, longitude, 5);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String address = addresses.size() > 0 ?
-                addresses.get(0).getAddressLine(0) :
-                "unknown";
+        if (addresses == null || addresses.size() <= 0) {
+            return;
+        }
 
-        this.currLocationTextView.setText(address);
+        Address address = addresses.get(0);
+        List<String> addressComponents = new ArrayList<>();
+
+        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            addressComponents.add(address.getAddressLine(i));
+        }
+
+        String primaryAddress = address.getThoroughfare();
+        String secondaryAddress = TextUtils.join(", ", addressComponents);
+
+        if (primaryAddress != null) {
+            this.currLocationTextView.setText(primaryAddress);
+        } else if (secondaryAddress != null) {
+            this.currLocationTextView.setText(secondaryAddress);
+        } else {
+            this.currLocationTextView.setText(R.string.unknown_location);
+        }
     }
 
     public void secretIntent(View view) {
