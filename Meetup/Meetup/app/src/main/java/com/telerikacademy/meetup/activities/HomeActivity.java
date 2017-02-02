@@ -27,7 +27,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.interfaces.IMenuInflater;
+import com.telerikacademy.meetup.interfaces.IToolbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        IMenuInflater menuInflater = (IMenuInflater)
+        IToolbar menuInflater = (IToolbar)
                 this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {

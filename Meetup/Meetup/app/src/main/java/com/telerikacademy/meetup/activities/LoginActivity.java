@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.interfaces.IMenuInflater;
+import com.telerikacademy.meetup.interfaces.IToolbar;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        IMenuInflater menuInflater = (IMenuInflater)
+        IToolbar menuInflater = (IToolbar)
                 this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {

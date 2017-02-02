@@ -5,7 +5,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-public interface IMenuInflater {
+public interface IToolbar {
 
     void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater menuInflater);
 

@@ -19,10 +19,10 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.LoginActivity;
 import com.telerikacademy.meetup.activities.RegisterActivity;
-import com.telerikacademy.meetup.interfaces.IMenuInflater;
+import com.telerikacademy.meetup.interfaces.IToolbar;
 
 public class ToolbarFragment extends Fragment
-        implements IMenuInflater {
+        implements IToolbar {
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -88,8 +88,6 @@ public class ToolbarFragment extends Fragment
                 .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
         new DrawerBuilder(this.currentActivity)
-//                .withRootView(R.id.fl_drawer_container)
-//                .withDisplayBelowStatusBar(false)
                 .withToolbar(this.toolbar)
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
