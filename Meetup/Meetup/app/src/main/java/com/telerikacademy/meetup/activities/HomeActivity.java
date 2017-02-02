@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.fragmentManager = getSupportFragmentManager();
+        this.fragmentManager = this.getSupportFragmentManager();
         this.currLocationTextView = (TextView) findViewById(R.id.tv_location);
 
         if (this.googleApiClient == null) {

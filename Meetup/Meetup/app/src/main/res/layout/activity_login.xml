@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <fragment
+        android:id="@+id/fragment_tool_bar"
+        android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <EditText
         android:id="@+id/username"
