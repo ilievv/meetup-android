@@ -19,7 +19,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.activities.LoginActivity;
 import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
+import com.telerikacademy.meetup.activities.RegisterActivity;
 import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
 import com.telerikacademy.meetup.models.Venue;
@@ -87,21 +89,21 @@ public class ToolbarFragment extends Fragment
                 .withActivity(this.currentActivity)
                 .withToolbar(this.toolbar)
                 .addDrawerItems(
-                        itemLogin,
-                        new DividerDrawerItem(),
-                        itemRegister
+                        itemLogin, //position 0
+                        new DividerDrawerItem(),//position 1
+                        itemRegister//position 2
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch(position) {
-                            case 1:
-                                Intent a = new Intent(currentActivity, NearbyVenuesActivity.class);
-                                startActivity(a);
+                            case 0:
+                                Intent loginIntent = new Intent(currentActivity, LoginActivity.class);
+                                startActivity(loginIntent);
                                 break;
                             case 2:
-                                Intent b = new Intent(currentActivity, VenueDetailsActivity.class);
-                                startActivity(b);
+                                Intent registerIntent = new Intent(currentActivity, RegisterActivity.class);
+                                startActivity(registerIntent);
                                 break;
                             default:
                         }
