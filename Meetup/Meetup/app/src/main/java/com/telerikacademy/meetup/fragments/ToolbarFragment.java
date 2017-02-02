@@ -1,5 +1,7 @@
 package com.telerikacademy.meetup.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
@@ -10,8 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
 
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.activities.LoginActivity;
+import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
+import com.telerikacademy.meetup.activities.RegisterActivity;
+import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
+import com.telerikacademy.meetup.models.Venue;
 
 public class ToolbarFragment extends Fragment
         implements IMenuInflater {
@@ -42,6 +55,7 @@ public class ToolbarFragment extends Fragment
         this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.tool_bar);
         this.currentActivity.setSupportActionBar(toolbar);
         this.actionBar = this.currentActivity.getSupportActionBar();
+        this.setDrawer();
     }
 
     public void setNavigationOnClickListener() {
@@ -65,5 +79,38 @@ public class ToolbarFragment extends Fragment
         menu.clear();
 
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
+    }
+
+    private void setDrawer(){
+        PrimaryDrawerItem itemLogin = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
+        PrimaryDrawerItem itemRegister = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
+        final Activity currentActivity = this.currentActivity;
+        Drawer result = new DrawerBuilder()
+                .withActivity(this.currentActivity)
+                .withToolbar(this.toolbar)
+                .addDrawerItems(
+                        itemLogin, //position 0
+                        new DividerDrawerItem(),//position 1
+                        itemRegister//position 2
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch(position) {
+                            case 0:
+                                Intent loginIntent = new Intent(currentActivity, LoginActivity.class);
+                                startActivity(loginIntent);
+                                break;
+                            case 2:
+                                Intent registerIntent = new Intent(currentActivity, RegisterActivity.class);
+                                startActivity(registerIntent);
+                                break;
+                            default:
+                        }
+
+                        return true;
+                    }
+                })
+                .build();
     }
 }
