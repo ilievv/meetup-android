@@ -1,8 +1,9 @@
 package com.telerikacademy.meetup.activities;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -62,7 +63,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                boolean hasChanged = dy > 100 || dy < -100;
+                boolean hasChanged = dy > 50 || dy < -50;
                 boolean isVisible = searchFragment != null && searchFragment.isVisible();
                 if (hasChanged && isVisible) {
                     fragmentManager
