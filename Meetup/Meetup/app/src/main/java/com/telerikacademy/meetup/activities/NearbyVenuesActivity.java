@@ -87,7 +87,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
-            menuInflater.setNavigationOnClickListener();
         }
 
         return true;

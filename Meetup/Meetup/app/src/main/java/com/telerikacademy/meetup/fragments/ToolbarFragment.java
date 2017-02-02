@@ -1,10 +1,8 @@
 package com.telerikacademy.meetup.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -16,15 +14,11 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.LoginActivity;
-import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
 import com.telerikacademy.meetup.activities.RegisterActivity;
-import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
-import com.telerikacademy.meetup.models.Venue;
 
 public class ToolbarFragment extends Fragment
         implements IMenuInflater {
@@ -81,11 +75,11 @@ public class ToolbarFragment extends Fragment
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
-    private void setDrawer(){
+    private void setDrawer() {
         PrimaryDrawerItem itemLogin = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
         PrimaryDrawerItem itemRegister = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
-        final Activity currentActivity = this.currentActivity;
-        Drawer result = new DrawerBuilder()
+
+        new DrawerBuilder()
                 .withActivity(this.currentActivity)
                 .withToolbar(this.toolbar)
                 .addDrawerItems(
@@ -96,7 +90,7 @@ public class ToolbarFragment extends Fragment
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switch(position) {
+                        switch (position) {
                             case 0:
                                 Intent loginIntent = new Intent(currentActivity, LoginActivity.class);
                                 startActivity(loginIntent);
