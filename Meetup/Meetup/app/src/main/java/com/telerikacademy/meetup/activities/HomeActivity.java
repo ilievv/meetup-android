@@ -63,12 +63,12 @@ public class HomeActivity extends AppCompatActivity
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
                 .setFastestInterval(1000);
+
+        this.requestPermissions();
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        this.requestPermissions();
-
         if (this.googleApiClient != null &&
                 this.checkPermission()) {
 
