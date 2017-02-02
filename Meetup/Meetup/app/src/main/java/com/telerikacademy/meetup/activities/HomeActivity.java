@@ -70,8 +70,7 @@ public class HomeActivity extends AppCompatActivity
         this.requestPermissions();
 
         if (this.googleApiClient != null &&
-                this.checkPermission(Manifest.permission.INTERNET) &&
-                this.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                this.checkPermission()) {
 
             Location location = LocationServices.FusedLocationApi
                     .getLastLocation(googleApiClient);
@@ -137,7 +136,11 @@ public class HomeActivity extends AppCompatActivity
                 .build();
     }
 
-    @RequiresPermission(anyOf = {Manifest.permission.INTERNET, Manifest.permission.ACCESS_FINE_LOCATION})
+    private boolean checkPermission() {
+        return checkPermission(Manifest.permission.INTERNET) &&
+                checkPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+    }
+
     private boolean checkPermission(String permission) {
         int result = ContextCompat.checkSelfPermission(this, permission);
         return result == PackageManager.PERMISSION_GRANTED;
