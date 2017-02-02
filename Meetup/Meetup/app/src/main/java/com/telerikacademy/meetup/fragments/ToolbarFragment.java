@@ -1,5 +1,7 @@
 package com.telerikacademy.meetup.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
@@ -17,7 +19,10 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
+import com.telerikacademy.meetup.activities.VenueDetailsActivity;
 import com.telerikacademy.meetup.interfaces.IMenuInflater;
+import com.telerikacademy.meetup.models.Venue;
 
 public class ToolbarFragment extends Fragment
         implements IMenuInflater {
@@ -75,20 +80,32 @@ public class ToolbarFragment extends Fragment
     }
 
     private void setDrawer(){
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
-
+        PrimaryDrawerItem itemLogin = new PrimaryDrawerItem().withIdentifier(1).withName("Login");
+        PrimaryDrawerItem itemRegister = new PrimaryDrawerItem().withIdentifier(2).withName("Register");
+        final Activity currentActivity = this.currentActivity;
         Drawer result = new DrawerBuilder()
                 .withActivity(this.currentActivity)
                 .withToolbar(this.toolbar)
                 .addDrawerItems(
-                        item1,
+                        itemLogin,
                         new DividerDrawerItem(),
-                        item2
+                        itemRegister
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch(position) {
+                            case 1:
+                                Intent a = new Intent(currentActivity, NearbyVenuesActivity.class);
+                                startActivity(a);
+                                break;
+                            case 2:
+                                Intent b = new Intent(currentActivity, VenueDetailsActivity.class);
+                                startActivity(b);
+                                break;
+                            default:
+                        }
+
                         return true;
                     }
                 })

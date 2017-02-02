@@ -36,6 +36,14 @@
                 android:name=".activities.VenueDetailsActivity"
                 android:parentActivityName=".activities.NearbyVenuesActivity">
         </activity>
+
+        <activity
+            android:name=".activities.LoginActivity">
+        </activity>
+
+        <activity
+            android:name=".activities.RegisterActivity" >
+        </activity>
     </application>
 
 </manifest>
