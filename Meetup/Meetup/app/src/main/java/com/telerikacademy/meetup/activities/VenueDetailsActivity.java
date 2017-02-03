@@ -10,7 +10,7 @@ import com.telerikacademy.meetup.models.Venue;
 
 public class VenueDetailsActivity extends AppCompatActivity {
 
-    private Venue currVenue;
+    private Venue currentVenue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,8 @@ public class VenueDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_venue_details);
 
         Intent intent = getIntent();
-        this.currVenue = (Venue) intent.getSerializableExtra("venue");
-        this.setTitle(currVenue.getName());
+        this.currentVenue = (Venue) intent.getSerializableExtra("venue");
+        this.setTitle(currentVenue.getName());
     }
 
     @Override

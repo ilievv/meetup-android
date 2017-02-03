@@ -81,11 +81,12 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        IToolbar menuInflater = (IToolbar)
+        IToolbar toolbarFragment = (IToolbar)
                 this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
-        if (menuInflater != null) {
-            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
+        if (toolbarFragment != null) {
+            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
+            toolbarFragment.setNavigationDrawer();
         }
 
         return true;

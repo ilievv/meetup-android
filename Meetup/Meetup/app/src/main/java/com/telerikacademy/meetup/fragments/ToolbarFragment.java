@@ -50,7 +50,6 @@ public class ToolbarFragment extends Fragment
         this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.toolbar);
         this.currentActivity.setSupportActionBar(toolbar);
         this.actionBar = this.currentActivity.getSupportActionBar();
-        this.setDrawer();
     }
 
     public void setNavigationOnClickListener() {
@@ -76,7 +75,7 @@ public class ToolbarFragment extends Fragment
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
-    private void setDrawer() {
+    public void setNavigationDrawer() {
         PrimaryDrawerItem itemLogin = new PrimaryDrawerItem()
                 .withIdentifier(1)
                 .withName("Sign in")

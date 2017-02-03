@@ -61,8 +61,6 @@ public class HomeActivity extends AppCompatActivity
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)
                 .setFastestInterval(1000);
-
-        this.requestPermissions();
     }
 
     @Override
@@ -88,20 +86,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        IToolbar menuInflater = (IToolbar)
-                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
-
-        if (menuInflater != null) {
-            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
-        }
-
-        return true;
-    }
-
-    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e("Connection failed: ", Integer.toString(connectionResult.getErrorCode()));
         Log.e("Connection failed: ", connectionResult.getErrorMessage());
@@ -119,6 +103,12 @@ public class HomeActivity extends AppCompatActivity
         if (googleApiClient != null) {
             this.googleApiClient.connect();
         }
+
+        IToolbar menuInflater = (IToolbar)
+                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+        menuInflater.setNavigationDrawer();
+
+        this.requestPermissions();
     }
 
     protected void onStop() {
