@@ -17,8 +17,8 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.activities.LoginActivity;
-import com.telerikacademy.meetup.activities.RegisterActivity;
+import com.telerikacademy.meetup.activities.SignInActivity;
+import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.interfaces.IToolbar;
 
 public class ToolbarFragment extends Fragment
@@ -101,11 +101,11 @@ public class ToolbarFragment extends Fragment
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (position) {
                             case 0:
-                                Intent loginIntent = new Intent(currentActivity, LoginActivity.class);
+                                Intent loginIntent = new Intent(currentActivity, SignInActivity.class);
                                 startActivity(loginIntent);
                                 break;
                             case 1:
-                                Intent registerIntent = new Intent(currentActivity, RegisterActivity.class);
+                                Intent registerIntent = new Intent(currentActivity, SignUpActivity.class);
                                 startActivity(registerIntent);
                                 break;
                         }

@@ -38,11 +38,11 @@
         </activity>
 
         <activity
-            android:name=".activities.LoginActivity">
+            android:name=".activities.SignInActivity">
         </activity>
 
         <activity
-            android:name=".activities.RegisterActivity" >
+            android:name=".activities.SignUpActivity" >
         </activity>
     </application>
 

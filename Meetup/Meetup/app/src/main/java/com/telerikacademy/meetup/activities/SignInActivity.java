@@ -9,13 +9,13 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.IToolbar;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_in);
         this.fragmentManager = this.getSupportFragmentManager();
     }
 
