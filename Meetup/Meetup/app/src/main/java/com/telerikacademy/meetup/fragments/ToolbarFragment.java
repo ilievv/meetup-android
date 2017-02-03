@@ -83,7 +83,7 @@ public class ToolbarFragment extends Fragment
 
         PrimaryDrawerItem itemRegister = new PrimaryDrawerItem()
                 .withIdentifier(2)
-                .withName("Register")
+                .withName("Sign up")
                 .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
         new DrawerBuilder(this.currentActivity)
