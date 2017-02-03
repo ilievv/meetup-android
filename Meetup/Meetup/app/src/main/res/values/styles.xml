@@ -41,6 +41,14 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
+    
+    <style name="AppTheme.EditText.V2" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textColorHint">@color/secondaryText</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/divider</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
 
     <style name="AppTheme.AutoCompleteTextView" parent="Base.Widget.AppCompat.AutoCompleteTextView">
         <item name="android:fontFamily">sans-serif</item>
