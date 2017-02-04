@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.helpers;
+package com.telerikacademy.meetup.utils;
 
 import com.telerikacademy.meetup.interfaces.IHttpResponse;
 
