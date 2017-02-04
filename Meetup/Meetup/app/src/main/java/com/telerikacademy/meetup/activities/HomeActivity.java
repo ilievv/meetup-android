@@ -81,17 +81,17 @@ public class HomeActivity extends AppCompatActivity {
         this.locationProvider.disconnect();
     }
 
-    private boolean checkPermission() {
+    protected boolean checkPermission() {
         return checkPermission(Manifest.permission.INTERNET) &&
                 checkPermission(Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
-    private boolean checkPermission(String permission) {
+    protected boolean checkPermission(String permission) {
         int result = ContextCompat.checkSelfPermission(this, permission);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void requestPermissions() {
+    protected void requestPermissions() {
         int accessFineLocationResult = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (accessFineLocationResult != 0) {
