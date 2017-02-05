@@ -8,10 +8,6 @@ import android.view.Menu;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.IToolbar;
 
-/**
- * Created by georgivelikov on 02-Feb-17.
- */
-
 public class SignUpActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
