@@ -12,12 +12,12 @@ import com.telerikacademy.meetup.interfaces.IToolbar;
  * Created by georgivelikov on 02-Feb-17.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_sign_up);
         this.fragmentManager = this.getSupportFragmentManager();
     }
 
