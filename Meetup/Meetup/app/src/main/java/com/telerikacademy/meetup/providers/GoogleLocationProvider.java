@@ -14,11 +14,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.interfaces.ILocationProvider;
-import com.telerikacademy.meetup.interfaces.events.IOnConnectedListener;
-import com.telerikacademy.meetup.interfaces.events.IOnConnectionFailedListener;
-import com.telerikacademy.meetup.interfaces.events.IOnLocationChangeListener;
+import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
+import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
+import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,6 +50,14 @@ public class GoogleLocationProvider
 
     public void disconnect() {
         this.googleApiClient.disconnect();
+    }
+
+    public boolean isConnected() {
+        return this.googleApiClient.isConnected();
+    }
+
+    public boolean isConnecting() {
+        return this.googleApiClient.isConnecting();
     }
 
     public void setOnConnectedListener(IOnConnectedListener onConnectedListener) {
@@ -119,11 +126,12 @@ public class GoogleLocationProvider
         if (this.locationRequest == null) {
             this.locationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(10 * 1000)
-                    .setFastestInterval(1000);
+                    .setInterval(10000)
+                    .setFastestInterval(10000);
         }
     }
 
+    // TODO: Create through location factory
     private com.telerikacademy.meetup.models.Location parseLocation(Location location) {
         if (location == null) {
             return null;

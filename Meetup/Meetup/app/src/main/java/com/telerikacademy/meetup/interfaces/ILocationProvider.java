@@ -1,14 +1,18 @@
 package com.telerikacademy.meetup.interfaces;
 
-import com.telerikacademy.meetup.interfaces.events.IOnConnectedListener;
-import com.telerikacademy.meetup.interfaces.events.IOnConnectionFailedListener;
-import com.telerikacademy.meetup.interfaces.events.IOnLocationChangeListener;
+import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
+import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
+import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 
 public interface ILocationProvider {
 
     void connect();
 
     void disconnect();
+
+    boolean isConnected();
+
+    boolean isConnecting();
 
     void setOnConnectedListener(IOnConnectedListener onConnectedListener);
 

@@ -36,6 +36,7 @@ dependencies {
     compile 'com.mikepenz:google-material-typeface:2.2.0.3.original@aar'
     compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.7.0.0@aar'
+    compile 'com.afollestad.material-dialogs:core:0.9.3.0'
 
     testCompile 'junit:junit:4.12'
 }

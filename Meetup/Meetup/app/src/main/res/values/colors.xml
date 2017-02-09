@@ -8,6 +8,7 @@
     <color name="primaryText">#B3000000</color>
     <color name="secondaryText">#757575</color>
     <color name="tertiaryText">#FEFEFE</color>
+    <color name="quaternaryText">#e4e4e4</color>
 
     <color name="icons">#757575</color>
 

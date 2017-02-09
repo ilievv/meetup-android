@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.interfaces.events;
+package com.telerikacademy.meetup.providers.events;
 
 import com.telerikacademy.meetup.models.Location;
 
