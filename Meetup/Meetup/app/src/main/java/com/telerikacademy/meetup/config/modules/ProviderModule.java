@@ -1,8 +1,8 @@
 package com.telerikacademy.meetup.config.modules;
 
 import android.content.Context;
-import com.telerikacademy.meetup.providers.base.ILocationProvider;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
+import com.telerikacademy.meetup.providers.base.ILocationProvider;
 import dagger.Module;
 import dagger.Provides;
 

@@ -16,13 +16,13 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.providers.base.ILocationProvider;
-import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Location;
+import com.telerikacademy.meetup.providers.base.ILocationProvider;
 import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
+import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 
 import javax.inject.Inject;
 

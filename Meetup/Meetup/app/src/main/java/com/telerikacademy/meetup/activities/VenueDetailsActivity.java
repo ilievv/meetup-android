@@ -1,8 +1,8 @@
 package com.telerikacademy.meetup.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;

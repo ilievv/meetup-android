@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 

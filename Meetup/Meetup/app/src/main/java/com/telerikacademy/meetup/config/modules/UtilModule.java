@@ -1,7 +1,7 @@
 package com.telerikacademy.meetup.config.modules;
 
-import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.utils.PermissionHandler;
+import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import dagger.Module;
 import dagger.Provides;
 

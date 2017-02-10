@@ -7,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.EditText;
 import android.widget.Filterable;
 import com.telerikacademy.meetup.R;
