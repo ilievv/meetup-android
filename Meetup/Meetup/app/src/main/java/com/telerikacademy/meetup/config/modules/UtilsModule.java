@@ -8,7 +8,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 
 @Module
-public class HomeActivityModule {
+public class UtilsModule {
 
     @Provides
     @Singleton

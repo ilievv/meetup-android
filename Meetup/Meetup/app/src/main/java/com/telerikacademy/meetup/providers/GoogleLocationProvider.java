@@ -19,6 +19,7 @@ import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class GoogleLocationProvider
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
+    @Inject
     public GoogleLocationProvider(Context context) {
         this.context = context;
 

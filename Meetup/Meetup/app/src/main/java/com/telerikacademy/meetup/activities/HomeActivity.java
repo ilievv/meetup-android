@@ -11,22 +11,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.config.components.DaggerIDaggerComponent;
-import com.telerikacademy.meetup.config.components.IDaggerComponent;
 import com.telerikacademy.meetup.interfaces.ILocationProvider;
 import com.telerikacademy.meetup.interfaces.IPermissionHandler;
 import com.telerikacademy.meetup.interfaces.IToolbar;
+import com.telerikacademy.meetup.models.Location;
+import com.telerikacademy.meetup.providers.GoogleLocationProvider;
 import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
-import com.telerikacademy.meetup.models.Location;
-import com.telerikacademy.meetup.providers.GoogleLocationProvider;
-import com.telerikacademy.meetup.utils.PermissionHandler;
 
 import javax.inject.Inject;
 
@@ -36,7 +33,9 @@ public class HomeActivity extends AppCompatActivity {
 
     @Inject
     public IPermissionHandler permissionHandler;
-    private ILocationProvider locationProvider;
+
+    @Inject
+    public ILocationProvider locationProvider;
 
     private FragmentManager fragmentManager;
     private TextView currentLocationTextView;
@@ -49,8 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        IDaggerComponent daggerComponent = DaggerIDaggerComponent.builder().build();
-        daggerComponent.inject(this);
+        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
 
         this.fragmentManager = this.getSupportFragmentManager();
         this.currentLocationTextView = (TextView) findViewById(R.id.tv_location);
@@ -75,8 +73,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Inject
-        this.locationProvider = new GoogleLocationProvider(this);
         locationProvider.setOnLocationChangeListener(new IOnLocationChangeListener() {
             @Override
             public void onLocationChange(Location location) {
