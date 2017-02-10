@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.interfaces;
+package com.telerikacademy.meetup.utils.base;
 
 import android.app.Activity;
 import android.content.Context;

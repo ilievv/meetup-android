@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.config.modules;
 
-import com.telerikacademy.meetup.interfaces.IPermissionHandler;
+import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.utils.PermissionHandler;
 import dagger.Module;
 import dagger.Provides;
@@ -8,7 +8,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 
 @Module
-public class UtilsModule {
+public class UtilModule {
 
     @Provides
     @Singleton

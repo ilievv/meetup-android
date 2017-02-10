@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.utils;
 
-import com.telerikacademy.meetup.interfaces.IJsonParser;
+import com.telerikacademy.meetup.utils.base.IJsonParser;
 
 import java.lang.reflect.Type;
 

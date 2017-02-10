@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.interfaces;
+package com.telerikacademy.meetup.models.base;
 
 import java.io.Serializable;
 

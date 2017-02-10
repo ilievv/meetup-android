@@ -19,7 +19,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.SignInActivity;
 import com.telerikacademy.meetup.activities.SignUpActivity;
-import com.telerikacademy.meetup.interfaces.IToolbar;
+import com.telerikacademy.meetup.fragments.base.IToolbar;
 
 public class ToolbarFragment extends Fragment
         implements IToolbar {

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.interfaces.IToolbar;
+import com.telerikacademy.meetup.fragments.base.IToolbar;
 
 public class SignUpActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;

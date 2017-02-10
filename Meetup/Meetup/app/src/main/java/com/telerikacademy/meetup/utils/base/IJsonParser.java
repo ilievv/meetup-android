@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.interfaces;
+package com.telerikacademy.meetup.utils.base;
 
 import java.lang.reflect.Type;
 

@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.interfaces;
+package com.telerikacademy.meetup.providers.base;
 
 import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;

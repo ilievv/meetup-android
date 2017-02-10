@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.models;
 
-import com.telerikacademy.meetup.interfaces.IVenue;
+import com.telerikacademy.meetup.models.base.IVenue;
 
 public class Venue implements IVenue {
 

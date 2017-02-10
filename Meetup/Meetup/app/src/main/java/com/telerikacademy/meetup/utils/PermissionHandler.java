@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import com.telerikacademy.meetup.interfaces.IPermissionHandler;
+import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 
 public class PermissionHandler implements IPermissionHandler {
 
