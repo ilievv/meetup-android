@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.components.DaggerIDaggerComponent;
+import com.telerikacademy.meetup.config.components.IDaggerComponent;
 import com.telerikacademy.meetup.interfaces.ILocationProvider;
 import com.telerikacademy.meetup.interfaces.IPermissionHandler;
 import com.telerikacademy.meetup.interfaces.IToolbar;
@@ -26,25 +28,29 @@ import com.telerikacademy.meetup.models.Location;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
 import com.telerikacademy.meetup.utils.PermissionHandler;
 
+import javax.inject.Inject;
+
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
-    private IPermissionHandler permissionHandler;
+    @Inject
+    public IPermissionHandler permissionHandler;
     private ILocationProvider locationProvider;
 
     private FragmentManager fragmentManager;
     private TextView currentLocationTextView;
     private FloatingActionButton updateLocationButton;
 
-    Location currentLocation;
+    private Location currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        this.permissionHandler = new PermissionHandler(this);
+        IDaggerComponent daggerComponent = DaggerIDaggerComponent.builder().build();
+        daggerComponent.inject(this);
 
         this.fragmentManager = this.getSupportFragmentManager();
         this.currentLocationTextView = (TextView) findViewById(R.id.tv_location);
@@ -53,9 +59,8 @@ public class HomeActivity extends AppCompatActivity {
         this.updateLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkPermissions()) {
-                    requestPermissions();
-                }
+                requestPermissions();
+                showEnableLocationDialog();
 
                 if (checkPermissions() &&
                         !locationProvider.isConnected() &&
@@ -111,18 +116,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     protected boolean checkPermissions() {
-        return this.permissionHandler.checkPermissions(
+        return this.permissionHandler.checkPermissions(this,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     protected void requestPermissions() {
-        this.permissionHandler.requestPermissions(
+        this.permissionHandler.requestPermissions(this,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
-    // TODO: Abstract
     protected void showEnableLocationDialog() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
