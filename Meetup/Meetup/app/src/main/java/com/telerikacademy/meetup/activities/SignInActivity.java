@@ -18,6 +18,9 @@ import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.network.base.IHttpRequester;
 import com.telerikacademy.meetup.network.base.IHttpResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observer;
@@ -89,10 +92,14 @@ public class SignInActivity extends AppCompatActivity {
         //String username1 = "georgivelikov";
         //String password1 = "123456";
         final TextView tv = this.textView;
+        Map map = new HashMap<String, String>();
+        map.put("username", "georgivelikov");
+        map.put("password", "123456");
+
         String url = "https://telerik-meetup.herokuapp.com/auth/login";
         //String localUrl = "http://10.0.2.2:8080/auth/login";
         //String body = String.format("{ \"username\": %s, \"password\": %s }", username1, password1);
-        this.httpRequester.post(url, username, password)
+        this.httpRequester.post(url, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<IHttpResponse>() {
