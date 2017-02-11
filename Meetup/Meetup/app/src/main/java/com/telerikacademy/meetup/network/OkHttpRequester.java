@@ -56,11 +56,14 @@ public class OkHttpRequester implements IHttpRequester {
         });
     }
 
-    public Observable<IHttpResponse> post(final String url, final String body) {
+    public Observable<IHttpResponse> post(final String url, final String... bodyParams) {
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
-                RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("username", bodyParams[0])
+                        .add("password", bodyParams[1])
+                        .build();
 
                 Request request = new Request.Builder()
                         .url(url)

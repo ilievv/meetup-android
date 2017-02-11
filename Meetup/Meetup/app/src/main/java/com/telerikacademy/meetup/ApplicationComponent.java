@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup;
 
 import com.telerikacademy.meetup.activities.HomeActivity;
+import com.telerikacademy.meetup.activities.SignInActivity;
+import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.config.modules.AndroidModule;
 import com.telerikacademy.meetup.config.modules.NetworkModule;
 import com.telerikacademy.meetup.config.modules.ProviderModule;
@@ -20,6 +22,10 @@ import javax.inject.Singleton;
 public interface ApplicationComponent {
 
     void inject(HomeActivity homeActivity);
+
+    void inject(SignInActivity signInActivity);
+
+    void inject(SignUpActivity signUpActivity);
 
     void inject(GoogleLocationProvider locationProvider);
 
