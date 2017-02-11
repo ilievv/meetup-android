@@ -23,6 +23,7 @@ import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
+import com.telerikacademy.meetup.utils.base.IUserSession;
 
 import javax.inject.Inject;
 
@@ -35,6 +36,9 @@ public class HomeActivity extends AppCompatActivity {
 
     @Inject
     public ILocationProvider locationProvider;
+
+    @Inject
+    public IUserSession userSession;
 
     private FragmentManager fragmentManager;
     private TextView currentLocationTitle;
@@ -101,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
 
         IToolbar toolbar = (IToolbar)
                 this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
-        toolbar.setNavigationDrawer();
+        toolbar.setNavigationDrawer(this.userSession.isUserLoggedIn());
 
         this.requestPermissions();
         this.showEnableLocationDialog();

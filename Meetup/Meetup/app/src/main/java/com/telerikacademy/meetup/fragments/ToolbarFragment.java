@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
@@ -19,6 +20,11 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.SignInActivity;
 import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.utils.UserSession;
+import com.telerikacademy.meetup.utils.base.IPermissionHandler;
+import com.telerikacademy.meetup.utils.base.IUserSession;
+
+import javax.inject.Inject;
 
 public class ToolbarFragment extends Fragment
         implements IToolbar {
@@ -74,14 +80,53 @@ public class ToolbarFragment extends Fragment
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
-    public void setNavigationDrawer() {
-        PrimaryDrawerItem itemLogin = new PrimaryDrawerItem()
-                .withIdentifier(1)
+    public void setNavigationDrawer(boolean isUserLoggedIn) {
+        if(isUserLoggedIn){
+            this.buildDrawerForLoggedUser();
+        } else {
+            this.buildDrawerForNotLoggedUser();
+        }
+    }
+
+    private void buildDrawerForLoggedUser(){
+        PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
+                .withIdentifier(0)
+                .withName("Sign out")
+                .withIcon(FontAwesome.Icon.faw_sign_in);
+
+        new DrawerBuilder(this.currentActivity)
+                .withToolbar(this.toolbar)
+                .withActionBarDrawerToggleAnimated(true)
+                .withTranslucentStatusBar(false)
+                .withDrawerWidthDp(260)
+                .addDrawerItems(
+                        itemSignOut
+                )
+                .withSelectedItem(0)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch (position) {
+                            case 0:
+                                Intent loginIntent = new Intent(currentActivity, SignInActivity.class);
+                                startActivity(loginIntent);
+                                break;
+                        }
+
+                        return true;
+                    }
+                })
+                .build();
+    }
+
+    private void buildDrawerForNotLoggedUser(){
+        PrimaryDrawerItem itemSignIn = new PrimaryDrawerItem()
+                .withIdentifier(0)
                 .withName("Sign in")
                 .withIcon(FontAwesome.Icon.faw_sign_in);
 
-        PrimaryDrawerItem itemRegister = new PrimaryDrawerItem()
-                .withIdentifier(2)
+        PrimaryDrawerItem itemSignUp = new PrimaryDrawerItem()
+                .withIdentifier(1)
                 .withName("Sign up")
                 .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
@@ -91,21 +136,21 @@ public class ToolbarFragment extends Fragment
                 .withTranslucentStatusBar(false)
                 .withDrawerWidthDp(260)
                 .addDrawerItems(
-                        itemLogin,
-                        itemRegister
+                        itemSignIn,
+                        itemSignUp
                 )
-                .withSelectedItem(1)
+                .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (position) {
                             case 0:
-                                Intent loginIntent = new Intent(currentActivity, SignInActivity.class);
-                                startActivity(loginIntent);
+                                Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
+                                startActivity(signInIntent);
                                 break;
                             case 1:
-                                Intent registerIntent = new Intent(currentActivity, SignUpActivity.class);
-                                startActivity(registerIntent);
+                                Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
+                                startActivity(signUpIntent);
                                 break;
                         }
 
