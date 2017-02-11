@@ -14,5 +14,5 @@ public interface IToolbar {
     void setNavigationOnClickListener(View.OnClickListener onClickListener);
 
     // Might be extracted into a separate interface
-    void setNavigationDrawer();
+    void setNavigationDrawer(boolean isUserLoggedIn);
 }

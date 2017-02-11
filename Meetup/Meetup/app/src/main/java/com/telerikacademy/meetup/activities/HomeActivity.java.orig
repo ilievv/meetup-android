@@ -26,11 +26,14 @@ import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
-import com.telerikacademy.meetup.utils.base.IUserSession;
+<<<<<<< HEAD
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+=======
+import com.telerikacademy.meetup.utils.base.IUserSession;
+>>>>>>> 0beb574c885b328dc4a4066824d6bdeb40c1c637
 
 import javax.inject.Inject;
 
@@ -59,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // TODO: Delete
         OkHttpRequester okHttpRequester = new OkHttpRequester(new ResponseFactory());
         okHttpRequester.get("http://httpbin.org/")
                 .subscribeOn(Schedulers.io())

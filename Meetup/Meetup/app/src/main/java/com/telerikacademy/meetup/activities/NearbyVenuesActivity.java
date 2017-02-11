@@ -77,20 +77,20 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        IToolbar toolbarFragment = (IToolbar)
-                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
-
-        if (toolbarFragment != null) {
-            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
-            toolbarFragment.setNavigationDrawer();
-        }
-
-        return true;
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        super.onPrepareOptionsMenu(menu);
+//
+//        IToolbar toolbarFragment = (IToolbar)
+//                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+//
+//        if (toolbarFragment != null) {
+//            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
+//            toolbarFragment.setNavigationDrawer();
+//        }
+//
+//        return true;
+//    }
 
     // TODO: Delete
     private List<Venue> generateSampleData() {
