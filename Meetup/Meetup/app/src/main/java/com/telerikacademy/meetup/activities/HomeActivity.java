@@ -14,13 +14,12 @@ import android.view.View;
 import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.meetup.utils.OkHttpRequester;
-import com.meetup.utils.ResponseFactory;
-import com.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Location;
+import com.telerikacademy.meetup.network.base.IHttpRequester;
+import com.telerikacademy.meetup.network.base.IHttpResponse;
 import com.telerikacademy.meetup.providers.base.ILocationProvider;
 import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
@@ -47,6 +46,9 @@ public class HomeActivity extends AppCompatActivity {
     @Inject
     public IUserSession userSession;
 
+    @Inject
+    public IHttpRequester httpRequester;
+
     private FragmentManager fragmentManager;
     private TextView currentLocationTitle;
     private TextView currentLocationSubtitle;
@@ -59,9 +61,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // TODO: Delete
-        OkHttpRequester okHttpRequester = new OkHttpRequester(new ResponseFactory());
-        okHttpRequester.get("http://httpbin.org/")
+        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
+
+        httpRequester.get("http://httpbin.org/")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<IHttpResponse>() {
@@ -72,7 +74,6 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(IHttpResponse value) {
-                        int a = 5;
                     }
 
                     @Override
@@ -85,8 +86,6 @@ public class HomeActivity extends AppCompatActivity {
 
                     }
                 });
-
-        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
 
         this.fragmentManager = this.getSupportFragmentManager();
         this.currentLocationTitle = (TextView) findViewById(R.id.tv_location_title);

@@ -1,9 +1,9 @@
-package com.meetup.config.modules;
+package com.telerikacademy.meetup.config.modules;
 
-import com.meetup.utils.OkHttpRequester;
-import com.meetup.utils.ResponseFactory;
-import com.meetup.utils.base.IHttpRequester;
-import com.meetup.utils.base.IHttpResponseFactory;
+import com.telerikacademy.meetup.network.OkHttpRequester;
+import com.telerikacademy.meetup.network.ResponseFactory;
+import com.telerikacademy.meetup.network.base.IHttpRequester;
+import com.telerikacademy.meetup.network.base.IHttpResponseFactory;
 import dagger.Module;
 import dagger.Provides;
 
@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Module
-public class UtilModule {
+public class NetworkModule {
 
     @Provides
     @Singleton

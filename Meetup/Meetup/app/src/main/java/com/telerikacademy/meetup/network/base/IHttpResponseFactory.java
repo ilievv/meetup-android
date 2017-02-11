@@ -1,4 +1,4 @@
-package com.meetup.utils.base;
+package com.telerikacademy.meetup.network.base;
 
 import java.util.List;
 import java.util.Map;
