@@ -29,16 +29,16 @@
                 android:paddingBottom="40dp">
 
             <TextView
+                    android:id="@+id/tv_location_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Unknown location"
                     android:textSize="24sp"
                     android:textColor="@color/tertiaryText"
                     android:ellipsize="end"
                     android:maxLines="1"/>
 
             <TextView
-                    android:id="@+id/tv_location"
+                    android:id="@+id/tv_location_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"

@@ -7,7 +7,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -133,7 +132,6 @@ public class GoogleLocationProvider
         }
     }
 
-    // TODO: Create through location factory
     private com.telerikacademy.meetup.models.Location parseLocation(Location location) {
         if (location == null) {
             return null;
@@ -141,7 +139,6 @@ public class GoogleLocationProvider
 
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        String fullAddress = "";
 
         Geocoder geocoder = new Geocoder(this.context, Locale.getDefault());
         List<Address> addresses = new ArrayList<>();
@@ -154,30 +151,16 @@ public class GoogleLocationProvider
 
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
-            List<String> addressComponents = new ArrayList<>();
 
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                addressComponents.add(address.getAddressLine(i));
-            }
+            String locality = address.getLocality();
+            String thoroughfare = address.getThoroughfare();
+            String subThoroughfare = address.getSubThoroughfare();
 
-            String primaryAddress = address.getThoroughfare();
-            String secondaryAddress = TextUtils.join(", ", addressComponents);
-
-            if (primaryAddress != null) {
-                if (!address.getSubThoroughfare().isEmpty()) {
-                    primaryAddress += " " + address.getSubThoroughfare();
-                }
-
-                if (!address.getLocality().isEmpty()) {
-                    primaryAddress += ", " + address.getLocality();
-                }
-
-                fullAddress = primaryAddress;
-            } else if (secondaryAddress != null) {
-                fullAddress = secondaryAddress;
-            }
+            // TODO: Create through location factory
+            return new com.telerikacademy.meetup.models.Location(latitude, longitude,
+                    locality, thoroughfare, subThoroughfare);
         }
 
-        return new com.telerikacademy.meetup.models.Location(latitude, longitude, fullAddress);
+        return null;
     }
 }

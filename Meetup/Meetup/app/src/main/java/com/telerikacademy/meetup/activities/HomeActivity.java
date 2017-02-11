@@ -37,7 +37,8 @@ public class HomeActivity extends AppCompatActivity {
     public ILocationProvider locationProvider;
 
     private FragmentManager fragmentManager;
-    private TextView currentLocationTextView;
+    private TextView currentLocationTitle;
+    private TextView currentLocationSubtitle;
     private FloatingActionButton updateLocationButton;
 
     private Location currentLocation;
@@ -50,7 +51,8 @@ public class HomeActivity extends AppCompatActivity {
         ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
 
         this.fragmentManager = this.getSupportFragmentManager();
-        this.currentLocationTextView = (TextView) findViewById(R.id.tv_location);
+        this.currentLocationTitle = (TextView) findViewById(R.id.tv_location_title);
+        this.currentLocationSubtitle = (TextView) findViewById(R.id.tv_location_subtitle);
         this.updateLocationButton = (FloatingActionButton) findViewById(R.id.btn_update_location);
 
         this.updateLocationButton.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +68,7 @@ public class HomeActivity extends AppCompatActivity {
                     locationProvider.connect();
                 }
 
-                if (currentLocation != null) {
-                    currentLocationTextView.setText(currentLocation.getAddress());
-                }
+                setTextViewTitle(currentLocation);
             }
         });
 
@@ -81,12 +81,11 @@ public class HomeActivity extends AppCompatActivity {
         locationProvider.setOnConnectedListener(new IOnConnectedListener() {
             @Override
             public void onConnected(Location location) {
-                if (location == null) {
-                    requestPermissions();
-                    showEnableLocationDialog();
-                } else {
-                    currentLocationTextView.setText(location.getAddress());
-                }
+                requestPermissions();
+                showEnableLocationDialog();
+
+                currentLocation = location;
+                setTextViewTitle(currentLocation);
             }
         });
         locationProvider.setOnConnectionFailedListener(new IOnConnectionFailedListener() {
@@ -103,6 +102,10 @@ public class HomeActivity extends AppCompatActivity {
         IToolbar toolbar = (IToolbar)
                 this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
         toolbar.setNavigationDrawer();
+
+        this.requestPermissions();
+        this.showEnableLocationDialog();
+        this.locationProvider.connect();
     }
 
     protected void onStop() {
@@ -137,6 +140,40 @@ public class HomeActivity extends AppCompatActivity {
                     .negativeText("No")
                     .iconRes(R.drawable.ic_location_gps)
                     .show();
+        }
+    }
+
+    private void setTextViewTitle(Location location) {
+        String LOCATION_NOT_FOUND = "Unknown location";
+
+        if (location == null) {
+            this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
+        }
+
+        String locality = location.getLocality();
+        String thoroughfare = location.getThoroughfare();
+        String subThoroughfare = location.getSubThoroughfare();
+
+        if (locality.isEmpty() && thoroughfare.isEmpty()) {
+            this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
+        } else if (locality.isEmpty()) {
+            this.currentLocationTitle.setText(thoroughfare);
+            this.currentLocationSubtitle.setText(subThoroughfare);
+        } else {
+            this.currentLocationTitle.setText(locality);
+
+            String subtitle;
+            if (!thoroughfare.isEmpty()) {
+                subtitle = thoroughfare;
+
+                if (!subThoroughfare.isEmpty()) {
+                    subtitle = String.format("%s, %s", thoroughfare, subThoroughfare);
+                }
+            } else {
+                subtitle = subThoroughfare;
+            }
+
+            this.currentLocationSubtitle.setText(subtitle);
         }
     }
 
