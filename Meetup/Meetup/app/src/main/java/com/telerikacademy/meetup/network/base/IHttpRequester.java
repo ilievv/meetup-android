@@ -12,9 +12,9 @@ public interface IHttpRequester {
 
     Observable<IHttpResponse> post(final String url, final Map<String, String> body);
 
-    Observable<IHttpResponse> post(final String url, final String body, final Map<String, String> headers);
+    Observable<IHttpResponse> post(final String url, final Map<String, String> body, final Map<String, String> headers);
 
-    Observable<IHttpResponse> put(final String url, final String body);
+    Observable<IHttpResponse> put(final String url, final Map<String, String> body);
 
-    Observable<IHttpResponse> put(final String url, final String body, final Map<String, String> headers);
+    Observable<IHttpResponse> put(final String url, final Map<String, String> body, final Map<String, String> headers);
 }

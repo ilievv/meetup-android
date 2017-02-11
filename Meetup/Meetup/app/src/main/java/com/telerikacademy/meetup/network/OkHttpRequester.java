@@ -14,8 +14,6 @@ import java.util.concurrent.Callable;
 
 public class OkHttpRequester implements IHttpRequester {
 
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
     private final IHttpResponseFactory responseFactory;
 
     private final OkHttpClient httpClient;
@@ -60,13 +58,7 @@ public class OkHttpRequester implements IHttpRequester {
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
-                FormBody.Builder bodyBuilder = new FormBody.Builder();
-
-                for (Map.Entry<String, String> pair : body.entrySet()) {
-                    bodyBuilder.add(pair.getKey(), pair.getValue());
-                }
-
-                RequestBody requestBody = bodyBuilder.build();
+                RequestBody requestBody = createRequestBody(body);
 
                 Request request = new Request.Builder()
                         .url(url)
@@ -78,11 +70,13 @@ public class OkHttpRequester implements IHttpRequester {
         });
     }
 
-    public Observable<IHttpResponse> post(final String url, final String body, final Map<String, String> headers) {
+    public Observable<IHttpResponse> post(final String url, final Map<String, String> body,
+                                          final Map<String, String> headers) {
+
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
-                RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = createRequestBody(body);
 
                 Request.Builder requestBuilder = new Request.Builder()
                         .url(url)
@@ -98,11 +92,11 @@ public class OkHttpRequester implements IHttpRequester {
         });
     }
 
-    public Observable<IHttpResponse> put(final String url, final String body) {
+    public Observable<IHttpResponse> put(final String url, final Map<String, String> body) {
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
-                RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = createRequestBody(body);
 
                 Request request = new Request.Builder()
                         .url(url)
@@ -114,11 +108,13 @@ public class OkHttpRequester implements IHttpRequester {
         });
     }
 
-    public Observable<IHttpResponse> put(final String url, final String body, final Map<String, String> headers) {
+    public Observable<IHttpResponse> put(final String url, final Map<String, String> body,
+                                         final Map<String, String> headers) {
+
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
-                RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = createRequestBody(body);
 
                 Request.Builder requestBuilder = new Request.Builder()
                         .url(url)
@@ -132,6 +128,17 @@ public class OkHttpRequester implements IHttpRequester {
                 return createResponse(request);
             }
         });
+    }
+
+    private RequestBody createRequestBody(Map<String, String> bodyMap) {
+        FormBody.Builder bodyBuilder = new FormBody.Builder();
+
+        for (Map.Entry<String, String> pair : bodyMap.entrySet()) {
+            bodyBuilder.add(pair.getKey(), pair.getValue());
+        }
+
+        RequestBody requestBody = bodyBuilder.build();
+        return requestBody;
     }
 
     private Observable<IHttpResponse> createResponse(Request request) {
