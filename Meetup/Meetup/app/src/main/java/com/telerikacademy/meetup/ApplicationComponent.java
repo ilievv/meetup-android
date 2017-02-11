@@ -13,7 +13,8 @@ import javax.inject.Singleton;
 @Component(modules = {
         AndroidModule.class,
         UtilModule.class,
-        ProviderModule.class})
+        ProviderModule.class,
+        com.meetup.config.modules.UtilModule.class})
 public interface ApplicationComponent {
 
     void inject(HomeActivity homeActivity);
