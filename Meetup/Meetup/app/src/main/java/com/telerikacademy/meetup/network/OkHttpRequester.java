@@ -9,6 +9,7 @@ import okhttp3.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -56,15 +57,15 @@ public class OkHttpRequester implements IHttpRequester {
         });
     }
 
-    public Observable<IHttpResponse> post(final String url, final String... bodyParams) {
+    public Observable<IHttpResponse> post(final String url, final Map<String, String> params) {
         return Observable.defer(new Callable<ObservableSource<? extends IHttpResponse>>() {
             @Override
             public ObservableSource<? extends IHttpResponse> call() throws Exception {
                 RequestBody requestBody = new FormBody.Builder()
-                        .add("username", bodyParams[0])
-                        .add("password", bodyParams[1])
+                        .add("username", params[0])
+                        .add("password", params[1])
                         .build();
-
+                
                 Request request = new Request.Builder()
                         .url(url)
                         .post(requestBody)
