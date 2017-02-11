@@ -92,6 +92,42 @@ public class OkHttpRequester implements IRequester {
         });
     }
 
+    public Observable<IResponse> put(final String url, final String body) {
+        return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
+            @Override
+            public ObservableSource<? extends IResponse> call() throws Exception {
+                RequestBody requestBody = RequestBody.create(JSON, body);
+
+                Request request = new Request.Builder()
+                        .url(url)
+                        .put(requestBody)
+                        .build();
+
+                return createResponse(request);
+            }
+        });
+    }
+
+    public Observable<IResponse> put(final String url, final String body, final Map<String, String> headers) {
+        return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
+            @Override
+            public ObservableSource<? extends IResponse> call() throws Exception {
+                RequestBody requestBody = RequestBody.create(JSON, body);
+
+                Request.Builder requestBuilder = new Request.Builder()
+                        .url(url)
+                        .put(requestBody);
+
+                for (Map.Entry<String, String> pair : headers.entrySet()) {
+                    requestBuilder.addHeader(pair.getKey(), pair.getValue());
+                }
+
+                Request request = requestBuilder.build();
+                return createResponse(request);
+            }
+        });
+    }
+
     private Observable<IResponse> createResponse(Request request) {
         try {
             Response response = this.httpClient.newCall(request).execute();
