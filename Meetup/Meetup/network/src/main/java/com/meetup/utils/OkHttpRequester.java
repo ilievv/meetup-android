@@ -8,6 +8,7 @@ import io.reactivex.ObservableSource;
 import okhttp3.*;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -29,21 +30,11 @@ public class OkHttpRequester implements IRequester {
         return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
             @Override
             public ObservableSource<? extends IResponse> call() throws Exception {
-                try {
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
 
-                    Response response = httpClient.newCall(request).execute();
-
-                    IResponse responseParsed = responseFactory.createResponse(
-                            response.headers().toMultimap(), response.body().string(),
-                            response.message(), response.code());
-
-                    return Observable.just(responseParsed);
-                } catch (Exception e) {
-                    return Observable.error(e);
-                }
+                return createResponse(request);
             }
         });
     }
@@ -52,26 +43,15 @@ public class OkHttpRequester implements IRequester {
         return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
             @Override
             public ObservableSource<? extends IResponse> call() throws Exception {
-                try {
-                    Request.Builder requestBuilder = new Request.Builder()
-                            .url(url);
+                Request.Builder requestBuilder = new Request.Builder()
+                        .url(url);
 
-                    for (Map.Entry<String, String> pair : headers.entrySet()) {
-                        requestBuilder.addHeader(pair.getKey(), pair.getValue());
-                    }
-
-                    Request request = requestBuilder.build();
-
-                    Response response = httpClient.newCall(request).execute();
-
-                    IResponse responseParsed = responseFactory.createResponse(
-                            response.headers().toMultimap(), response.body().string(),
-                            response.message(), response.code());
-
-                    return Observable.just(responseParsed);
-                } catch (Exception e) {
-                    return Observable.error(e);
+                for (Map.Entry<String, String> pair : headers.entrySet()) {
+                    requestBuilder.addHeader(pair.getKey(), pair.getValue());
                 }
+
+                Request request = requestBuilder.build();
+                return createResponse(request);
             }
         });
     }
@@ -80,24 +60,14 @@ public class OkHttpRequester implements IRequester {
         return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
             @Override
             public ObservableSource<? extends IResponse> call() throws Exception {
-                try {
-                    RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = RequestBody.create(JSON, body);
 
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .post(requestBody)
-                            .build();
+                Request request = new Request.Builder()
+                        .url(url)
+                        .post(requestBody)
+                        .build();
 
-                    Response response = httpClient.newCall(request).execute();
-
-                    IResponse responseParsed = responseFactory.createResponse(
-                            response.headers().toMultimap(), response.body().string(),
-                            response.message(), response.code());
-
-                    return Observable.just(responseParsed);
-                } catch (Exception e) {
-                    return Observable.error(e);
-                }
+                return createResponse(request);
             }
         });
     }
@@ -106,30 +76,33 @@ public class OkHttpRequester implements IRequester {
         return Observable.defer(new Callable<ObservableSource<? extends IResponse>>() {
             @Override
             public ObservableSource<? extends IResponse> call() throws Exception {
-                try {
-                    RequestBody requestBody = RequestBody.create(JSON, body);
+                RequestBody requestBody = RequestBody.create(JSON, body);
 
-                    Request.Builder requestBuilder = new Request.Builder()
-                            .url(url)
-                            .post(requestBody);
+                Request.Builder requestBuilder = new Request.Builder()
+                        .url(url)
+                        .post(requestBody);
 
-                    for (Map.Entry<String, String> pair : headers.entrySet()) {
-                        requestBuilder.addHeader(pair.getKey(), pair.getValue());
-                    }
-
-                    Request request = requestBuilder.build();
-
-                    Response response = httpClient.newCall(request).execute();
-
-                    IResponse responseParsed = responseFactory.createResponse(
-                            response.headers().toMultimap(), response.body().string(),
-                            response.message(), response.code());
-
-                    return Observable.just(responseParsed);
-                } catch (Exception e) {
-                    return Observable.error(e);
+                for (Map.Entry<String, String> pair : headers.entrySet()) {
+                    requestBuilder.addHeader(pair.getKey(), pair.getValue());
                 }
+
+                Request request = requestBuilder.build();
+                return createResponse(request);
             }
         });
+    }
+
+    private Observable<IResponse> createResponse(Request request) {
+        try {
+            Response response = this.httpClient.newCall(request).execute();
+
+            IResponse responseParsed = responseFactory.createResponse(
+                    response.headers().toMultimap(), response.body().string(),
+                    response.message(), response.code());
+
+            return Observable.just(responseParsed);
+        } catch (IOException e) {
+            return Observable.error(e);
+        }
     }
 }
