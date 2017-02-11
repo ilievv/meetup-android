@@ -3,7 +3,7 @@ package com.meetup.utils.base;
 import java.util.List;
 import java.util.Map;
 
-public interface IResponse {
+public interface IHttpResponse {
 
     Map<String, List<String>> getHeaders();
 

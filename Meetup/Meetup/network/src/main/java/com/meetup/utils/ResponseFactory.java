@@ -1,17 +1,18 @@
 package com.meetup.utils;
 
-import com.meetup.utils.base.IResponse;
-import com.meetup.utils.base.IResponseFactory;
+import com.meetup.utils.base.IHttpResponse;
+import com.meetup.utils.base.IHttpResponseFactory;
 
 import java.util.List;
 import java.util.Map;
 
-public class ResponseFactory implements IResponseFactory {
+public class ResponseFactory implements IHttpResponseFactory {
 
-    public IResponse createResponse(final Map<String, List<String>> headers, final String body,
-                                    final String message, final int code) {
+    public IHttpResponse createResponse(
+            final Map<String, List<String>> headers, final String body,
+            final String message, final int code) {
 
-        return new IResponse() {
+        return new IHttpResponse() {
             @Override
             public Map<String, List<String>> getHeaders() {
                 return headers;

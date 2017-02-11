@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.meetup.utils.OkHttpRequester;
 import com.meetup.utils.ResponseFactory;
-import com.meetup.utils.base.IResponse;
+import com.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
@@ -64,14 +64,14 @@ public class HomeActivity extends AppCompatActivity {
         okHttpRequester.get("http://httpbin.org/")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<IResponse>() {
+                .subscribe(new Observer<IHttpResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(IResponse value) {
+                    public void onNext(IHttpResponse value) {
                         int a = 5;
                     }
 
