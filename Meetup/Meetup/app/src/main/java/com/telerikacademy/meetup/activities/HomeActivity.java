@@ -148,6 +148,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (location == null) {
             this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
+            return;
         }
 
         String locality = location.getLocality();
