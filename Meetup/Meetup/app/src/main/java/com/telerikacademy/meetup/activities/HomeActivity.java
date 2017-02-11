@@ -144,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setTextViewTitle(Location location) {
-        String LOCATION_NOT_FOUND = "Unknown location";
+        final String LOCATION_NOT_FOUND = "Unknown location";
 
         if (location == null) {
             this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
