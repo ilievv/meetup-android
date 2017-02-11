@@ -10,7 +10,7 @@ public interface IHttpRequester {
 
     Observable<IHttpResponse> get(final String url, final Map<String, String> headers);
 
-    Observable<IHttpResponse> post(final String url, final String... bodyParams);
+    Observable<IHttpResponse> post(final String url, final Map<String, String> body);
 
     Observable<IHttpResponse> post(final String url, final String body, final Map<String, String> headers);
 

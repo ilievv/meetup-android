@@ -71,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
                 .subscribe(new Observer<IHttpResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
@@ -80,12 +79,10 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
 
