@@ -3,7 +3,6 @@ package com.telerikacademy.meetup.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.telerikacademy.meetup.utils.base.IUserSession;
 
 public class UserSession implements IUserSession {
@@ -36,12 +35,12 @@ public class UserSession implements IUserSession {
         this.prefs.edit().putString("token", token).commit();
     }
 
-    public boolean isUserLoggedIn(){
+    public boolean isUserLoggedIn() {
         String username = this.getUsername();
         return username != null;
     }
 
-    public void clearSession(){
+    public void clearSession() {
         this.setUsername(null);
         this.setToken(null);
     }

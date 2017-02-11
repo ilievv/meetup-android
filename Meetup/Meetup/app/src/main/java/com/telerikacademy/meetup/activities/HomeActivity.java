@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     @Inject
     public IUserSession userSession;
 
+    // TODO: Delete
     @Inject
     public IHttpRequester httpRequester;
 
@@ -63,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
 
+        // TODO: Delete
         httpRequester.get("http://httpbin.org/")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

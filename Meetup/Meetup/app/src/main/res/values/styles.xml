@@ -52,7 +52,7 @@
         <item name="colorControlActivated">#c5c5c5</item>
         <item name="colorControlHighlight">#c5c5c5</item>
     </style>
-    
+
     <style name="AppTheme.EditText.V2" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/primaryText</item>
         <item name="android:textColorHint">@color/secondaryText</item>

@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MenuRes;
@@ -20,11 +19,6 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.SignInActivity;
 import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
-import com.telerikacademy.meetup.utils.UserSession;
-import com.telerikacademy.meetup.utils.base.IPermissionHandler;
-import com.telerikacademy.meetup.utils.base.IUserSession;
-
-import javax.inject.Inject;
 
 public class ToolbarFragment extends Fragment
         implements IToolbar {
@@ -81,14 +75,14 @@ public class ToolbarFragment extends Fragment
     }
 
     public void setNavigationDrawer(boolean isUserLoggedIn) {
-        if(isUserLoggedIn){
+        if (isUserLoggedIn) {
             this.buildDrawerForLoggedUser();
         } else {
             this.buildDrawerForNotLoggedUser();
         }
     }
 
-    private void buildDrawerForLoggedUser(){
+    private void buildDrawerForLoggedUser() {
         PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Sign out")
@@ -119,7 +113,7 @@ public class ToolbarFragment extends Fragment
                 .build();
     }
 
-    private void buildDrawerForNotLoggedUser(){
+    private void buildDrawerForNotLoggedUser() {
         PrimaryDrawerItem itemSignIn = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Sign in")

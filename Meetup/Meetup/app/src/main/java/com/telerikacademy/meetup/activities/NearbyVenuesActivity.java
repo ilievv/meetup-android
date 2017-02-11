@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.widget.AutoCompleteTextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
 
