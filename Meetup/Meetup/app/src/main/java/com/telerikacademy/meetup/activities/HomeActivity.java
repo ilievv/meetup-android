@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.telerikacademy.meetup.BaseApplication;
@@ -38,31 +40,31 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     @Inject
-    public IPermissionHandler permissionHandler;
-
+    IPermissionHandler permissionHandler;
     @Inject
-    public ILocationProvider locationProvider;
-
+    ILocationProvider locationProvider;
     @Inject
-    public IUserSession userSession;
-
-    // TODO: Delete
+    IUserSession userSession;
     @Inject
-    public IHttpRequester httpRequester;
+    IHttpRequester httpRequester;
+
+    @BindView(R.id.tv_location_title)
+    TextView currentLocationTitle;
+    @BindView(R.id.tv_location_subtitle)
+    TextView currentLocationSubtitle;
+    @BindView(R.id.btn_update_location)
+    FloatingActionButton updateLocationButton;
 
     private FragmentManager fragmentManager;
-    private TextView currentLocationTitle;
-    private TextView currentLocationSubtitle;
-    private FloatingActionButton updateLocationButton;
-
     private Location currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        injectDependencies();
 
-        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
+        fragmentManager = getSupportFragmentManager();
 
         // TODO: Delete
         httpRequester.get("http://httpbin.org/")
@@ -86,12 +88,8 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
 
-        this.fragmentManager = this.getSupportFragmentManager();
-        this.currentLocationTitle = (TextView) findViewById(R.id.tv_location_title);
-        this.currentLocationSubtitle = (TextView) findViewById(R.id.tv_location_subtitle);
-        this.updateLocationButton = (FloatingActionButton) findViewById(R.id.btn_update_location);
 
-        this.updateLocationButton.setOnClickListener(new View.OnClickListener() {
+        updateLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestPermissions();
@@ -117,9 +115,6 @@ public class HomeActivity extends AppCompatActivity {
         locationProvider.setOnConnectedListener(new IOnConnectedListener() {
             @Override
             public void onConnected(Location location) {
-                requestPermissions();
-                showEnableLocationDialog();
-
                 currentLocation = location;
                 setTextViewTitle(currentLocation);
             }
@@ -127,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
         locationProvider.setOnConnectionFailedListener(new IOnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(String errorMessage) {
+                setTextViewTitle(currentLocation);
                 Log.e(TAG, errorMessage);
             }
         });
@@ -135,34 +131,33 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        IToolbar toolbar = (IToolbar)
-                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+        IToolbar toolbar = (IToolbar) fragmentManager.findFragmentById(R.id.fragment_toolbar);
         toolbar.setNavigationDrawer(this.userSession);
 
-        this.requestPermissions();
-        this.showEnableLocationDialog();
-        this.locationProvider.connect();
+        requestPermissions();
+        showEnableLocationDialog();
+        locationProvider.connect();
     }
 
     protected void onStop() {
         super.onStop();
-        this.locationProvider.disconnect();
+        locationProvider.disconnect();
     }
 
     protected boolean checkPermissions() {
-        return this.permissionHandler.checkPermissions(this,
+        return permissionHandler.checkPermissions(this,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     protected void requestPermissions() {
-        this.permissionHandler.requestPermissions(this,
+        permissionHandler.requestPermissions(this,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     protected void showEnableLocationDialog() {
-        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             new MaterialDialog.Builder(this)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -183,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
         final String LOCATION_NOT_FOUND = "Unknown location";
 
         if (location == null) {
-            this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
+            currentLocationTitle.setText(LOCATION_NOT_FOUND);
             return;
         }
 
@@ -192,12 +187,12 @@ public class HomeActivity extends AppCompatActivity {
         String subThoroughfare = location.getSubThoroughfare();
 
         if (locality.isEmpty() && thoroughfare.isEmpty()) {
-            this.currentLocationTitle.setText(LOCATION_NOT_FOUND);
+            currentLocationTitle.setText(LOCATION_NOT_FOUND);
         } else if (locality.isEmpty()) {
-            this.currentLocationTitle.setText(thoroughfare);
-            this.currentLocationSubtitle.setText(subThoroughfare);
+            currentLocationTitle.setText(thoroughfare);
+            currentLocationSubtitle.setText(subThoroughfare);
         } else {
-            this.currentLocationTitle.setText(locality);
+            currentLocationTitle.setText(locality);
 
             String subtitle;
             if (!thoroughfare.isEmpty()) {
@@ -210,13 +205,20 @@ public class HomeActivity extends AppCompatActivity {
                 subtitle = subThoroughfare;
             }
 
-            this.currentLocationSubtitle.setText(subtitle);
+            currentLocationSubtitle.setText(subtitle);
         }
+    }
+
+    private void injectDependencies() {
+        ((BaseApplication) getApplication())
+                .getApplicationComponent()
+                .inject(this);
+        ButterKnife.bind(this);
     }
 
     // TODO: Remove
     public void secretIntent(View view) {
         Intent intent = new Intent(this, NearbyVenuesActivity.class);
-        this.startActivity(intent);
+        startActivity(intent);
     }
 }
