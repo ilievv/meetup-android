@@ -138,7 +138,7 @@ public class SignInActivity extends AppCompatActivity {
 
                         userSession.setUsername(resultUser.getUsername());
                         userSession.setId(resultUser.getId());
-                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "You are now signed in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
                         Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
                         startActivity(homeIntent);
                     }
