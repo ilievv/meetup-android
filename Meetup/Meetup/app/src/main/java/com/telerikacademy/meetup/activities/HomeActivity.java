@@ -10,11 +10,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.telerikacademy.meetup.BaseApplication;
@@ -33,6 +32,7 @@ import javax.inject.Inject;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
 
     @Inject
     IPermissionHandler permissionHandler;
@@ -58,24 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
-        setNavigationEvents();
-
-        updateLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                requestPermissions();
-                showEnableLocationDialog();
-
-                if (checkPermissions() &&
-                        !locationProvider.isConnected() &&
-                        !locationProvider.isConnecting()) {
-
-                    locationProvider.connect();
-                }
-
-                setTextViewTitle(currentLocation);
-            }
-        });
 
         locationProvider.setOnLocationChangeListener(new IOnLocationChangeListener() {
             @Override
@@ -97,6 +79,61 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e(TAG, errorMessage);
             }
         });
+    }
+
+    @OnClick(R.id.btn_update_location)
+    void updateLocation() {
+        requestPermissions();
+        showEnableLocationDialog();
+
+        if (checkPermissions() &&
+                !locationProvider.isConnected() &&
+                !locationProvider.isConnecting()) {
+
+            locationProvider.connect();
+        }
+
+        setTextViewTitle(currentLocation);
+    }
+
+    @OnClick(R.id.btn_restaurant)
+    void showNearbyRestaurants() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "restaurant");
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_cafe)
+    void showNearbyCafes() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "cafe");
+    }
+
+    @OnClick(R.id.btn_pub)
+    void showNearbyPubs() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "pub");
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_fast_food)
+    void showNearbyFastFoodRestaurants() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "fast_food");
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_favourites)
+    void showFavourites() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "favourites");
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_other)
+    void showOtherVenues() {
+        Intent intent = new Intent(this, NearbyVenuesActivity.class);
+        intent.putExtra(VENUE_TYPE_TAG, "other");
     }
 
     protected void onStart() {
@@ -144,31 +181,6 @@ public class HomeActivity extends AppCompatActivity {
                     .negativeText("No")
                     .iconRes(R.drawable.ic_location_gps)
                     .show();
-        }
-    }
-
-    private void setNavigationEvents() {
-        final int[] navItemsIds = {
-                R.id.btn_restaurant,
-                R.id.btn_cafe,
-                R.id.btn_pub,
-                R.id.btn_fast_food,
-                R.id.btn_favourites,
-                R.id.btn_other
-        };
-
-        for (int navItemId : navItemsIds) {
-            final Button navBtn = (Button) findViewById(navItemId);
-            final String venueType = navBtn.getTag().toString();
-
-            navBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browseVenues = new Intent(HomeActivity.this, NearbyVenuesActivity.class);
-                    browseVenues.putExtra("type", venueType);
-                    startActivity(browseVenues);
-                }
-            });
         }
     }
 
