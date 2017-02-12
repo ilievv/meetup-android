@@ -20,18 +20,12 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Location;
-import com.telerikacademy.meetup.network.base.IHttpRequester;
-import com.telerikacademy.meetup.network.base.IHttpResponse;
 import com.telerikacademy.meetup.providers.base.ILocationProvider;
 import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
 import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
 import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.utils.base.IUserSession;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
 
@@ -45,8 +39,6 @@ public class HomeActivity extends AppCompatActivity {
     ILocationProvider locationProvider;
     @Inject
     IUserSession userSession;
-    @Inject
-    IHttpRequester httpRequester;
 
     @BindView(R.id.tv_location_title)
     TextView currentLocationTitle;
@@ -65,29 +57,6 @@ public class HomeActivity extends AppCompatActivity {
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
-
-        // TODO: Delete
-        httpRequester.get("http://httpbin.org/")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<IHttpResponse>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(IHttpResponse value) {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
 
         updateLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,11 +100,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        IToolbar toolbar = (IToolbar) fragmentManager.findFragmentById(R.id.fragment_toolbar);
-        toolbar.setNavigationDrawer(this.userSession);
+        IToolbar toolbar = (IToolbar)
+                fragmentManager.findFragmentById(R.id.fragment_toolbar);
+        toolbar.setNavigationDrawer();
 
         requestPermissions();
         showEnableLocationDialog();
+
         locationProvider.connect();
     }
 

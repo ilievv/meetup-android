@@ -7,7 +7,9 @@ import com.telerikacademy.meetup.config.modules.AndroidModule;
 import com.telerikacademy.meetup.config.modules.NetworkModule;
 import com.telerikacademy.meetup.config.modules.ProviderModule;
 import com.telerikacademy.meetup.config.modules.UtilModule;
+import com.telerikacademy.meetup.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
+import com.telerikacademy.meetup.utils.UserSession;
 import dagger.Component;
 import okhttp3.OkHttpClient;
 
@@ -30,4 +32,8 @@ public interface ApplicationComponent {
     void inject(GoogleLocationProvider locationProvider);
 
     void inject(OkHttpClient okHttpClient);
+
+    void inject(UserSession userSession);
+
+    void inject(ToolbarFragment toolbarFragment);
 }
