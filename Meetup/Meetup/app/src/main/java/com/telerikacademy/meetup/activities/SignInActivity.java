@@ -16,9 +16,8 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.User;
-import com.telerikacademy.meetup.network.base.IHttpRequester;
-import com.telerikacademy.meetup.network.base.IHttpResponse;
-import com.telerikacademy.meetup.utils.UserSession;
+import com.telerikacademy.meetup.utils.base.IHttpRequester;
+import com.telerikacademy.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.utils.base.IJsonParser;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 

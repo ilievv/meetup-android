@@ -1,7 +1,7 @@
-package com.telerikacademy.meetup.network;
+package com.telerikacademy.meetup.utils;
 
-import com.telerikacademy.meetup.network.base.IHttpResponse;
-import com.telerikacademy.meetup.network.base.IHttpResponseFactory;
+import com.telerikacademy.meetup.utils.base.IHttpResponse;
+import com.telerikacademy.meetup.utils.base.IHttpResponseFactory;
 
 import java.util.List;
 import java.util.Map;

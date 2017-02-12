@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.network.base;
+package com.telerikacademy.meetup.utils.base;
 
 import io.reactivex.Observable;
 
