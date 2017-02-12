@@ -1,22 +1,24 @@
 package com.telerikacademy.meetup.activities;
 
-import android.database.Observable;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.models.User;
 import com.telerikacademy.meetup.network.base.IHttpRequester;
 import com.telerikacademy.meetup.network.base.IHttpResponse;
+import com.telerikacademy.meetup.utils.UserSession;
+import com.telerikacademy.meetup.utils.base.IJsonParser;
+import com.telerikacademy.meetup.utils.base.IUserSession;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,18 +29,19 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Response;
-
 
 public class SignInActivity extends AppCompatActivity {
 
     @Inject
     public IHttpRequester httpRequester;
+    @Inject
+    public IJsonParser jsonParser;
+    @Inject
+    public IUserSession userSession;
 
     private FragmentManager fragmentManager;
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private TextView textView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class SignInActivity extends AppCompatActivity {
         this.fragmentManager = this.getSupportFragmentManager();
         this.usernameEditText = (EditText)findViewById(R.id.username);
         this.passwordEditText = (EditText)findViewById(R.id.password);
-        this.textView = (TextView)findViewById(R.id.text_login);
+
         this.attachSignInButtonEvent();
     }
 
@@ -78,27 +81,26 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-
     private void signInUser(){
         String username = this.usernameEditText.getText().toString();
         String password = this.passwordEditText.getText().toString();
 
         // TODO add to resourse
         if(username == null || password == null) {
-            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
             return;
         }
 
-        //String username1 = "georgivelikov";
-        //String password1 = "123456";
-        final TextView tv = this.textView;
         Map map = new HashMap<String, String>();
-        map.put("username", "georgivelikov");
-        map.put("password", "123456");
+        map.put("username", username);
+        map.put("password", password);
 
         String url = "https://telerik-meetup.herokuapp.com/auth/login";
-        //String localUrl = "http://10.0.2.2:8080/auth/login";
-        //String body = String.format("{ \"username\": %s, \"password\": %s }", username1, password1);
+
+        final Context context = this.getApplicationContext();
+        final IUserSession userSession = this.userSession;
+        final IJsonParser jsonParser = this.jsonParser;
+
         this.httpRequester.post(url, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -110,7 +112,10 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(IHttpResponse value) {
-                        tv.setText(value.getBody().toString());
+                        String responseBody = value.getBody().toString();
+                        String userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
+                        User resultUser = jsonParser.fromJson(userJsonObject, User.class);
+                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
