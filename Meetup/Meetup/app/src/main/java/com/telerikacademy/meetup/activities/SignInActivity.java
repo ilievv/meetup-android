@@ -56,6 +56,7 @@ public class SignInActivity extends AppCompatActivity {
         this.passwordEditText = (EditText)findViewById(R.id.password);
 
         this.attachSignInButtonEvent();
+        this.attachRedirectToSignUpEvent();
     }
 
     @Override
@@ -83,12 +84,23 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    private void attachRedirectToSignUpEvent(){
+        Button redirectButton = (Button) findViewById(R.id.link_signup);
+        redirectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                redirectToSignUp();
+            }
+        });
+
+    }
+
     private void signInUser(){
         String username = this.usernameEditText.getText().toString();
         String password = this.passwordEditText.getText().toString();
 
         // TODO add to resourse
-        if(username == null || password == null) {
+        if(username == "" || password == "" || username == null || password == null) {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
             return;
         }
@@ -137,5 +149,10 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void redirectToSignUp(){
+        Intent signUpIntent = new Intent(this, SignUpActivity.class);
+        startActivity(signUpIntent);
     }
 }
