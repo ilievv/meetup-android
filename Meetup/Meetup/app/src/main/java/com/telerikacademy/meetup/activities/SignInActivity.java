@@ -100,14 +100,14 @@ public class SignInActivity extends AppCompatActivity {
         String password = this.passwordEditText.getText().toString();
 
         // TODO add to resourse
-        if(username == "" || password == "" || username == null || password == null) {
+        if(username.equals("") || password.equals("")) {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
             return;
         }
 
         Map map = new HashMap<String, String>();
         map.put("username", username);
-        map.put("password", password);
+        map.put("passHash", password);
 
         String url = "https://telerik-meetup.herokuapp.com/auth/login";
 
@@ -128,12 +128,19 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onNext(IHttpResponse value) {
                         String responseBody = value.getBody().toString();
-                        String userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
-                        User resultUser = jsonParser.fromJson(userJsonObject, User.class);
+                        String userJsonObject;
+                        User resultUser;
+                        try {
+                            userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
+                            resultUser = jsonParser.fromJson(userJsonObject, User.class);
+                        } catch(IllegalStateException e) {
+                            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
                         userSession.setUsername(resultUser.getUsername());
-                        userSession.setToken(resultUser.getToken());
-                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_SHORT).show();
+                        userSession.setId(resultUser.getId());
+                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
                         Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
                         startActivity(homeIntent);
                     }

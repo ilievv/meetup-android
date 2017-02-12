@@ -6,9 +6,9 @@ public interface IUserSession {
 
     void setUsername(String username);
 
-    String getToken();
+    String getId();
 
-    void setToken(String token);
+    void setId(String id);
 
     boolean isUserLoggedIn();
 

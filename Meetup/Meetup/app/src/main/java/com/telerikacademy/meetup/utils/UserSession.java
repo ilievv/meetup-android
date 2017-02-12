@@ -25,14 +25,14 @@ public class UserSession implements IUserSession {
     }
 
     @Override
-    public String getToken() {
-        String token = this.prefs.getString("token", null);
-        return token;
+    public String getId() {
+        String id = this.prefs.getString("id", null);
+        return id;
     }
 
     @Override
-    public void setToken(String token) {
-        this.prefs.edit().putString("token", token).commit();
+    public void setId(String id) {
+        this.prefs.edit().putString("id", id).commit();
     }
 
     public boolean isUserLoggedIn() {
@@ -42,6 +42,6 @@ public class UserSession implements IUserSession {
 
     public void clearSession() {
         this.setUsername(null);
-        this.setToken(null);
+        this.setId(null);
     }
 }
