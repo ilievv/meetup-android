@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 
+import javax.inject.Inject;
+
 public class UserSession implements IUserSession {
 
     private SharedPreferences prefs;
 
+    @Inject
     public UserSession(Context context) {
         this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }

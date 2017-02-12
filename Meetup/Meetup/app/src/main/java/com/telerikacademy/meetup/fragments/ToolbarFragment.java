@@ -15,6 +15,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.activities.HomeActivity;
 import com.telerikacademy.meetup.activities.SignInActivity;
@@ -22,8 +23,13 @@ import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 
+import javax.inject.Inject;
+
 public class ToolbarFragment extends Fragment
         implements IToolbar {
+
+    @Inject
+    IUserSession userSession;
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -42,19 +48,21 @@ public class ToolbarFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
+        injectDependencies();
 
         if (!(getActivity() instanceof AppCompatActivity)) {
-            throw new ClassCastException("Activity must be of type AppCompatActivity in order to support custom Toolbar.");
+            throw new ClassCastException(
+                    "Activity must be of type AppCompatActivity in order to support custom Toolbar.");
         }
 
-        this.currentActivity = (AppCompatActivity) getActivity();
-        this.toolbar = (Toolbar) this.currentActivity.findViewById(R.id.toolbar);
-        this.currentActivity.setSupportActionBar(toolbar);
-        this.actionBar = this.currentActivity.getSupportActionBar();
+        currentActivity = (AppCompatActivity) getActivity();
+        toolbar = (Toolbar) currentActivity.findViewById(R.id.toolbar);
+        currentActivity.setSupportActionBar(toolbar);
+        actionBar = currentActivity.getSupportActionBar();
     }
 
     public void setNavigationOnClickListener() {
-        this.setNavigationOnClickListener(new View.OnClickListener() {
+        setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavUtils.navigateUpFromSameTask(currentActivity);
@@ -63,35 +71,33 @@ public class ToolbarFragment extends Fragment
     }
 
     public void setNavigationOnClickListener(View.OnClickListener clickListener) {
-        this.actionBar.setDisplayHomeAsUpEnabled(true);
-        this.actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(clickListener);
     }
 
     public void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
         menu.clear();
-
-        this.currentActivity.getMenuInflater().inflate(menuRes, menu);
+        currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
-    public void setNavigationDrawer(IUserSession userSession) {
+    public void setNavigationDrawer() {
         if (userSession.isUserLoggedIn()) {
-            this.buildDrawerForLoggedUser(userSession);
+            buildDrawerForLoggedUser();
         } else {
-            this.buildDrawerForNotLoggedUser();
+            buildDrawerForNotLoggedUser();
         }
     }
 
-    private void buildDrawerForLoggedUser(final IUserSession userSession) {
+    private void buildDrawerForLoggedUser() {
         PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Sign out")
                 .withIcon(FontAwesome.Icon.faw_sign_in);
 
-        new DrawerBuilder(this.currentActivity)
-                .withToolbar(this.toolbar)
+        new DrawerBuilder(currentActivity)
+                .withToolbar(toolbar)
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
                 .withDrawerWidthDp(260)
@@ -155,5 +161,12 @@ public class ToolbarFragment extends Fragment
                     }
                 })
                 .build();
+    }
+
+    private void injectDependencies() {
+        ((BaseApplication) getActivity()
+                .getApplication())
+                .getApplicationComponent()
+                .inject(this);
     }
 }

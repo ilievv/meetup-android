@@ -5,8 +5,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
-import com.telerikacademy.meetup.utils.base.IUserSession;
-
 public interface IToolbar {
 
     void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater menuInflater);
@@ -16,5 +14,5 @@ public interface IToolbar {
     void setNavigationOnClickListener(View.OnClickListener onClickListener);
 
     // Might be extracted into a separate interface
-    void setNavigationDrawer(IUserSession userSession);
+    void setNavigationDrawer();
 }

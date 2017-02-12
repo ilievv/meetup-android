@@ -6,16 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
+import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
+import com.telerikacademy.meetup.views.adapters.PlacesAutocompleteLimitAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
+
+    @BindView(R.id.rv_venues)
+    RecyclerView recyclerView;
+    @BindView(R.id.et_search)
+    AutoCompleteTextView searchInput;
 
     private FragmentManager fragmentManager;
 
@@ -23,22 +34,21 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_venues);
+        injectDependencies();
 
-        this.fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_venues);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        NearbyVenuesRecyclerAdapter recyclerAdapter = new NearbyVenuesRecyclerAdapter(generateSampleData());
+        NearbyVenuesRecyclerAdapter recyclerAdapter =
+                new NearbyVenuesRecyclerAdapter(generateSampleData());
 
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
                 linearLayoutManager.getOrientation()));
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
-        final AutoCompleteTextView searchInput = (AutoCompleteTextView) findViewById(R.id.et_search);
-
         final SearchHeaderFragment searchFragment = (SearchHeaderFragment)
-                this.fragmentManager.findFragmentById(R.id.fragment_search_header);
+                fragmentManager.findFragmentById(R.id.fragment_search_header);
 
         if (searchFragment != null) {
             searchFragment.setFilter(searchInput, recyclerAdapter);
@@ -75,20 +85,24 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        super.onPrepareOptionsMenu(menu);
-//
-//        IToolbar toolbarFragment = (IToolbar)
-//                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
-//
-//        if (toolbarFragment != null) {
-//            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
-//            toolbarFragment.setNavigationDrawer();
-//        }
-//
-//        return true;
-//    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        IToolbar toolbarFragment = (IToolbar)
+                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+
+        if (toolbarFragment != null) {
+            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
+            toolbarFragment.setNavigationDrawer();
+        }
+
+        return true;
+    }
+
+    private void injectDependencies() {
+        ButterKnife.bind(this);
+    }
 
     // TODO: Delete
     private List<Venue> generateSampleData() {

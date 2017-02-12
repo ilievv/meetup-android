@@ -43,9 +43,12 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+
     provided 'javax.annotation:jsr250-api:1.0'
 
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     testCompile 'junit:junit:4.12'
 }
