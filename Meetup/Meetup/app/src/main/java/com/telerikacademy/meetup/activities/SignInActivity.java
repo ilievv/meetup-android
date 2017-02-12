@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.activities;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -98,6 +100,7 @@ public class SignInActivity extends AppCompatActivity {
         String url = "https://telerik-meetup.herokuapp.com/auth/login";
 
         final Context context = this.getApplicationContext();
+        final Activity currentActivity = this;
         final IUserSession userSession = this.userSession;
         final IJsonParser jsonParser = this.jsonParser;
 
@@ -115,7 +118,12 @@ public class SignInActivity extends AppCompatActivity {
                         String responseBody = value.getBody().toString();
                         String userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                         User resultUser = jsonParser.fromJson(userJsonObject, User.class);
-                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
+
+                        userSession.setUsername(resultUser.getUsername());
+                        userSession.setToken(resultUser.getToken());
+                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_SHORT).show();
+                        Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
+                        startActivity(homeIntent);
                     }
 
                     @Override

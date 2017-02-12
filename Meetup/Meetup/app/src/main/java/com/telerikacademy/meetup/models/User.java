@@ -8,4 +8,8 @@ public class User {
     public String getUsername(){
         return this.username;
     }
+
+    public String getToken(){
+        return this.token;
+    }
 }

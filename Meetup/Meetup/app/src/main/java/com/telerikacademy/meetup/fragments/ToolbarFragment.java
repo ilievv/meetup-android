@@ -16,9 +16,11 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.activities.HomeActivity;
 import com.telerikacademy.meetup.activities.SignInActivity;
 import com.telerikacademy.meetup.activities.SignUpActivity;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.utils.base.IUserSession;
 
 public class ToolbarFragment extends Fragment
         implements IToolbar {
@@ -74,15 +76,15 @@ public class ToolbarFragment extends Fragment
         this.currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
-    public void setNavigationDrawer(boolean isUserLoggedIn) {
-        if (isUserLoggedIn) {
-            this.buildDrawerForLoggedUser();
+    public void setNavigationDrawer(IUserSession userSession) {
+        if (userSession.isUserLoggedIn()) {
+            this.buildDrawerForLoggedUser(userSession);
         } else {
             this.buildDrawerForNotLoggedUser();
         }
     }
 
-    private void buildDrawerForLoggedUser() {
+    private void buildDrawerForLoggedUser(final IUserSession userSession) {
         PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
                 .withIdentifier(0)
                 .withName("Sign out")
@@ -102,8 +104,9 @@ public class ToolbarFragment extends Fragment
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         switch (position) {
                             case 0:
-                                Intent loginIntent = new Intent(currentActivity, SignInActivity.class);
-                                startActivity(loginIntent);
+                                userSession.clearSession();
+                                Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
+                                startActivity(homeIntent);
                                 break;
                         }
 
