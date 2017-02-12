@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void attachSignUpButtonEvent(){
-        Button signInButton = (Button) findViewById(R.id.btn_sign_in);
+        Button signInButton = (Button) findViewById(R.id.btn_sign_up);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
         map.put("username", username);
         map.put("passHash", password);
 
-        String url = "https://telerik-meetup.herokuapp.com/auth/login";
+        String url = "https://telerik-meetup.herokuapp.com/auth/register";
 
         final Context context = this.getApplicationContext();
         final Activity currentActivity = this;
@@ -119,15 +119,14 @@ public class SignUpActivity extends AppCompatActivity {
                             userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                             resultUser = jsonParser.fromJson(userJsonObject, User.class);
                         } catch(IllegalStateException e) {
-                            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Username already exists", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        userSession.setUsername(resultUser.getUsername());
-                        userSession.setId(resultUser.getId());
-                        Toast.makeText(context, "You are now logged in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
-                        Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
-                        startActivity(homeIntent);
+                        Toast.makeText(context, "Sign up successfull!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "You may sign in now...", Toast.LENGTH_LONG).show();
+                        Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
+                        startActivity(signInIntent);
                     }
 
                     @Override
