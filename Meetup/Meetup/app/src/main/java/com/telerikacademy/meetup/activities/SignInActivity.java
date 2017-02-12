@@ -81,7 +81,6 @@ public class SignInActivity extends AppCompatActivity {
                 signInUser();
             }
         });
-
     }
 
     private void attachRedirectToSignUpEvent(){
