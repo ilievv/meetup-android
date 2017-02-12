@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
+        setNavigationEvents();
 
         updateLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +147,31 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void setNavigationEvents() {
+        final int[] navItemsIds = {
+                R.id.btn_restaurant,
+                R.id.btn_cafe,
+                R.id.btn_pub,
+                R.id.btn_fast_food,
+                R.id.btn_favourites,
+                R.id.btn_other
+        };
+
+        for (int navItemId : navItemsIds) {
+            final Button navBtn = (Button) findViewById(navItemId);
+            final String venueType = navBtn.getTag().toString();
+
+            navBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browseVenues = new Intent(HomeActivity.this, NearbyVenuesActivity.class);
+                    browseVenues.putExtra("type", venueType);
+                    startActivity(browseVenues);
+                }
+            });
+        }
+    }
+
     private void setTextViewTitle(Location location) {
         final String LOCATION_NOT_FOUND = "Unknown location";
 
@@ -185,11 +212,5 @@ public class HomeActivity extends AppCompatActivity {
                 .getApplicationComponent()
                 .inject(this);
         ButterKnife.bind(this);
-    }
-
-    // TODO: Remove
-    public void secretIntent(View view) {
-        Intent intent = new Intent(this, NearbyVenuesActivity.class);
-        startActivity(intent);
     }
 }

@@ -67,6 +67,8 @@
                     <TableRow>
 
                         <Button
+                                android:id="@+id/btn_restaurant"
+                                android:tag="restaurant"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
@@ -76,6 +78,8 @@
                                 android:drawablePadding="8dp"/>
 
                         <Button
+                                android:id="@+id/btn_cafe"
+                                android:tag="cafe"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
@@ -85,6 +89,8 @@
                                 android:drawablePadding="8dp"/>
 
                         <Button
+                                android:id="@+id/btn_pub"
+                                android:tag="pub"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
@@ -97,6 +103,8 @@
                     <TableRow>
 
                         <Button
+                                android:id="@+id/btn_fast_food"
+                                android:tag="fast_food"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
@@ -106,6 +114,8 @@
                                 android:drawablePadding="8dp"/>
 
                         <Button
+                                android:id="@+id/btn_favourites"
+                                android:tag="favourites"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
@@ -115,6 +125,8 @@
                                 android:drawablePadding="8dp"/>
 
                         <Button
+                                android:id="@+id/btn_other"
+                                android:tag="other"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
