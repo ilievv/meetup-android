@@ -12,11 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.User;
-import com.telerikacademy.meetup.network.base.IHttpRequester;
-import com.telerikacademy.meetup.network.base.IHttpResponse;
+import com.telerikacademy.meetup.utils.base.IHttpRequester;
+import com.telerikacademy.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.utils.base.IJsonParser;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 
@@ -45,6 +46,9 @@ public class SignUpActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
+
         this.fragmentManager = this.getSupportFragmentManager();
         this.usernameEditText = (EditText)findViewById(R.id.username);
         this.passwordEditText = (EditText)findViewById(R.id.password);
