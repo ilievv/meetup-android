@@ -18,11 +18,12 @@
             android:layout_marginBottom="8dp"
             app:theme="@style/SignInTheme.TextInputLayout">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#f0eded"
                 android:hint="@string/sign_in_username"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -34,11 +35,12 @@
             android:layout_marginBottom="8dp"
             app:theme="@style/SignInTheme.TextInputLayout">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColor="#f0eded"
                 android:hint="@string/sign_in_password"/>
 
     </android.support.design.widget.TextInputLayout>

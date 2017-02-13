@@ -17,7 +17,7 @@
             android:layout_marginBottom="8dp"
             app:theme="@style/AppTheme.EditText.V2">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:layout_marginBottom="8dp"
             app:theme="@style/AppTheme.EditText.V2">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

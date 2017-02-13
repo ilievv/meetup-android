@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
 
         IToolbar toolbar = (IToolbar)
                 fragmentManager.findFragmentById(R.id.fragment_toolbar);
-        toolbar.setNavigationDrawer();
+        toolbar.setNavigationDrawer(R.layout.activity_home);
 
         requestPermissions();
         showEnableLocationDialog();

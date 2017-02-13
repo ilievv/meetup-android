@@ -92,7 +92,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         if (toolbarFragment != null) {
             toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
-            toolbarFragment.setNavigationDrawer();
+            toolbarFragment.setNavigationDrawer(R.layout.activity_nearby_venues);
         }
 
         return true;

@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.fragments.base;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.MenuRes;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,5 +15,5 @@ public interface IToolbar {
     void setNavigationOnClickListener(View.OnClickListener onClickListener);
 
     // Might be extracted into a separate interface
-    void setNavigationDrawer();
+    void setNavigationDrawer(@LayoutRes long selectedItem);
 }
