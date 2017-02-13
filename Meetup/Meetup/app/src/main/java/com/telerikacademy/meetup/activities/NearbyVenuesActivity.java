@@ -89,7 +89,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         String type = getIntent().getStringExtra(VENUE_TYPE_TAG);
         Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
     }
