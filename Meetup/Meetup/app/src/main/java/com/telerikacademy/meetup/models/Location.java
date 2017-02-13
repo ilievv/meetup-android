@@ -14,9 +14,6 @@ public class Location {
     public Location(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.locality = STRING_EMPTY;
-        this.thoroughfare = STRING_EMPTY;
-        this.subThoroughfare = STRING_EMPTY;
     }
 
     public Location(double latitude, double longitude, String locality,
@@ -53,15 +50,15 @@ public class Location {
         String fullAddress = STRING_EMPTY;
 
         if (this.getThoroughfare() != null) {
-            fullAddress += this.thoroughfare;
+            fullAddress += thoroughfare;
         }
 
         if (this.getSubThoroughfare() != null) {
-            fullAddress += " " + this.getSubThoroughfare();
+            fullAddress += " " + getSubThoroughfare();
         }
 
         if (this.getLocality() != null) {
-            fullAddress += ", " + this.getLocality();
+            fullAddress += ", " + getLocality();
         }
 
         return fullAddress;

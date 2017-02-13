@@ -198,6 +198,10 @@ public class HomeActivity extends AppCompatActivity {
         String thoroughfare = location.getThoroughfare();
         String subThoroughfare = location.getSubThoroughfare();
 
+        locality = locality == null ? "" : locality;
+        thoroughfare = thoroughfare == null ? "" : thoroughfare;
+        subThoroughfare = subThoroughfare == null ? "" : subThoroughfare;
+
         if (locality.isEmpty() && thoroughfare.isEmpty()) {
             currentLocationTitle.setText(LOCATION_NOT_FOUND);
         } else if (locality.isEmpty()) {
