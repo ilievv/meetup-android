@@ -1,7 +1,6 @@
 package com.telerikacademy.meetup.config.modules;
 
 import android.content.Context;
-
 import com.telerikacademy.meetup.utils.GsonParser;
 import com.telerikacademy.meetup.utils.PermissionHandler;
 import com.telerikacademy.meetup.utils.UserSession;

@@ -107,6 +107,7 @@ public class HomeActivity extends AppCompatActivity {
     void showNearbyCafes() {
         Intent intent = new Intent(this, NearbyVenuesActivity.class);
         intent.putExtra(VENUE_TYPE_TAG, "cafe");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_pub)
@@ -134,6 +135,7 @@ public class HomeActivity extends AppCompatActivity {
     void showOtherVenues() {
         Intent intent = new Intent(this, NearbyVenuesActivity.class);
         intent.putExtra(VENUE_TYPE_TAG, "other");
+        startActivity(intent);
     }
 
     protected void onStart() {

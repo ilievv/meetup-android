@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
@@ -20,25 +19,23 @@ import com.telerikacademy.meetup.utils.base.IHttpRequester;
 import com.telerikacademy.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.utils.base.IJsonParser;
 import com.telerikacademy.meetup.utils.base.IUserSession;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Inject;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignInActivity extends AppCompatActivity {
 
     @Inject
-    public IHttpRequester httpRequester;
+    IHttpRequester httpRequester;
     @Inject
-    public IJsonParser jsonParser;
+    IJsonParser jsonParser;
     @Inject
-    public IUserSession userSession;
+    IUserSession userSession;
 
     private FragmentManager fragmentManager;
     private EditText usernameEditText;
@@ -51,8 +48,8 @@ public class SignInActivity extends AppCompatActivity {
         ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
 
         this.fragmentManager = this.getSupportFragmentManager();
-        this.usernameEditText = (EditText)findViewById(R.id.username);
-        this.passwordEditText = (EditText)findViewById(R.id.password);
+        this.usernameEditText = (EditText) findViewById(R.id.username);
+        this.passwordEditText = (EditText) findViewById(R.id.password);
 
         this.attachSignInButtonEvent();
         this.attachRedirectToSignUpEvent();
@@ -72,7 +69,7 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
-    private void attachSignInButtonEvent(){
+    private void attachSignInButtonEvent() {
         Button signInButton = (Button) findViewById(R.id.btn_sign_in);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +79,7 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-    private void attachRedirectToSignUpEvent(){
+    private void attachRedirectToSignUpEvent() {
         Button redirectButton = (Button) findViewById(R.id.link_signup);
         redirectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +90,12 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void signInUser(){
+    private void signInUser() {
         String username = this.usernameEditText.getText().toString();
         String password = this.passwordEditText.getText().toString();
 
         // TODO add to resourse
-        if(username.equals("") || password.equals("")) {
+        if (username.equals("") || password.equals("")) {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
             return;
         }
@@ -131,7 +128,7 @@ public class SignInActivity extends AppCompatActivity {
                         try {
                             userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                             resultUser = jsonParser.fromJson(userJsonObject, User.class);
-                        } catch(IllegalStateException e) {
+                        } catch (IllegalStateException e) {
                             Toast.makeText(context, "Invalid username or password", Toast.LENGTH_LONG).show();
                             return;
                         }
@@ -156,7 +153,7 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    private void redirectToSignUp(){
+    private void redirectToSignUp() {
         Intent signUpIntent = new Intent(this, SignUpActivity.class);
         startActivity(signUpIntent);
     }

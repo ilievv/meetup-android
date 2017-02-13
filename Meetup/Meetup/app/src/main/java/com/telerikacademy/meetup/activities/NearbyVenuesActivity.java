@@ -7,7 +7,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,7 +15,6 @@ import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
-import com.telerikacademy.meetup.views.adapters.PlacesAutocompleteLimitAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
