@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.R;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
+
+    private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
 
     @BindView(R.id.rv_venues)
     RecyclerView recyclerView;
@@ -81,6 +84,14 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        String type = getIntent().getStringExtra(VENUE_TYPE_TAG);
+        Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
     }
 
     @Override

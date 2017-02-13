@@ -88,9 +88,14 @@ public class ToolbarFragment extends Fragment
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         DrawerBuilder builder = createDrawerBuilder(selectedItemId);
 
+        final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        final Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
+        nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
         if (userSession.isUserLoggedIn()) {
             PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
-                    .withIdentifier(0)
                     .withName("Sign out")
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
@@ -100,8 +105,13 @@ public class ToolbarFragment extends Fragment
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                             switch (position) {
                                 case 0:
+                                    startActivity(homeIntent);
+                                    break;
+                                case 1:
+                                    startActivity(nearbyVenuesIntent);
+                                    break;
+                                case 3:
                                     userSession.clearSession();
-                                    Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
                                     startActivity(homeIntent);
                                     break;
                             }
@@ -120,6 +130,12 @@ public class ToolbarFragment extends Fragment
                     .withName("Sign up")
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
+            final Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
+            signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+            final Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
+            signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
             builder.addDrawerItems(
                     itemSignIn,
                     itemSignUp
@@ -128,19 +144,15 @@ public class ToolbarFragment extends Fragment
                 public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                     switch (position) {
                         case 0:
-                            Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
                             startActivity(homeIntent);
                             break;
                         case 1:
-                            Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
                             startActivity(nearbyVenuesIntent);
                             break;
                         case 3:
-                            Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
                             startActivity(signInIntent);
                             break;
                         case 4:
-                            Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
                             startActivity(signUpIntent);
                             break;
                     }

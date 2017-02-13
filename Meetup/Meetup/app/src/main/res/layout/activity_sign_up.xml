@@ -8,20 +8,22 @@
               android:paddingEnd="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
               android:paddingBottom="@dimen/activity_vertical_margin"
-              android:gravity="center_horizontal|center_vertical">
+              android:background="#E43F3F"
+              android:gravity="center">
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:theme="@style/AppTheme.EditText.V2">
+            app:theme="@style/SignInTheme.TextInputLayout">
 
         <android.support.design.widget.TextInputEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#f0eded"
                 android:hint="@string/sign_up_username"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -31,13 +33,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:theme="@style/AppTheme.EditText.V2">
+            app:theme="@style/SignInTheme.TextInputLayout">
 
         <android.support.design.widget.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColor="#f0eded"
                 android:hint="@string/sign_up_password"/>
 
     </android.support.design.widget.TextInputLayout>
@@ -49,6 +52,16 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="@string/create_account"/>
+            android:textColor="#FFF"
+            android:background="#CC1D1D"
+            android:text="@string/sign_up"/>
+
+    <Button
+            android:id="@+id/link_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            style="@style/SignInTheme.Button.Borderless"
+            android:text="@string/already_have_an_account_sign_in"/>
 
 </LinearLayout>

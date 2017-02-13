@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.fragments.base.IToolbar;
@@ -37,22 +38,19 @@ public class SignInActivity extends AppCompatActivity {
     @Inject
     IUserSession userSession;
 
+    @BindView(R.id.username)
+    EditText usernameEditText;
+    @BindView(R.id.password)
+    EditText passwordEditText;
+
     private FragmentManager fragmentManager;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        injectDependencies();
 
-        ((BaseApplication) getApplication()).getApplicationComponent().inject(this);
-
-        this.fragmentManager = this.getSupportFragmentManager();
-        this.usernameEditText = (EditText) findViewById(R.id.username);
-        this.passwordEditText = (EditText) findViewById(R.id.password);
-
-        this.attachSignInButtonEvent();
-        this.attachRedirectToSignUpEvent();
+        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -60,7 +58,7 @@ public class SignInActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
 
         IToolbar menuInflater = (IToolbar)
-                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+                fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
@@ -69,30 +67,10 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
-    private void attachSignInButtonEvent() {
-        Button signInButton = (Button) findViewById(R.id.btn_sign_in);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signInUser();
-            }
-        });
-    }
-
-    private void attachRedirectToSignUpEvent() {
-        Button redirectButton = (Button) findViewById(R.id.link_signup);
-        redirectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                redirectToSignUp();
-            }
-        });
-
-    }
-
-    private void signInUser() {
-        String username = this.usernameEditText.getText().toString();
-        String password = this.passwordEditText.getText().toString();
+    @OnClick(R.id.btn_sign_in)
+    void signInUser() {
+        String username = usernameEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
         // TODO add to resourse
         if (username.equals("") || password.equals("")) {
@@ -100,13 +78,13 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
-        Map map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put("username", username);
         map.put("passHash", password);
 
         String url = "https://telerik-meetup.herokuapp.com/auth/login";
 
-        final Context context = this.getApplicationContext();
+        final Context context = getApplicationContext();
         final Activity currentActivity = this;
         final IUserSession userSession = this.userSession;
         final IJsonParser jsonParser = this.jsonParser;
@@ -117,7 +95,6 @@ public class SignInActivity extends AppCompatActivity {
                 .subscribe(new Observer<IHttpResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
@@ -142,19 +119,26 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
 
     }
 
-    private void redirectToSignUp() {
+    @OnClick(R.id.link_signup)
+    void redirectToSignUp() {
         Intent signUpIntent = new Intent(this, SignUpActivity.class);
+        signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(signUpIntent);
+    }
+
+    private void injectDependencies() {
+        ((BaseApplication) getApplication())
+                .getApplicationComponent()
+                .inject(this);
+        ButterKnife.bind(this);
     }
 }

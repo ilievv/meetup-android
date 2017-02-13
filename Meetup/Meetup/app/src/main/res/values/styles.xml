@@ -10,6 +10,7 @@
         <item name="android:buttonStyle">@style/AppTheme.Button</item>
         <item name="android:editTextStyle">@style/AppTheme.EditText</item>
         <item name="android:autoCompleteTextViewStyle">@style/AppTheme.AutoCompleteTextView</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.WindowAnimationTransition</item>
     </style>
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
@@ -87,6 +88,13 @@
     <style name="AppTheme.FloatingActionButton" parent="Base.Widget.AppCompat.ImageButton">
         <item name="android:tint">@color/tertiaryText</item>
         <item name="elevation">@dimen/button_raised_elevation</item>
+    </style>
+
+    <style name="AppTheme.WindowAnimationTransition">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
     </style>
 
 </resources>
