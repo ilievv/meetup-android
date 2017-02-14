@@ -20,15 +20,15 @@
     <AutoCompleteTextView
             android:id="@+id/et_search"
             style="@style/AppTheme.AutoCompleteTextView"
-            android:ems="10"
             android:maxLines="1"
             android:singleLine="true"
+            android:textSize="16sp"
             android:hint="@string/search"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
             android:background="@android:color/transparent"
             android:layout_alignBottom="@+id/ic_search"
-            android:textSize="16sp"
-            android:layout_centerHorizontal="true"/>
+            android:layout_toRightOf="@+id/ic_search"/>
 
 </RelativeLayout>
