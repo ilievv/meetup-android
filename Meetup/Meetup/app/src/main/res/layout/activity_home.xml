@@ -114,14 +114,14 @@
                                 android:drawablePadding="8dp"/>
 
                         <Button
-                                android:id="@+id/btn_favourites"
-                                android:tag="favourites"
+                                android:id="@+id/btn_night_club"
+                                android:tag="night_club"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/AppTheme.Button.Borderless"
-                                android:text="@string/favourite"
+                                android:text="@string/night_club"
                                 android:textAllCaps="false"
-                                android:drawableTop="@drawable/ic_solid_pub"
+                                android:drawableTop="@drawable/ic_solid_night_club"
                                 android:drawablePadding="8dp"/>
 
                         <Button
@@ -132,7 +132,7 @@
                                 style="@style/AppTheme.Button.Borderless"
                                 android:text="@string/other"
                                 android:textAllCaps="false"
-                                android:drawableTop="@drawable/ic_solid_pub"
+                                android:drawableTop="@drawable/ic_solid_bowling"
                                 android:drawablePadding="8dp"
                                 android:onClick="secretIntent"/>
                     </TableRow>

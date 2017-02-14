@@ -128,11 +128,11 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_favourites)
-    void showFavourites() {
+    @OnClick(R.id.btn_night_club)
+    void showNightClubs() {
         Intent intent = new Intent(this, NearbyVenuesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.putExtra(VENUE_TYPE_TAG, "favourites");
+        intent.putExtra(VENUE_TYPE_TAG, "night_club");
         startActivity(intent);
     }
 
