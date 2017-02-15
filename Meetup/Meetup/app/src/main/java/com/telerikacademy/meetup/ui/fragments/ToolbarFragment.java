@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.ui.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -94,6 +95,8 @@ public class ToolbarFragment extends Fragment
         final Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
         nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
+        final Activity currentActivity = this.getActivity();
+
         if (userSession.isUserLoggedIn()) {
             PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
                     .withName("Sign out")
@@ -112,6 +115,7 @@ public class ToolbarFragment extends Fragment
                                     break;
                                 case 3:
                                     userSession.clearSession();
+                                    currentActivity.finish();
                                     startActivity(homeIntent);
                                     break;
                             }
