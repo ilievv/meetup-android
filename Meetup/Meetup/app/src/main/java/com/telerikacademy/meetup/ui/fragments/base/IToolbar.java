@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.fragments.base;
+package com.telerikacademy.meetup.ui.fragments.base;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.MenuRes;

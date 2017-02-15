@@ -1,11 +1,11 @@
-package com.telerikacademy.meetup.activities;
+package com.telerikacademy.meetup.views.venue_details;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Venue;
 
 public class VenueDetailsActivity extends AppCompatActivity {

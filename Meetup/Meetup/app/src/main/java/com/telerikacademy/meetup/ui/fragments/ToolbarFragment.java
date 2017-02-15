@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.fragments;
+package com.telerikacademy.meetup.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +19,11 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.activities.HomeActivity;
-import com.telerikacademy.meetup.activities.NearbyVenuesActivity;
-import com.telerikacademy.meetup.activities.SignInActivity;
-import com.telerikacademy.meetup.activities.SignUpActivity;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.views.home.HomeActivity;
+import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
+import com.telerikacademy.meetup.views.sign_in.SignInActivity;
+import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
+import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 
 import javax.inject.Inject;

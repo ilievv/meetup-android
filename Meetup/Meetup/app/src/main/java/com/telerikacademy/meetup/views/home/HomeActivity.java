@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.activities;
+package com.telerikacademy.meetup.views.home;
 
 import android.Manifest;
 import android.content.Context;
@@ -18,14 +18,12 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Location;
-import com.telerikacademy.meetup.providers.base.ILocationProvider;
-import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
-import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
-import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
+import com.telerikacademy.meetup.providers.base.LocationProvider;
+import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.utils.base.IUserSession;
+import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
 
 import javax.inject.Inject;
 
@@ -37,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     @Inject
     IPermissionHandler permissionHandler;
     @Inject
-    ILocationProvider locationProvider;
+    LocationProvider locationProvider;
     @Inject
     IUserSession userSession;
 
@@ -59,20 +57,20 @@ public class HomeActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        locationProvider.setOnLocationChangeListener(new IOnLocationChangeListener() {
+        locationProvider.setOnLocationChangeListener(new LocationProvider.IOnLocationChangeListener() {
             @Override
             public void onLocationChange(Location location) {
                 currentLocation = location;
             }
         });
-        locationProvider.setOnConnectedListener(new IOnConnectedListener() {
+        locationProvider.setOnConnectedListener(new LocationProvider.IOnConnectedListener() {
             @Override
             public void onConnected(Location location) {
                 currentLocation = location;
                 setTextViewTitle(currentLocation);
             }
         });
-        locationProvider.setOnConnectionFailedListener(new IOnConnectionFailedListener() {
+        locationProvider.setOnConnectionFailedListener(new LocationProvider.IOnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(String errorMessage) {
                 setTextViewTitle(currentLocation);

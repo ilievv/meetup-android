@@ -13,10 +13,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.telerikacademy.meetup.providers.base.ILocationProvider;
-import com.telerikacademy.meetup.providers.events.IOnConnectedListener;
-import com.telerikacademy.meetup.providers.events.IOnConnectionFailedListener;
-import com.telerikacademy.meetup.providers.events.IOnLocationChangeListener;
+import com.telerikacademy.meetup.providers.base.LocationProvider;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -24,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class GoogleLocationProvider
-        implements ILocationProvider, GoogleApiClient.ConnectionCallbacks,
+public class GoogleLocationProvider extends LocationProvider
+        implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private final Context context;

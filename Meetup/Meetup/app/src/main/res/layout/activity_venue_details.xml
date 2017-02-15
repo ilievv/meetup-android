@@ -5,11 +5,11 @@
         android:id="@+id/activity_venue_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.telerikacademy.meetup.activities.VenueDetailsActivity">
+        tools:context="com.telerikacademy.meetup.views.venue_details.VenueDetailsActivity">
 
     <fragment
             android:id="@+id/fragment_toolbar"
-            android:name="com.telerikacademy.meetup.fragments.ToolbarFragment"
+            android:name="com.telerikacademy.meetup.ui.fragments.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

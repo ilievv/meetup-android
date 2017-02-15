@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.views.decorators;
+package com.telerikacademy.meetup.ui.decorators;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.activities;
+package com.telerikacademy.meetup.views.nearby_venues;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +12,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.fragments.SearchHeaderFragment;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.ui.fragments.SearchHeaderFragment;
+import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.Venue;
-import com.telerikacademy.meetup.views.adapters.NearbyVenuesRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

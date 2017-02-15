@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.views.adapters;
+package com.telerikacademy.meetup.views.nearby_venues;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.activities.VenueDetailsActivity;
+import com.telerikacademy.meetup.views.venue_details.VenueDetailsActivity;
 import com.telerikacademy.meetup.models.Venue;
 
 import java.util.ArrayList;

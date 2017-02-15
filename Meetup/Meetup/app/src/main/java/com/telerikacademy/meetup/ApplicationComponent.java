@@ -1,13 +1,13 @@
 package com.telerikacademy.meetup;
 
-import com.telerikacademy.meetup.activities.HomeActivity;
-import com.telerikacademy.meetup.activities.SignInActivity;
-import com.telerikacademy.meetup.activities.SignUpActivity;
+import com.telerikacademy.meetup.views.home.HomeActivity;
+import com.telerikacademy.meetup.views.sign_in.SignInActivity;
+import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
 import com.telerikacademy.meetup.config.modules.AndroidModule;
 import com.telerikacademy.meetup.config.modules.NetworkModule;
 import com.telerikacademy.meetup.config.modules.ProviderModule;
 import com.telerikacademy.meetup.config.modules.UtilModule;
-import com.telerikacademy.meetup.fragments.ToolbarFragment;
+import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
 import com.telerikacademy.meetup.utils.UserSession;
 import dagger.Component;

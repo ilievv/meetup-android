@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.views.adapters;
+package com.telerikacademy.meetup.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;

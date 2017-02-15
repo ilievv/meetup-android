@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.fragments;
+package com.telerikacademy.meetup.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

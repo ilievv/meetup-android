@@ -1,7 +1,6 @@
-package com.telerikacademy.meetup.activities;
+package com.telerikacademy.meetup.views.sign_up;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -14,12 +13,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.fragments.base.IToolbar;
+import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.models.User;
 import com.telerikacademy.meetup.utils.base.IHttpRequester;
 import com.telerikacademy.meetup.utils.base.IHttpResponse;
 import com.telerikacademy.meetup.utils.base.IJsonParser;
 import com.telerikacademy.meetup.utils.base.IUserSession;
+import com.telerikacademy.meetup.views.sign_in.SignInActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     @Inject
     IHttpRequester httpRequester;
@@ -47,7 +47,7 @@ public class SignInActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_sign_up);
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
@@ -67,8 +67,8 @@ public class SignInActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick(R.id.btn_sign_in)
-    void signInUser() {
+    @OnClick(R.id.btn_sign_up)
+    void signUpUser() {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
@@ -82,9 +82,8 @@ public class SignInActivity extends AppCompatActivity {
         map.put("username", username);
         map.put("passHash", password);
 
-        String url = "https://telerik-meetup.herokuapp.com/auth/login";
+        final String url = "https://telerik-meetup.herokuapp.com/auth/register";
 
-        final Context context = getApplicationContext();
         final Activity currentActivity = this;
         final IUserSession userSession = this.userSession;
         final IJsonParser jsonParser = this.jsonParser;
@@ -99,22 +98,24 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(IHttpResponse value) {
-                        String responseBody = value.getBody().toString();
+                        String responseBody = value.getBody();
                         String userJsonObject;
                         User resultUser;
+
                         try {
                             userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                             resultUser = jsonParser.fromJson(userJsonObject, User.class);
                         } catch (IllegalStateException e) {
-                            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(currentActivity, "Username already exists", Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        userSession.setUsername(resultUser.getUsername());
-                        userSession.setId(resultUser.getId());
-                        Toast.makeText(context, "You are now signed in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
-                        Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
-                        startActivity(homeIntent);
+                        Toast.makeText(currentActivity, "Sign up successfull!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, "You may sign in now...", Toast.LENGTH_LONG).show();
+
+                        Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
+                        signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(signInIntent);
                     }
 
                     @Override
@@ -128,11 +129,11 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.link_signup)
-    void redirectToSignUp() {
-        Intent signUpIntent = new Intent(this, SignUpActivity.class);
-        signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(signUpIntent);
+    @OnClick(R.id.link_signin)
+    void redirectToSignIn() {
+        Intent signInIntent = new Intent(this, SignInActivity.class);
+        signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(signInIntent);
     }
 
     private void injectDependencies() {

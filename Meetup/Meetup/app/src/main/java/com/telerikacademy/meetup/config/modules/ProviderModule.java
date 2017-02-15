@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.config.modules;
 
 import android.content.Context;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
-import com.telerikacademy.meetup.providers.base.ILocationProvider;
+import com.telerikacademy.meetup.providers.base.LocationProvider;
 import dagger.Module;
 import dagger.Provides;
 
@@ -15,7 +15,7 @@ public class ProviderModule {
     @Inject
     @Provides
     @Singleton
-    ILocationProvider provideLocationProvider(Context context) {
+    LocationProvider provideLocationProvider(Context context) {
         return new GoogleLocationProvider(context);
     }
 }
