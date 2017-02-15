@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.ui.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -22,6 +21,8 @@ import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IUserSession;
 import com.telerikacademy.meetup.views.home.HomeActivity;
 import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
+import com.telerikacademy.meetup.views.sign_in.SignInActivity;
+import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
 
 import javax.inject.Inject;
 
@@ -87,7 +88,7 @@ public class ToolbarFragment extends Fragment
     }
 
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
-        createDrawerBuilder(selectedItemId);
+        createDrawerBuilder();
 
         final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
         homeIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -100,33 +101,11 @@ public class ToolbarFragment extends Fragment
                     .withName("Sign out")
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
-            navigationDrawer.withDrawerItems(itemSignOut);
-        }
-
-        navigationDrawer.build();
-    }
-
-/*
-    public void setNavigationDrawer(@LayoutRes long selectedItemId) {
-        DrawerBuilder builder = createDrawerBuilder(selectedItemId);
-
-        final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        final Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
-        nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        final Activity currentActivity = this.getActivity();
-
-        if (userSession.isUserLoggedIn()) {
-            PrimaryDrawerItem itemSignOut = new PrimaryDrawerItem()
-                    .withName("Sign out")
-                    .withIcon(FontAwesome.Icon.faw_sign_out);
-
-            builder.withDrawerItems(itemSignOut)
+            navigationDrawer
+                    .withDrawerItems(itemSignOut)
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                         @Override
-                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        public boolean onClick(View view, int position) {
                             switch (position) {
                                 case 0:
                                     startActivity(homeIntent);
@@ -136,7 +115,6 @@ public class ToolbarFragment extends Fragment
                                     break;
                                 case 3:
                                     userSession.clearSession();
-                                    currentActivity.finish();
                                     startActivity(homeIntent);
                                     break;
                             }
@@ -145,12 +123,12 @@ public class ToolbarFragment extends Fragment
                         }
                     });
         } else {
-            PrimaryDrawerItem itemSignIn = new PrimaryDrawerItem()
+            DrawerItem itemSignIn = drawerItemFactory.createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_in)
                     .withName("Sign in")
                     .withIcon(FontAwesome.Icon.faw_sign_in);
 
-            PrimaryDrawerItem itemSignUp = new PrimaryDrawerItem()
+            DrawerItem itemSignUp = drawerItemFactory.createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_up)
                     .withName("Sign up")
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
@@ -161,37 +139,38 @@ public class ToolbarFragment extends Fragment
             final Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
             signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-            builder.withDrawerItems(
-                    itemSignIn,
-                    itemSignUp
-            ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                @Override
-                public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                    switch (position) {
-                        case 0:
-                            startActivity(homeIntent);
-                            break;
-                        case 1:
-                            startActivity(nearbyVenuesIntent);
-                            break;
-                        case 3:
-                            startActivity(signInIntent);
-                            break;
-                        case 4:
-                            startActivity(signUpIntent);
-                            break;
-                    }
+            navigationDrawer
+                    .withDrawerItems(
+                            itemSignIn,
+                            itemSignUp
+                    )
+                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onClick(View view, int position) {
+                            switch (position) {
+                                case 0:
+                                    startActivity(homeIntent);
+                                    break;
+                                case 1:
+                                    startActivity(nearbyVenuesIntent);
+                                    break;
+                                case 3:
+                                    startActivity(signInIntent);
+                                    break;
+                                case 4:
+                                    startActivity(signUpIntent);
+                                    break;
+                            }
 
-                    return false;
-                }
-            });
+                            return false;
+                        }
+                    });
         }
 
-        builder.build();
+        navigationDrawer.withSelectedItem(selectedItemId).build();
     }
-*/
 
-    private void createDrawerBuilder(long selectedItemId) {
+    private void createDrawerBuilder() {
         DrawerItem itemHome = drawerItemFactory.createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_home)
                 .withName("Home")
@@ -208,10 +187,10 @@ public class ToolbarFragment extends Fragment
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
                 .withDrawerWidth(270)
-                .withSelectedItem(selectedItemId)
                 .withDrawerItems(
                         itemHome,
-                        itemNearbyVenues
+                        itemNearbyVenues,
+                        drawerItemFactory.createDividerDrawerItem()
                 );
     }
 

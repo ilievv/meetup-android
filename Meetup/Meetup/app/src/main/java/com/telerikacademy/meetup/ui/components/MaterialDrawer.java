@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.AbstractBadgeableDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.ui.components.base.Drawer;
 import com.telerikacademy.meetup.ui.components.base.DrawerItem;
@@ -27,15 +29,15 @@ public class MaterialDrawer extends Drawer {
 
     @Override
     public Drawer withDrawerItems(@NonNull DrawerItem... drawerItems) {
-        List<IDrawerItem> parsedDrawerItems = parseDrawerItems(Arrays.asList(drawerItems));
-        drawerBuilder.withDrawerItems(parsedDrawerItems);
+        IDrawerItem[] parsedDrawerItems = parseDrawerItems(Arrays.asList(drawerItems));
+        drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
     }
 
     @Override
     public Drawer withDrawerItems(@NonNull List<DrawerItem> drawerItems) {
-        List<IDrawerItem> parsedDrawerItems = parseDrawerItems(drawerItems);
-        drawerBuilder.withDrawerItems(parsedDrawerItems);
+        IDrawerItem[] parsedDrawerItems = parseDrawerItems(drawerItems);
+        drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
     }
 
@@ -70,33 +72,56 @@ public class MaterialDrawer extends Drawer {
     }
 
     @Override
+    public Drawer withOnDrawerItemClickListener(final Drawer.OnDrawerItemClickListener onDrawerItemClickListener) {
+        drawerBuilder.withOnDrawerItemClickListener(new com.mikepenz.materialdrawer.Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                return onDrawerItemClickListener.onClick(view, position);
+            }
+        });
+
+        return this;
+    }
+
+    @Override
     public void build() {
         drawerBuilder.build();
     }
 
-    private List<IDrawerItem> parseDrawerItems(List<DrawerItem> drawerItems) {
+    private IDrawerItem[] parseDrawerItems(List<DrawerItem> drawerItems) {
         List<IDrawerItem> materialDrawerItems = new ArrayList<>();
 
         for (DrawerItem drawerItem : drawerItems) {
             Type drawerItemType = drawerItem.getDrawerItemType();
 
-            IDrawerItem materialDrawerItem = null;
-            if (drawerItemType == PrimaryDrawerItem.class) {
-                materialDrawerItem = new com.mikepenz.materialdrawer.model.PrimaryDrawerItem()
-                        .withIdentifier(drawerItem.getIdentifier())
-                        .withName(drawerItem.getName())
-                        .withIcon(drawerItem.getIcon());
+            IDrawerItem materialDrawerItem;
+            AbstractBadgeableDrawerItem mainDrawerItem;
 
+            if (drawerItemType == PrimaryDrawerItem.class) {
+                mainDrawerItem = new com.mikepenz.materialdrawer.model.PrimaryDrawerItem();
             } else if (drawerItemType == SecondaryDrawerItem.class) {
-                materialDrawerItem = new com.mikepenz.materialdrawer.model.SecondaryDrawerItem()
-                        .withIdentifier(drawerItem.getIdentifier())
-                        .withName(drawerItem.getName())
-                        .withIcon(drawerItem.getIcon());
+                mainDrawerItem = new com.mikepenz.materialdrawer.model.SecondaryDrawerItem();
+            } else if (drawerItemType == DividerDrawerItem.class) {
+                materialDrawerItem = new com.mikepenz.materialdrawer.model.DividerDrawerItem()
+                        .withIdentifier(drawerItem.getIdentifier());
+                materialDrawerItems.add(materialDrawerItem);
+                continue;
+            } else {
+                throw new UnsupportedOperationException(drawerItemType.toString() + " not supported.");
             }
 
-            materialDrawerItems.add(materialDrawerItem);
+            mainDrawerItem.withIdentifier(drawerItem.getIdentifier());
+            mainDrawerItem.withName(drawerItem.getName());
+
+            if (drawerItem.getIicon() != null) {
+                mainDrawerItem.withIcon(drawerItem.getIicon());
+            } else {
+                mainDrawerItem.withIcon(drawerItem.getIcon());
+            }
+
+            materialDrawerItems.add(mainDrawerItem);
         }
 
-        return materialDrawerItems;
+        return materialDrawerItems.toArray(new IDrawerItem[materialDrawerItems.size()]);
     }
 }

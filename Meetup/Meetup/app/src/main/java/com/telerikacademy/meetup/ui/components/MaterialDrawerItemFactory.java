@@ -24,4 +24,9 @@ public class MaterialDrawerItemFactory extends DrawerItemFactory {
     public DrawerItem createSecondaryDrawerItem() {
         return new SecondaryDrawerItem(context);
     }
+
+    @Override
+    public DrawerItem createDividerDrawerItem() {
+        return new DividerDrawerItem(context);
+    }
 }

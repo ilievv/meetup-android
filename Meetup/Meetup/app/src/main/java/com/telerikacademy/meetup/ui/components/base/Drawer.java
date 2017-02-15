@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public abstract class Drawer {
 
     public abstract Drawer withTranslucentStatusBar(boolean isTranslucent);
 
+    public abstract Drawer withOnDrawerItemClickListener(OnDrawerItemClickListener onDrawerItemClickListener);
+
     public abstract void build();
+
+    public interface OnDrawerItemClickListener {
+
+        boolean onClick(View view, int position);
+    }
 }

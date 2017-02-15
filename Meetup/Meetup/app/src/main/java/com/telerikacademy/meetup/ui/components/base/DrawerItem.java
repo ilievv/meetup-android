@@ -90,9 +90,13 @@ public abstract class DrawerItem {
         } else if (iconRes != -1) {
             return getContext().getDrawable(iconRes);
         } else if (iicon != null) {
-            return new IconicsDrawable(getContext(), iicon).actionBar();
+            return new IconicsDrawable(getContext(), iicon).alpha(150);
         }
 
         return null;
+    }
+
+    public IIcon getIicon() {
+        return iicon;
     }
 }
