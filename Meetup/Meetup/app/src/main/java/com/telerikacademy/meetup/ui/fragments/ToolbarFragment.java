@@ -12,19 +12,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.*;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.views.home.HomeActivity;
-import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
-import com.telerikacademy.meetup.views.sign_in.SignInActivity;
-import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
+import com.telerikacademy.meetup.ui.components.base.Drawer;
+import com.telerikacademy.meetup.ui.components.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.base.DrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IUserSession;
+import com.telerikacademy.meetup.views.home.HomeActivity;
+import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
 
 import javax.inject.Inject;
 
@@ -33,6 +29,10 @@ public class ToolbarFragment extends Fragment
 
     @Inject
     IUserSession userSession;
+    @Inject
+    Drawer navigationDrawer;
+    @Inject
+    DrawerItemFactory drawerItemFactory;
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -86,6 +86,27 @@ public class ToolbarFragment extends Fragment
     }
 
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
+        createDrawerBuilder(selectedItemId);
+
+        final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        final Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
+        nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        if (userSession.isUserLoggedIn()) {
+            DrawerItem itemSignOut = drawerItemFactory.createPrimaryDrawerItem()
+                    .withName("Sign out")
+                    .withIcon(FontAwesome.Icon.faw_sign_out);
+
+            navigationDrawer.withDrawerItems(itemSignOut);
+        }
+
+        navigationDrawer.build();
+    }
+
+/*
+    public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         DrawerBuilder builder = createDrawerBuilder(selectedItemId);
 
         final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
@@ -99,7 +120,7 @@ public class ToolbarFragment extends Fragment
                     .withName("Sign out")
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
-            builder.addDrawerItems(itemSignOut)
+            builder.withDrawerItems(itemSignOut)
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -136,7 +157,7 @@ public class ToolbarFragment extends Fragment
             final Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
             signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
-            builder.addDrawerItems(
+            builder.withDrawerItems(
                     itemSignIn,
                     itemSignUp
             ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -164,30 +185,30 @@ public class ToolbarFragment extends Fragment
 
         builder.build();
     }
+*/
 
-    private DrawerBuilder createDrawerBuilder(long selectedItemId) {
-        PrimaryDrawerItem itemHome = new PrimaryDrawerItem()
+    private void createDrawerBuilder(long selectedItemId) {
+        DrawerItem itemHome = drawerItemFactory.createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_home)
                 .withName("Home")
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
-        PrimaryDrawerItem itemNearbyVenues = new PrimaryDrawerItem()
+        DrawerItem itemNearbyVenues = drawerItemFactory.createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_nearby_venues)
                 .withName("Explore")
                 .withIcon(GoogleMaterial.Icon.gmd_explore);
 
-        DrawerBuilder builder = new DrawerBuilder(this.currentActivity)
-                .withToolbar(this.toolbar)
+        navigationDrawer
+                .initialize(currentActivity)
+                .withToolbar(toolbar)
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
-                .withDrawerWidthDp(270)
+                .withDrawerWidth(270)
                 .withSelectedItem(selectedItemId)
-                .addDrawerItems(
+                .withDrawerItems(
                         itemHome,
-                        itemNearbyVenues,
-                        new DividerDrawerItem());
-
-        return builder;
+                        itemNearbyVenues
+                );
     }
 
     private void injectDependencies() {

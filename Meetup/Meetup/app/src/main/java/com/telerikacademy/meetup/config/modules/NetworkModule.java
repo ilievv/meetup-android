@@ -15,14 +15,14 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    public IHttpResponseFactory provideResponseFactory() {
+    IHttpResponseFactory provideResponseFactory() {
         return new ResponseFactory();
     }
 
     @Inject
     @Provides
     @Singleton
-    public IHttpRequester provideHttpRequester(IHttpResponseFactory httpResponseFactory) {
+    IHttpRequester provideHttpRequester(IHttpResponseFactory httpResponseFactory) {
         return new OkHttpRequester(httpResponseFactory);
     }
 }

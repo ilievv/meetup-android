@@ -1,0 +1,31 @@
+package com.telerikacademy.meetup.ui.components.base;
+
+import android.app.Activity;
+import android.support.annotation.Dimension;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+
+import java.util.List;
+
+public abstract class Drawer {
+
+    private final static int DP = 0;
+
+    public abstract Drawer initialize(Activity activity);
+
+    public abstract Drawer withDrawerItems(@NonNull DrawerItem... drawerItems);
+
+    public abstract Drawer withDrawerItems(@NonNull List<DrawerItem> drawerItems);
+
+    public abstract Drawer withSelectedItem(long identifier);
+
+    public abstract Drawer withDrawerWidth(@Dimension(unit = DP) int drawerWidth);
+
+    public abstract Drawer withToolbar(@NonNull Toolbar toolbar);
+
+    public abstract Drawer withActionBarDrawerToggleAnimated(boolean hasAnimation);
+
+    public abstract Drawer withTranslucentStatusBar(boolean isTranslucent);
+
+    public abstract void build();
+}

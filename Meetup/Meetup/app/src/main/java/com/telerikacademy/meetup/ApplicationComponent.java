@@ -1,15 +1,13 @@
 package com.telerikacademy.meetup;
 
+import com.telerikacademy.meetup.config.modules.*;
+import com.telerikacademy.meetup.services.GoogleLocationProvider;
+import com.telerikacademy.meetup.ui.components.MaterialDrawerItemFactory;
+import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
+import com.telerikacademy.meetup.utils.UserSession;
 import com.telerikacademy.meetup.views.home.HomeActivity;
 import com.telerikacademy.meetup.views.sign_in.SignInActivity;
 import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
-import com.telerikacademy.meetup.config.modules.AndroidModule;
-import com.telerikacademy.meetup.config.modules.NetworkModule;
-import com.telerikacademy.meetup.config.modules.ProviderModule;
-import com.telerikacademy.meetup.config.modules.UtilModule;
-import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
-import com.telerikacademy.meetup.providers.GoogleLocationProvider;
-import com.telerikacademy.meetup.utils.UserSession;
 import dagger.Component;
 import okhttp3.OkHttpClient;
 
@@ -19,8 +17,10 @@ import javax.inject.Singleton;
 @Component(modules = {
         AndroidModule.class,
         UtilModule.class,
-        ProviderModule.class,
-        NetworkModule.class})
+        ServiceModule.class,
+        NetworkModule.class,
+        UIModule.class
+})
 public interface ApplicationComponent {
 
     void inject(HomeActivity homeActivity);
@@ -36,4 +36,6 @@ public interface ApplicationComponent {
     void inject(UserSession userSession);
 
     void inject(ToolbarFragment toolbarFragment);
+
+    void inject(MaterialDrawerItemFactory materialDrawerItemFactory);
 }

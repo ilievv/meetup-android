@@ -17,7 +17,7 @@ public class AndroidModule {
 
     @Provides
     @Singleton
-    public Context provideContext() {
+    Context provideContext() {
         return this.context;
     }
 }
