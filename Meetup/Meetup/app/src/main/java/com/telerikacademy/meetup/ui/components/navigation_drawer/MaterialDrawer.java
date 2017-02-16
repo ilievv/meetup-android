@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.ui.components;
+package com.telerikacademy.meetup.ui.components.navigation_drawer;
 
 import android.app.Activity;
 import android.support.annotation.Dimension;
@@ -8,8 +8,8 @@ import android.view.View;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.AbstractBadgeableDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.telerikacademy.meetup.ui.components.base.Drawer;
-import com.telerikacademy.meetup.ui.components.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

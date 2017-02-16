@@ -1,12 +1,12 @@
-package com.telerikacademy.meetup.ui.components;
+package com.telerikacademy.meetup.ui.components.navigation_drawer;
 
 import android.content.Context;
-import com.telerikacademy.meetup.ui.components.base.DrawerItem;
-import com.telerikacademy.meetup.ui.components.base.DrawerItemFactory;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 
 import javax.inject.Inject;
 
-public class MaterialDrawerItemFactory extends DrawerItemFactory {
+public class MaterialDrawerItemFactory implements IDrawerItemFactory {
 
     private final Context context;
 

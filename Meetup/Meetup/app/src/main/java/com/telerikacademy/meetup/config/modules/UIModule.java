@@ -1,10 +1,12 @@
 package com.telerikacademy.meetup.config.modules;
 
 import android.content.Context;
-import com.telerikacademy.meetup.ui.components.MaterialDrawer;
-import com.telerikacademy.meetup.ui.components.MaterialDrawerItemFactory;
-import com.telerikacademy.meetup.ui.components.base.Drawer;
-import com.telerikacademy.meetup.ui.components.base.DrawerItemFactory;
+import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,7 +25,14 @@ public class UIModule {
     @Inject
     @Provides
     @Singleton
-    DrawerItemFactory provideDrawerItemFactory(Context context) {
+    IDrawerItemFactory provideDrawerItemFactory(Context context) {
         return new MaterialDrawerItemFactory(context);
+    }
+
+    @Inject
+    @Provides
+    @Singleton
+    Dialog provideDialog(Context context) {
+        return new MaterialDialog(context);
     }
 }

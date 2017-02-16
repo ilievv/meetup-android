@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.ui.components.base;
+package com.telerikacademy.meetup.ui.components.navigation_drawer.base;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

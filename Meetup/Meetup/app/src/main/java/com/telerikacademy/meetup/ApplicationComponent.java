@@ -2,7 +2,8 @@ package com.telerikacademy.meetup;
 
 import com.telerikacademy.meetup.config.modules.*;
 import com.telerikacademy.meetup.services.GoogleLocationProvider;
-import com.telerikacademy.meetup.ui.components.MaterialDrawerItemFactory;
+import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.utils.UserSession;
 import com.telerikacademy.meetup.views.home.HomeActivity;
@@ -38,4 +39,6 @@ public interface ApplicationComponent {
     void inject(ToolbarFragment toolbarFragment);
 
     void inject(MaterialDrawerItemFactory materialDrawerItemFactory);
+
+    void inject(MaterialDialog materialDialog);
 }
