@@ -33,9 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
 
     @Inject
-    IPermissionHandler permissionHandler;
-    @Inject
     LocationProvider locationProvider;
+    @Inject
+    IPermissionHandler permissionHandler;
     @Inject
     IUserSession userSession;
     @Inject
