@@ -99,7 +99,8 @@ public class GoogleLocationProvider extends LocationProvider
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (this.onConnectionFailedListener != null) {
-            this.onConnectionFailedListener.onConnectionFailed(connectionResult.getErrorMessage());
+            this.onConnectionFailedListener.onConnectionFailed(
+                    connectionResult.getErrorCode() + " " + connectionResult.getErrorMessage());
         }
     }
 
