@@ -3,10 +3,9 @@ package com.telerikacademy.meetup.views.home;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +14,12 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.models.Location;
 import com.telerikacademy.meetup.services.base.LocationProvider;
+import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
 import com.telerikacademy.meetup.utils.base.IUserSession;
@@ -40,6 +38,8 @@ public class HomeActivity extends AppCompatActivity {
     LocationProvider locationProvider;
     @Inject
     IUserSession userSession;
+    @Inject
+    IDialogFactory dialogFactory;
 
     @BindView(R.id.tv_location_title)
     TextView currentLocationTitle;
@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         injectDependencies();
+
+        dialogFactory.initialize(this);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -177,17 +179,17 @@ public class HomeActivity extends AppCompatActivity {
     protected void showEnableLocationDialog() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            new MaterialDialog.Builder(this)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+            dialogFactory
+                    .createDialog()
+                    .withTitle(R.string.enable_location_dialog_title)
+                    .withPositiveButton(R.string.enable_location_dialog_positive, new Dialog.OnOptionButtonClick() {
                         @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        public void onClick() {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                         }
                     })
-                    .title("Enable location service?")
-                    .positiveText("Yes")
-                    .negativeText("No")
-                    .iconRes(R.drawable.ic_location_gps)
+                    .withNegativeButton(R.string.enable_location_dialog_negative, null)
+                    .withIcon(R.drawable.ic_location_gps)
                     .show();
         }
     }

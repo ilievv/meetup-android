@@ -30,9 +30,9 @@ public class ToolbarFragment extends Fragment
         implements IToolbar {
 
     @Inject
-    IUserSession userSession;
-    @Inject
     Drawer navigationDrawer;
+    @Inject
+    IUserSession userSession;
     @Inject
     IDrawerItemFactory drawerItemFactory;
 
@@ -64,6 +64,8 @@ public class ToolbarFragment extends Fragment
         toolbar = (Toolbar) currentActivity.findViewById(R.id.toolbar);
         currentActivity.setSupportActionBar(toolbar);
         actionBar = currentActivity.getSupportActionBar();
+
+        navigationDrawer.initialize(currentActivity);
     }
 
     public void setNavigationOnClickListener() {
@@ -182,7 +184,6 @@ public class ToolbarFragment extends Fragment
                 .withIcon(GoogleMaterial.Icon.gmd_explore);
 
         navigationDrawer
-                .initialize(currentActivity)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)

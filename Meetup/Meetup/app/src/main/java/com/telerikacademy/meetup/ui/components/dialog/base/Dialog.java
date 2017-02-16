@@ -1,11 +1,14 @@
 package com.telerikacademy.meetup.ui.components.dialog.base;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 public abstract class Dialog {
+
+    public abstract Dialog initialize(@NonNull Activity activity);
 
     public abstract Dialog withTitle(@NonNull CharSequence title);
 

@@ -39,6 +39,4 @@ public interface ApplicationComponent {
     void inject(ToolbarFragment toolbarFragment);
 
     void inject(MaterialDrawerItemFactory materialDrawerItemFactory);
-
-    void inject(MaterialDialog materialDialog);
 }
