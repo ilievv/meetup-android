@@ -10,52 +10,44 @@ import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 
 public class MaterialDialog extends Dialog {
 
-    private com.afollestad.materialdialogs.MaterialDialog.Builder dialogBuilder;
+    private final com.afollestad.materialdialogs.MaterialDialog.Builder dialogBuilder;
 
-    @Override
-    public Dialog initialize(@NonNull Activity activity) {
+    public MaterialDialog(@NonNull Activity activity) {
         dialogBuilder = new com.afollestad.materialdialogs.MaterialDialog.Builder(activity);
-        return this;
     }
 
     @Override
     public Dialog withTitle(@NonNull CharSequence title) {
-        throwIfUninitialized();
         dialogBuilder.title(title);
         return this;
     }
 
     @Override
     public Dialog withTitle(@StringRes int title) {
-        throwIfUninitialized();
         dialogBuilder.title(title);
         return this;
     }
 
     @Override
     public Dialog withContent(@NonNull CharSequence content) {
-        throwIfUninitialized();
         dialogBuilder.content(content);
         return this;
     }
 
     @Override
     public Dialog withContent(@StringRes int content) {
-        throwIfUninitialized();
         dialogBuilder.content(content);
         return this;
     }
 
     @Override
     public Dialog withIcon(@NonNull Drawable icon) {
-        throwIfUninitialized();
         dialogBuilder.icon(icon);
         return this;
     }
 
     @Override
     public Dialog withIcon(@DrawableRes int icon) {
-        throwIfUninitialized();
         dialogBuilder.iconRes(icon);
         return this;
     }
@@ -64,7 +56,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withPositiveButton(@StringRes int text,
                                      final OnOptionButtonClick onPositiveListener) {
 
-        throwIfUninitialized();
         dialogBuilder.positiveText(text);
         if (onPositiveListener != null) {
             dialogBuilder.onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -82,7 +73,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withPositiveButton(@NonNull CharSequence text,
                                      final OnOptionButtonClick onPositiveListener) {
 
-        throwIfUninitialized();
         dialogBuilder.positiveText(text);
         if (onPositiveListener != null) {
             dialogBuilder.onPositive(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -100,7 +90,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withNeutralButton(@StringRes int text,
                                     final OnOptionButtonClick onNeutralListener) {
 
-        throwIfUninitialized();
         dialogBuilder.neutralText(text);
         if (onNeutralListener != null) {
             dialogBuilder.onNeutral(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -118,7 +107,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withNeutralButton(@NonNull CharSequence text,
                                     final OnOptionButtonClick onNeutralListener) {
 
-        throwIfUninitialized();
         dialogBuilder.neutralText(text);
         if (onNeutralListener != null) {
             dialogBuilder.onNeutral(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -136,7 +124,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withNegativeButton(@StringRes int text,
                                      final OnOptionButtonClick onNegativeListener) {
 
-        throwIfUninitialized();
         dialogBuilder.negativeText(text);
         if (onNegativeListener != null) {
             dialogBuilder.onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -154,7 +141,6 @@ public class MaterialDialog extends Dialog {
     public Dialog withNegativeButton(@NonNull CharSequence text,
                                      final OnOptionButtonClick onNegativeListener) {
 
-        throwIfUninitialized();
         dialogBuilder.negativeText(text);
         if (onNegativeListener != null) {
             dialogBuilder.onNegative(new com.afollestad.materialdialogs.MaterialDialog.SingleButtonCallback() {
@@ -170,13 +156,6 @@ public class MaterialDialog extends Dialog {
 
     @Override
     public void show() {
-        throwIfUninitialized();
         dialogBuilder.show();
-    }
-
-    private void throwIfUninitialized() {
-        if (dialogBuilder == null) {
-            throw new RuntimeException("Dialog is not initialized.");
-        }
     }
 }

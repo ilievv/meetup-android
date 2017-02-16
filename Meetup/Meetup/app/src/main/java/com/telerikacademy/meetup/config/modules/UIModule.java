@@ -17,7 +17,6 @@ import javax.inject.Singleton;
 public class UIModule {
 
     @Provides
-    @Singleton
     Drawer provideNavigationDrawer() {
         return new MaterialDrawer();
     }

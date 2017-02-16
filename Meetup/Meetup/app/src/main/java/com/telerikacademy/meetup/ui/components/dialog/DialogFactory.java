@@ -16,7 +16,7 @@ public final class DialogFactory implements IDialogFactory {
     @Override
     public Dialog createDialog() {
         throwIfUninitialized();
-        return new MaterialDialog().initialize(activity);
+        return new MaterialDialog(activity);
     }
 
     private void throwIfUninitialized() {
