@@ -28,6 +28,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     @BindView(R.id.et_search)
     AutoCompleteTextView searchInput;
 
+    private IToolbar toolbar;
     private FragmentManager fragmentManager;
 
     @Override
@@ -37,6 +38,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
+        toolbar = (IToolbar) fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         NearbyVenuesRecyclerAdapter recyclerAdapter =
@@ -90,18 +92,18 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onStart();
         String type = getIntent().getStringExtra(VENUE_TYPE_TAG);
         Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
+
+        if (toolbar != null) {
+            toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        IToolbar toolbar = (IToolbar)
-                fragmentManager.findFragmentById(R.id.fragment_toolbar);
-
         if (toolbar != null) {
             toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
-            toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
         }
 
         return true;

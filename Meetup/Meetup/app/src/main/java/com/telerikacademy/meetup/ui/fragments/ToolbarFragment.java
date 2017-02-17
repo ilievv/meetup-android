@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.*;
-import android.widget.Toast;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.telerikacademy.meetup.BaseApplication;
@@ -100,7 +99,8 @@ public class ToolbarFragment extends Fragment
         nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 
         if (userSession.isUserLoggedIn()) {
-            DrawerItem itemSignOut = drawerItemFactory.createPrimaryDrawerItem()
+            DrawerItem itemSignOut = drawerItemFactory
+                    .createPrimaryDrawerItem()
                     .withName("Sign out")
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
@@ -126,12 +126,14 @@ public class ToolbarFragment extends Fragment
                         }
                     });
         } else {
-            DrawerItem itemSignIn = drawerItemFactory.createPrimaryDrawerItem()
+            DrawerItem itemSignIn = drawerItemFactory
+                    .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_in)
                     .withName("Sign in")
                     .withIcon(FontAwesome.Icon.faw_sign_in);
 
-            DrawerItem itemSignUp = drawerItemFactory.createPrimaryDrawerItem()
+            DrawerItem itemSignUp = drawerItemFactory
+                    .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_up)
                     .withName("Sign up")
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
@@ -174,12 +176,14 @@ public class ToolbarFragment extends Fragment
     }
 
     private void createDrawerBuilder() {
-        DrawerItem itemHome = drawerItemFactory.createPrimaryDrawerItem()
+        DrawerItem itemHome = drawerItemFactory
+                .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_home)
                 .withName("Home")
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
-        DrawerItem itemNearbyVenues = drawerItemFactory.createPrimaryDrawerItem()
+        DrawerItem itemNearbyVenues = drawerItemFactory
+                .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_nearby_venues)
                 .withName("Explore")
                 .withIcon(GoogleMaterial.Icon.gmd_explore);
