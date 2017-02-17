@@ -9,6 +9,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
+import com.telerikacademy.meetup.views.home.base.IHomeHeader;
 
 public class HomeActivity extends AppCompatActivity {
 

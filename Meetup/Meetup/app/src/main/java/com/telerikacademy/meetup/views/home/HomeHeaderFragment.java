@@ -22,6 +22,7 @@ import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.utils.base.IPermissionHandler;
+import com.telerikacademy.meetup.views.home.base.IHomeHeader;
 
 import javax.inject.Inject;
 
