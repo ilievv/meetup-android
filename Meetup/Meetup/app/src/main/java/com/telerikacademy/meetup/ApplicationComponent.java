@@ -8,6 +8,7 @@ import com.telerikacademy.meetup.utils.UserSession;
 import com.telerikacademy.meetup.views.home.HomeActivity;
 import com.telerikacademy.meetup.views.home.HomeContentFragment;
 import com.telerikacademy.meetup.views.home.HomeHeaderFragment;
+import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesContentFragment;
 import com.telerikacademy.meetup.views.sign_in.SignInActivity;
 import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
 import dagger.Component;
@@ -44,4 +45,6 @@ public interface ApplicationComponent {
     void inject(HomeContentFragment homeContentFragment);
 
     void inject(HomeHeaderFragment homeToolbarFragment);
+
+    void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 }

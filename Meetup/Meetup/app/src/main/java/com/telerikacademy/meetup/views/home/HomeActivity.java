@@ -34,16 +34,11 @@ public class HomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_update_location)
     void updateLocation() {
-        if (homeHeader != null) {
-            homeHeader.updateLocation();
-        }
+        homeHeader.updateLocation();
     }
 
     protected void onStart() {
         super.onStart();
-
-        if (toolbar != null) {
-            toolbar.setNavigationDrawer(R.layout.activity_home);
-        }
+        toolbar.setNavigationDrawer(R.layout.activity_home);
     }
 }
