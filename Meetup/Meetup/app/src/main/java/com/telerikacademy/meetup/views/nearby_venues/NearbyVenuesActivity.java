@@ -55,36 +55,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         if (searchFragment != null) {
             searchFragment.setFilter(searchInput, recyclerAdapter);
         }
-
-/*        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    fragmentManager
-                            .beginTransaction()
-                            .setCustomAnimations(R.anim.slide_down, R.anim.slide_out)
-                            .show(searchFragment)
-                            .commit();
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                boolean hasChanged = dy > 50 || dy < -50;
-                boolean isVisible = searchFragment != null && searchFragment.isVisible();
-                if (hasChanged && isVisible) {
-                    fragmentManager
-                            .beginTransaction()
-                            .setCustomAnimations(R.anim.slide_down, R.anim.slide_out)
-                            .hide(searchFragment)
-                            .commit();
-                }
-
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });*/
     }
 
     @Override
