@@ -12,9 +12,9 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.models.Venue;
 import com.telerikacademy.meetup.ui.fragments.SearchHeaderFragment;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
-import com.telerikacademy.meetup.models.Venue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
             searchFragment.setFilter(searchInput, recyclerAdapter);
         }
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+/*        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -82,7 +82,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
                 super.onScrolled(recyclerView, dx, dy);
             }
-        });
+        });*/
     }
 
     @Override
@@ -93,15 +93,15 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
 
-        IToolbar toolbarFragment = (IToolbar)
-                this.fragmentManager.findFragmentById(R.id.fragment_toolbar);
+        IToolbar toolbar = (IToolbar)
+                fragmentManager.findFragmentById(R.id.fragment_toolbar);
 
-        if (toolbarFragment != null) {
-            toolbarFragment.inflateMenu(R.menu.main, menu, getMenuInflater());
-            toolbarFragment.setNavigationDrawer(R.layout.activity_nearby_venues);
+        if (toolbar != null) {
+            toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
+            toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
         }
 
         return true;

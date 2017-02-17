@@ -1,8 +1,7 @@
 package com.telerikacademy.meetup;
 
 import com.telerikacademy.meetup.config.modules.*;
-import com.telerikacademy.meetup.services.GoogleLocationProvider;
-import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
+import com.telerikacademy.meetup.providers.GoogleLocationProvider;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.utils.UserSession;

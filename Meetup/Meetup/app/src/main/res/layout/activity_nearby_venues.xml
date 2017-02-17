@@ -6,14 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:fitsSystemWindows="true"
         tools:context="com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity">
 
     <fragment
             android:id="@+id/fragment_toolbar"
             android:name="com.telerikacademy.meetup.ui.fragments.ToolbarFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="?android:attr/actionBarSize"/>
 
     <fragment
             android:id="@+id/fragment_search_header"

@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.services;
+package com.telerikacademy.meetup.providers;
 
 import android.content.Context;
 import android.location.Address;
@@ -13,7 +13,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.telerikacademy.meetup.services.base.LocationProvider;
+import com.telerikacademy.meetup.providers.base.LocationProvider;
 
 import javax.inject.Inject;
 import java.io.IOException;

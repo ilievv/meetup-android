@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.models.Location;
-import com.telerikacademy.meetup.services.base.LocationProvider;
+import com.telerikacademy.meetup.providers.base.LocationProvider;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
