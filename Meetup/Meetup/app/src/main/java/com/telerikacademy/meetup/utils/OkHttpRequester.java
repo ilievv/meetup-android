@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.utils;
 
 import com.telerikacademy.meetup.utils.base.IHttpRequester;
 import com.telerikacademy.meetup.utils.base.IHttpResponse;
-import com.telerikacademy.meetup.utils.base.IHttpResponseFactory;
+import com.telerikacademy.meetup.providers.base.IHttpResponseFactory;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import okhttp3.*;

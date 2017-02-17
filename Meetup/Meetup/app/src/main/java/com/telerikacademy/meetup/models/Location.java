@@ -1,29 +1,16 @@
 package com.telerikacademy.meetup.models;
 
-public class Location {
+import com.telerikacademy.meetup.models.base.ILocation;
+
+public class Location implements ILocation {
 
     private final String STRING_EMPTY = "";
 
-    private final double latitude;
-    private final double longitude;
-
+    private double latitude;
+    private double longitude;
     private String locality;
     private String thoroughfare;
     private String subThoroughfare;
-
-    public Location(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
-
-    public Location(double latitude, double longitude, String locality,
-                    String thoroughfare, String subThoroughfare) {
-
-        this(latitude, longitude);
-        this.locality = locality;
-        this.thoroughfare = thoroughfare;
-        this.subThoroughfare = subThoroughfare;
-    }
 
     public double getLatitude() {
         return latitude;
@@ -43,6 +30,26 @@ public class Location {
 
     public String getSubThoroughfare() {
         return subThoroughfare;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLocality(String locality) {
+        this.locality = locality;
+    }
+
+    public void setThoroughfare(String thoroughfare) {
+        this.thoroughfare = thoroughfare;
+    }
+
+    public void setSubThoroughfare(String subThoroughfare) {
+        this.subThoroughfare = subThoroughfare;
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerI
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.utils.UserSession;
 import com.telerikacademy.meetup.views.home.HomeActivity;
+import com.telerikacademy.meetup.views.home.HomeContentFragment;
+import com.telerikacademy.meetup.views.home.HomeHeaderFragment;
 import com.telerikacademy.meetup.views.sign_in.SignInActivity;
 import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
 import dagger.Component;
@@ -17,7 +19,7 @@ import javax.inject.Singleton;
 @Component(modules = {
         AndroidModule.class,
         UtilModule.class,
-        ServiceModule.class,
+        ProviderModule.class,
         NetworkModule.class,
         UIModule.class
 })
@@ -38,4 +40,8 @@ public interface ApplicationComponent {
     void inject(ToolbarFragment toolbarFragment);
 
     void inject(MaterialDrawerItemFactory materialDrawerItemFactory);
+
+    void inject(HomeContentFragment homeContentFragment);
+
+    void inject(HomeHeaderFragment homeToolbarFragment);
 }

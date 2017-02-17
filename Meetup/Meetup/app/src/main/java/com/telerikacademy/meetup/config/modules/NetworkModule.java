@@ -1,9 +1,9 @@
 package com.telerikacademy.meetup.config.modules;
 
 import com.telerikacademy.meetup.utils.OkHttpRequester;
-import com.telerikacademy.meetup.utils.ResponseFactory;
+import com.telerikacademy.meetup.providers.ResponseFactory;
 import com.telerikacademy.meetup.utils.base.IHttpRequester;
-import com.telerikacademy.meetup.utils.base.IHttpResponseFactory;
+import com.telerikacademy.meetup.providers.base.IHttpResponseFactory;
 import dagger.Module;
 import dagger.Provides;
 

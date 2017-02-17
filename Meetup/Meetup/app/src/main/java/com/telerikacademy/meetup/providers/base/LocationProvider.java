@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.providers.base;
 
-import com.telerikacademy.meetup.models.Location;
+import com.telerikacademy.meetup.models.base.ILocation;
 
 public abstract class LocationProvider {
 
@@ -19,7 +19,7 @@ public abstract class LocationProvider {
     public abstract void setOnLocationChangeListener(IOnLocationChangeListener onLocationChangeListener);
 
     public interface IOnConnectedListener {
-        void onConnected(Location location);
+        void onConnected(ILocation location);
     }
 
     public interface IOnConnectionFailedListener {
@@ -27,6 +27,6 @@ public abstract class LocationProvider {
     }
 
     public interface IOnLocationChangeListener {
-        void onLocationChange(Location location);
+        void onLocationChange(ILocation location);
     }
 }

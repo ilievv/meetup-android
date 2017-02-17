@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
 
         IToolbar menuInflater = (IToolbar)
-                fragmentManager.findFragmentById(R.id.fragment_toolbar);
+                fragmentManager.findFragmentById(R.id.fragment_home_header);
 
         if (menuInflater != null) {
             menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());

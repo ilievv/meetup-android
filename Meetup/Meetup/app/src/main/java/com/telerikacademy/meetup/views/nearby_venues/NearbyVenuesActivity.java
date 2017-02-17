@@ -38,7 +38,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         injectDependencies();
 
         fragmentManager = getSupportFragmentManager();
-        toolbar = (IToolbar) fragmentManager.findFragmentById(R.id.fragment_toolbar);
+        toolbar = (IToolbar) fragmentManager.findFragmentById(R.id.fragment_home_header);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         NearbyVenuesRecyclerAdapter recyclerAdapter =

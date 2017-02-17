@@ -8,7 +8,7 @@
         tools:context="com.telerikacademy.meetup.views.venue_details.VenueDetailsActivity">
 
     <fragment
-            android:id="@+id/fragment_toolbar"
+            android:id="@+id/fragment_home_header"
             android:name="com.telerikacademy.meetup.ui.fragments.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

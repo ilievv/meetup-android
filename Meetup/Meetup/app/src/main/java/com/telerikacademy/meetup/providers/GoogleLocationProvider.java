@@ -13,6 +13,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.telerikacademy.meetup.models.base.ILocation;
+import com.telerikacademy.meetup.providers.base.ILocationFactory;
 import com.telerikacademy.meetup.providers.base.LocationProvider;
 
 import javax.inject.Inject;
@@ -25,7 +27,11 @@ public class GoogleLocationProvider extends LocationProvider
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    private static final int INTERVAL = 10000;
+    private static final int FASTEST_INTERVAL = 10000;
+
     private final Context context;
+    private final ILocationFactory locationFactory;
 
     private IOnConnectedListener onConnectedListener;
     private IOnConnectionFailedListener onConnectionFailedListener;
@@ -35,8 +41,9 @@ public class GoogleLocationProvider extends LocationProvider
     private LocationRequest locationRequest;
 
     @Inject
-    public GoogleLocationProvider(Context context) {
+    public GoogleLocationProvider(Context context, ILocationFactory locationFactory) {
         this.context = context;
+        this.locationFactory = locationFactory;
 
         this.buildGoogleApiClient();
         this.createLocationRequest();
@@ -125,12 +132,12 @@ public class GoogleLocationProvider extends LocationProvider
         if (this.locationRequest == null) {
             this.locationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(10000)
-                    .setFastestInterval(10000);
+                    .setInterval(INTERVAL)
+                    .setFastestInterval(FASTEST_INTERVAL);
         }
     }
 
-    private com.telerikacademy.meetup.models.Location parseLocation(Location location) {
+    private ILocation parseLocation(Location location) {
         if (location == null) {
             return null;
         }
@@ -154,8 +161,7 @@ public class GoogleLocationProvider extends LocationProvider
             String thoroughfare = address.getThoroughfare();
             String subThoroughfare = address.getSubThoroughfare();
 
-            // TODO: Create through location factory
-            return new com.telerikacademy.meetup.models.Location(latitude, longitude,
+            return locationFactory.createLocation(latitude, longitude,
                     locality, thoroughfare, subThoroughfare);
         }
 
