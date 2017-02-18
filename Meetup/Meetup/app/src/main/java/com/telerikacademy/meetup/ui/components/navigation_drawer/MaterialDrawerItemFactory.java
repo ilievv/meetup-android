@@ -1,6 +1,7 @@
 package com.telerikacademy.meetup.ui.components.navigation_drawer;
 
 import android.content.Context;
+import com.telerikacademy.meetup.config.di.qualifier.ApplicationContext;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 
@@ -11,7 +12,7 @@ public class MaterialDrawerItemFactory implements IDrawerItemFactory {
     private final Context context;
 
     @Inject
-    public MaterialDrawerItemFactory(Context context) {
+    public MaterialDrawerItemFactory(@ApplicationContext Context context) {
         this.context = context;
     }
 

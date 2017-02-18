@@ -9,7 +9,9 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.*;
+import android.widget.Toast;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.telerikacademy.meetup.BaseApplication;
@@ -18,11 +20,11 @@ import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
-import com.telerikacademy.meetup.utils.base.IUserSession;
-import com.telerikacademy.meetup.views.home.HomeActivity;
-import com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity;
-import com.telerikacademy.meetup.views.sign_in.SignInActivity;
-import com.telerikacademy.meetup.views.sign_up.SignUpActivity;
+import com.telerikacademy.meetup.util.base.IUserSession;
+import com.telerikacademy.meetup.view.home.HomeActivity;
+import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
+import com.telerikacademy.meetup.view.sign_in.SignInActivity;
+import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 
 import javax.inject.Inject;
 
@@ -201,9 +203,9 @@ public class ToolbarFragment extends Fragment
     }
 
     private void injectDependencies() {
-        ((BaseApplication) getActivity()
-                .getApplication())
-                .getApplicationComponent()
+        BaseApplication
+                .from(getContext())
+                .getComponent()
                 .inject(this);
     }
 }

@@ -5,7 +5,7 @@
         android:id="@+id/activity_venue_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.telerikacademy.meetup.views.venue_details.VenueDetailsActivity">
+        tools:context="com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity">
 
     <fragment
             android:id="@+id/fragment_home_header"

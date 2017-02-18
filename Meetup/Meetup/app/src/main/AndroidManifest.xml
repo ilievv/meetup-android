@@ -20,7 +20,7 @@
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
 
         <activity
-                android:name=".views.home.HomeActivity">
+                android:name=".view.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -30,23 +30,23 @@
         </activity>
 
         <activity
-                android:name=".views.nearby_venues.NearbyVenuesActivity"
+                android:name=".view.nearby_venues.NearbyVenuesActivity"
                 android:label="@string/local_venues_label"
-                android:parentActivityName=".views.home.HomeActivity">
+                android:parentActivityName=".view.home.HomeActivity">
         </activity>
 
         <activity
-                android:name=".views.venue_details.VenueDetailsActivity"
-                android:parentActivityName=".views.nearby_venues.NearbyVenuesActivity">
+                android:name=".view.venue_details.VenueDetailsActivity"
+                android:parentActivityName=".view.nearby_venues.NearbyVenuesActivity">
         </activity>
 
         <activity
-                android:name=".views.sign_in.SignInActivity"
+                android:name=".view.sign_in.SignInActivity"
                 android:theme="@style/SignInTheme">
         </activity>
 
         <activity
-                android:name=".views.sign_up.SignUpActivity"
+                android:name=".view.sign_up.SignUpActivity"
                 android:theme="@style/SignInTheme">
         </activity>
 

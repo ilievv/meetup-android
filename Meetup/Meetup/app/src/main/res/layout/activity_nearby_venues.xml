@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesActivity">
+        tools:context="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity">
 
     <fragment
             android:id="@+id/fragment_home_header"
@@ -22,7 +22,7 @@
 
     <fragment
             android:id="@+id/fragment_nearby_venues_content"
-            android:name="com.telerikacademy.meetup.views.nearby_venues.NearbyVenuesContentFragment"
+            android:name="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

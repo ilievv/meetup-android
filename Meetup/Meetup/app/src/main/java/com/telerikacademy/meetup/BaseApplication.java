@@ -1,9 +1,11 @@
 package com.telerikacademy.meetup;
 
 import android.app.Application;
-import com.telerikacademy.meetup.config.di.components.ApplicationComponent;
-import com.telerikacademy.meetup.config.di.components.DaggerApplicationComponent;
-import com.telerikacademy.meetup.config.di.modules.AndroidModule;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import com.telerikacademy.meetup.config.di.component.ApplicationComponent;
+import com.telerikacademy.meetup.config.di.component.DaggerApplicationComponent;
+import com.telerikacademy.meetup.config.di.module.ApplicationModule;
 
 public class BaseApplication extends Application {
 
@@ -13,12 +15,17 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        applicationComponent = DaggerApplicationComponent.builder()
-                .androidModule(new AndroidModule(getApplicationContext()))
+        applicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
+    public ApplicationComponent getComponent() {
         return applicationComponent;
+    }
+
+    public static BaseApplication from(@NonNull Context context) {
+        return (BaseApplication) context.getApplicationContext();
     }
 }
