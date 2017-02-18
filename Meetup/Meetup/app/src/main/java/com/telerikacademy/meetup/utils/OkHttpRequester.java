@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
 public class OkHttpRequester implements IHttpRequester {
 
     private final IHttpResponseFactory responseFactory;
-
     private final OkHttpClient httpClient;
 
     @Inject

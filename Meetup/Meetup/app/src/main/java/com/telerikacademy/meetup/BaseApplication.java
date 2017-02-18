@@ -13,12 +13,12 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        this.applicationComponent = DaggerApplicationComponent.builder()
+        applicationComponent = DaggerApplicationComponent.builder()
                 .androidModule(new AndroidModule(getApplicationContext()))
                 .build();
     }
 
     public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+        return applicationComponent;
     }
 }
