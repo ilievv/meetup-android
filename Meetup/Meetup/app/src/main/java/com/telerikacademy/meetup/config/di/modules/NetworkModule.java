@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.config.modules;
+package com.telerikacademy.meetup.config.di.modules;
 
 import com.telerikacademy.meetup.utils.OkHttpRequester;
 import com.telerikacademy.meetup.providers.ResponseFactory;

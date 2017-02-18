@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.config.modules;
+package com.telerikacademy.meetup.config.di.modules;
 
 import android.content.Context;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Module
-public class UIModule {
+public class UiModule {
 
     @Provides
     Drawer provideNavigationDrawer() {

@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.config.modules;
+package com.telerikacademy.meetup.config.di.modules;
 
 import android.content.Context;
 import com.telerikacademy.meetup.utils.GsonParser;
@@ -29,7 +29,7 @@ public class UtilModule {
 
     @Provides
     @Singleton
-    IJsonParser provideJsonParser(Context context) {
+    IJsonParser provideJsonParser() {
         return new GsonParser();
     }
 }

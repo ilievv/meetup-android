@@ -1,6 +1,6 @@
-package com.telerikacademy.meetup;
+package com.telerikacademy.meetup.config.di.components;
 
-import com.telerikacademy.meetup.config.modules.*;
+import com.telerikacademy.meetup.config.di.modules.*;
 import com.telerikacademy.meetup.providers.GoogleLocationProvider;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
@@ -22,11 +22,17 @@ import javax.inject.Singleton;
         UtilModule.class,
         ProviderModule.class,
         NetworkModule.class,
-        UIModule.class
+        UiModule.class
 })
 public interface ApplicationComponent {
 
     void inject(HomeActivity homeActivity);
+
+    void inject(HomeContentFragment homeContentFragment);
+
+    void inject(HomeHeaderFragment homeToolbarFragment);
+
+    void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 
     void inject(SignInActivity signInActivity);
 
@@ -41,10 +47,4 @@ public interface ApplicationComponent {
     void inject(ToolbarFragment toolbarFragment);
 
     void inject(MaterialDrawerItemFactory materialDrawerItemFactory);
-
-    void inject(HomeContentFragment homeContentFragment);
-
-    void inject(HomeHeaderFragment homeToolbarFragment);
-
-    void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 }

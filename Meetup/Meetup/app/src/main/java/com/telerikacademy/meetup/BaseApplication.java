@@ -1,7 +1,9 @@
 package com.telerikacademy.meetup;
 
 import android.app.Application;
-import com.telerikacademy.meetup.config.modules.AndroidModule;
+import com.telerikacademy.meetup.config.di.components.ApplicationComponent;
+import com.telerikacademy.meetup.config.di.components.DaggerApplicationComponent;
+import com.telerikacademy.meetup.config.di.modules.AndroidModule;
 
 public class BaseApplication extends Application {
 

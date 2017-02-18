@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.config.modules;
+package com.telerikacademy.meetup.config.di.modules;
 
 import android.content.Context;
 import dagger.Module;
