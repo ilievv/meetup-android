@@ -16,6 +16,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
+import com.telerikacademy.meetup.util.base.IHashProvider;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
@@ -39,6 +40,8 @@ public class SignInActivity extends AppCompatActivity {
     IJsonParser jsonParser;
     @Inject
     IUserSession userSession;
+    @Inject
+    IHashProvider hashProvider;
 
     @BindView(R.id.username)
     EditText usernameEditText;
@@ -74,22 +77,29 @@ public class SignInActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // TODO add to resourse
-        if (username.equals("") || password.equals("")) {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
+        if (username.equals("")) {
+            this.usernameEditText.setError(getString(R.string.enter_username));
             return;
         }
 
+        if (password.equals("")) {
+            this.passwordEditText.setError(getString(R.string.enter_password));
+            return;
+        }
+
+        String passHash = this.hashProvider.providePasswordHash(password);
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
-        map.put("passHash", password);
+        map.put("passHash", passHash);
 
-        String url = "https://telerik-meetup.herokuapp.com/auth/login";
+        String url = this.getString(R.string.auth_login_post);
 
         final Context context = getApplicationContext();
         final Activity currentActivity = this;
         final IUserSession userSession = this.userSession;
         final IJsonParser jsonParser = this.jsonParser;
+        final EditText usernameEditText = this.usernameEditText;
+        final EditText passwordEditText = this.passwordEditText;
 
         this.httpRequester.post(url, map)
                 .subscribeOn(Schedulers.io())
@@ -108,13 +118,14 @@ public class SignInActivity extends AppCompatActivity {
                             userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                             resultUser = jsonParser.fromJson(userJsonObject, User.class);
                         } catch (IllegalStateException e) {
-                            Toast.makeText(context, "Invalid username or password", Toast.LENGTH_LONG).show();
+                            usernameEditText.setError(getString(R.string.invalid_details));
+                            passwordEditText.setError(getString(R.string.invalid_details));
                             return;
                         }
 
                         userSession.setUsername(resultUser.getUsername());
                         userSession.setId(resultUser.getId());
-                        Toast.makeText(context, "You are now signed in as " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, getString(R.string.sign_in_successfull) + " " + resultUser.getUsername(), Toast.LENGTH_LONG).show();
                         Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
                         startActivity(homeIntent);
                     }

@@ -13,7 +13,7 @@
         <item name="android:textColor">#f0eded</item>
     </style>
 
-    <style name="SignInTheme.TextInputLayout" parent="TextAppearance.AppCompat">
+    <style name="SignInTheme.TextInputLayout" parent="AppTheme">
         <item name="android:textColorHint">#e1dbdb</item>
         <item name="colorControlNormal">#e1dbdb</item>
         <item name="colorControlActivated">#f0eded</item>

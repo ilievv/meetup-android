@@ -15,10 +15,12 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
+import com.telerikacademy.meetup.util.base.IHashProvider;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
 import com.telerikacademy.meetup.util.base.IUserSession;
+import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -37,6 +39,10 @@ public class SignUpActivity extends AppCompatActivity {
     IJsonParser jsonParser;
     @Inject
     IUserSession userSession;
+    @Inject
+    IValidator validator;
+    @Inject
+    IHashProvider hashProvider;
 
     @BindView(R.id.username)
     EditText usernameEditText;
@@ -72,21 +78,28 @@ public class SignUpActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // TODO add to resourse
-        if (username.equals("") || password.equals("")) {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show();
+        if(!validator.isUsernameValid(username)){
+            this.usernameEditText.setError(this.getString(R.string.short_username));
             return;
         }
 
+        if(!validator.isPasswordValid(password)){
+            this.passwordEditText.setError(this.getString(R.string.short_password));
+            return;
+        }
+
+        String passHash = this.hashProvider.providePasswordHash(password);
+
         Map<String, String> map = new HashMap<>();
         map.put("username", username);
-        map.put("passHash", password);
+        map.put("passHash", passHash);
 
-        final String url = "https://telerik-meetup.herokuapp.com/auth/register";
+        final String url = this.getString(R.string.auth_register_post);
 
         final Activity currentActivity = this;
         final IUserSession userSession = this.userSession;
         final IJsonParser jsonParser = this.jsonParser;
+        final EditText usernameEditText = this.usernameEditText;
 
         this.httpRequester.post(url, map)
                 .subscribeOn(Schedulers.io())
@@ -106,12 +119,12 @@ public class SignUpActivity extends AppCompatActivity {
                             userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
                             resultUser = jsonParser.fromJson(userJsonObject, User.class);
                         } catch (IllegalStateException e) {
-                            Toast.makeText(currentActivity, "Username already exists", Toast.LENGTH_LONG).show();
+                            usernameEditText.setError(getString(R.string.existing_username));
                             return;
                         }
 
-                        Toast.makeText(currentActivity, "Sign up successfull!", Toast.LENGTH_LONG).show();
-                        Toast.makeText(currentActivity, "You may sign in now...", Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, getString(R.string.sign_up_successfull), Toast.LENGTH_LONG).show();
+                        Toast.makeText(currentActivity, getString(R.string.sign_in_redirect), Toast.LENGTH_LONG).show();
 
                         Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
                         signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
