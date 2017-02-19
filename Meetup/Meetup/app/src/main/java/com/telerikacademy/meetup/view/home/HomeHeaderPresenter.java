@@ -1,24 +1,119 @@
 package com.telerikacademy.meetup.view.home;
 
-import com.telerikacademy.meetup.view.home.base.HomeHeaderContract;
+import android.util.Log;
+import com.telerikacademy.meetup.model.base.ILocation;
+import com.telerikacademy.meetup.provider.base.LocationProvider;
+import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
-public class HomeHeaderPresenter implements HomeHeaderContract.Presenter {
+import javax.inject.Inject;
 
-    private HomeHeaderContract.View view;
-    private HomeActivity activity;
+public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
 
-    @Override
-    public void initialize(HomeHeaderContract.View view, HomeActivity activity) {
-        setView(view);
-        this.activity = activity;
+    private static final String TAG = HomeHeaderPresenter.class.getSimpleName();
+
+    private LocationProvider locationProvider;
+    private IHomeHeaderContract.View view;
+    private ILocation currentLocation;
+
+    @Inject
+    public HomeHeaderPresenter(LocationProvider locationProvider) {
+        this.locationProvider = locationProvider;
+        setupLocationListeners();
     }
 
     @Override
-    public void setView(HomeHeaderContract.View view) {
+    public void setView(IHomeHeaderContract.View view) {
         this.view = view;
     }
 
     @Override
     public void load() {
+    }
+
+    @Override
+    public void subscribe() {
+        locationProvider.connect();
+    }
+
+    @Override
+    public void unsubscribe() {
+        locationProvider.disconnect();
+    }
+
+    @Override
+    public void update() {
+        view.requestPermissions();
+        view.showEnableLocationDialog();
+
+        if (view.checkPermissions() &&
+                !locationProvider.isConnected() &&
+                !locationProvider.isConnecting()) {
+
+            locationProvider.connect();
+        }
+
+        setTitle(currentLocation);
+    }
+
+    private void setupLocationListeners() {
+        locationProvider.setOnLocationChangeListener(new LocationProvider.IOnLocationChangeListener() {
+            @Override
+            public void onLocationChange(ILocation location) {
+                currentLocation = location;
+            }
+        });
+        locationProvider.setOnConnectedListener(new LocationProvider.IOnConnectedListener() {
+            @Override
+            public void onConnected(ILocation location) {
+                currentLocation = location;
+                setTitle(location);
+            }
+        });
+        locationProvider.setOnConnectionFailedListener(new LocationProvider.IOnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(String errorMessage) {
+                Log.e(TAG, errorMessage);
+                setTitle(null);
+            }
+        });
+    }
+
+    private void setTitle(ILocation location) {
+        final String LOCATION_NOT_FOUND = "Unknown location";
+
+        if (location == null) {
+            view.setTitle(LOCATION_NOT_FOUND);
+            return;
+        }
+
+        String locality = location.getLocality();
+        String thoroughfare = location.getThoroughfare();
+        String subThoroughfare = location.getSubThoroughfare();
+
+        locality = locality == null ? "" : locality;
+        thoroughfare = thoroughfare == null ? "" : thoroughfare;
+        subThoroughfare = subThoroughfare == null ? "" : subThoroughfare;
+
+        if (locality.isEmpty() && thoroughfare.isEmpty()) {
+            view.setTitle(LOCATION_NOT_FOUND);
+        } else if (locality.isEmpty()) {
+            view.setTitle(thoroughfare);
+            view.setSubtitle(subThoroughfare);
+        } else {
+            view.setTitle(locality);
+
+            String subtitle;
+            if (!thoroughfare.isEmpty()) {
+                subtitle = thoroughfare;
+
+                if (!subThoroughfare.isEmpty()) {
+                    subtitle = String.format("%s, %s", thoroughfare, subThoroughfare);
+                }
+            } else {
+                subtitle = subThoroughfare;
+            }
+
+            view.setSubtitle(subtitle);
+        }
     }
 }

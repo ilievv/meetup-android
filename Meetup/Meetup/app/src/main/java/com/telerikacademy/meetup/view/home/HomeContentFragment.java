@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,16 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.view.home.base.HomeContentContract;
+import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
+import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 
 public class HomeContentFragment extends Fragment
-        implements HomeContentContract.View {
+        implements IHomeContentContract.View {
 
-    private HomeContentContract.Presenter presenter;
+    private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
+
+    private IHomeContentContract.Presenter presenter;
 
     @Override
-    public void setPresenter(HomeContentContract.Presenter presenter) {
+    public void setPresenter(IHomeContentContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -33,31 +38,49 @@ public class HomeContentFragment extends Fragment
 
     @OnClick(R.id.btn_restaurant)
     void showNearbyRestaurants() {
-        presenter.showNearbyRestaurants();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "restaurant");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_cafe)
     void showNearbyCafes() {
-        presenter.showNearbyCafes();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "cafe");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_pub)
     void showNearbyPubs() {
-        presenter.showNearbyPubs();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "pub");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_fast_food)
     void showNearbyFastFoodRestaurants() {
-        presenter.showNearbyFastFoodRestaurants();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "fast_food");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_night_club)
     void showNightClubs() {
-        presenter.showNearbyNightClubs();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "night_club");
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_other)
     void showOtherVenues() {
-        presenter.showOtherVenues();
+        Intent intent = BaseApplication
+                .createIntent(getActivity(), NearbyVenuesActivity.class)
+                .putExtra(VENUE_TYPE_TAG, "other");
+        startActivity(intent);
     }
 }
