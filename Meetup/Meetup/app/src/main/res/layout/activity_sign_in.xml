@@ -54,7 +54,7 @@
             android:padding="12dp"
             android:textColor="#FFF"
             android:background="#CC1D1D"
-            android:text="@string/sign_in"/>
+            android:text="@string/nav_sign_in"/>
 
     <Button
             android:id="@+id/link_signup"

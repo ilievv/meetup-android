@@ -10,9 +10,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.*;
-import android.widget.Toast;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.telerikacademy.meetup.BaseApplication;
@@ -31,6 +29,13 @@ import javax.inject.Inject;
 
 public class ToolbarFragment extends Fragment
         implements IToolbar {
+
+    private static final int NAV_HOME_ID = 0;
+    private static final int NAV_EXPLORE_ID = 1;
+    private static final int NAV_SIGN_IN_ID = 3;
+    private static final int NAV_SIGN_UP_ID = 4;
+    private static final int NAV_SIGN_OUT_ID = 3;
+    private static final int NAV_DRAWER_WIDTH = 270;
 
     @Inject
     Drawer navigationDrawer;
@@ -95,18 +100,13 @@ public class ToolbarFragment extends Fragment
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         createDrawerBuilder();
 
-        final Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        final Intent nearbyVenuesIntent = new Intent(currentActivity, NearbyVenuesActivity.class);
-        nearbyVenuesIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        final Activity currentActivity = this.currentActivity;
+        final Intent homeIntent = createIntent(HomeActivity.class);
+        final Intent nearbyVenuesIntent = createIntent(NearbyVenuesActivity.class);
 
         if (userSession.isUserLoggedIn()) {
             DrawerItem itemSignOut = drawerItemFactory
                     .createPrimaryDrawerItem()
-                    .withName("Sign out")
+                    .withName(R.string.nav_sign_out)
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
             navigationDrawer
@@ -115,13 +115,13 @@ public class ToolbarFragment extends Fragment
                         @Override
                         public boolean onClick(View view, int position) {
                             switch (position) {
-                                case 0:
+                                case NAV_HOME_ID:
                                     startActivity(homeIntent);
                                     break;
-                                case 1:
+                                case NAV_EXPLORE_ID:
                                     startActivity(nearbyVenuesIntent);
                                     break;
-                                case 3:
+                                case NAV_SIGN_OUT_ID:
                                     userSession.clearSession();
                                     currentActivity.finish();
                                     startActivity(homeIntent);
@@ -135,20 +135,17 @@ public class ToolbarFragment extends Fragment
             DrawerItem itemSignIn = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_in)
-                    .withName("Sign in")
+                    .withName(R.string.nav_sign_in)
                     .withIcon(FontAwesome.Icon.faw_sign_in);
 
             DrawerItem itemSignUp = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_up)
-                    .withName("Sign up")
+                    .withName(R.string.nav_sign_up)
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
-            final Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
-            signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-            final Intent signUpIntent = new Intent(currentActivity, SignUpActivity.class);
-            signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            final Intent signInIntent = createIntent(SignInActivity.class);
+            final Intent signUpIntent = createIntent(SignUpActivity.class);
 
             navigationDrawer
                     .withDrawerItems(
@@ -159,16 +156,16 @@ public class ToolbarFragment extends Fragment
                         @Override
                         public boolean onClick(View view, int position) {
                             switch (position) {
-                                case 0:
+                                case NAV_HOME_ID:
                                     startActivity(homeIntent);
                                     break;
-                                case 1:
+                                case NAV_EXPLORE_ID:
                                     startActivity(nearbyVenuesIntent);
                                     break;
-                                case 3:
+                                case NAV_SIGN_IN_ID:
                                     startActivity(signInIntent);
                                     break;
-                                case 4:
+                                case NAV_SIGN_UP_ID:
                                     startActivity(signUpIntent);
                                     break;
                             }
@@ -185,25 +182,31 @@ public class ToolbarFragment extends Fragment
         DrawerItem itemHome = drawerItemFactory
                 .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_home)
-                .withName("Home")
+                .withName(R.string.nav_home)
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
         DrawerItem itemNearbyVenues = drawerItemFactory
                 .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_nearby_venues)
-                .withName("Explore")
+                .withName(R.string.nav_explore)
                 .withIcon(GoogleMaterial.Icon.gmd_explore);
 
         navigationDrawer
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
-                .withDrawerWidth(270)
+                .withDrawerWidth(NAV_DRAWER_WIDTH)
                 .withDrawerItems(
                         itemHome,
                         itemNearbyVenues,
                         drawerItemFactory.createDividerDrawerItem()
                 );
+    }
+
+    private Intent createIntent(Class<? extends Activity> cls) {
+        Intent intent = new Intent(currentActivity, cls);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        return intent;
     }
 
     private void injectDependencies() {
