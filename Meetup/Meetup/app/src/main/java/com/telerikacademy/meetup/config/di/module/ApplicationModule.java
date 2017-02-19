@@ -2,8 +2,8 @@ package com.telerikacademy.meetup.config.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import com.telerikacademy.meetup.config.di.qualifier.ApplicationContext;
-import com.telerikacademy.meetup.config.di.qualifier.ApplicationScope;
+import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
+import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.provider.GoogleLocationProvider;
 import com.telerikacademy.meetup.provider.HttpResponseFactory;
 import com.telerikacademy.meetup.provider.LocationFactory;

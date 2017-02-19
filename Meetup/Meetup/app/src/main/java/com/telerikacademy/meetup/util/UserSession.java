@@ -3,7 +3,7 @@ package com.telerikacademy.meetup.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.telerikacademy.meetup.config.di.qualifier.ApplicationContext;
+import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.util.base.IUserSession;
 
 import javax.inject.Inject;

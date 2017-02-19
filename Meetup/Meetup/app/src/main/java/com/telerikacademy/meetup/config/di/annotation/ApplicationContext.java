@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.config.di.qualifier;
+package com.telerikacademy.meetup.config.di.annotation;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.Retention;

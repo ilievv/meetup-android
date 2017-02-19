@@ -13,7 +13,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.telerikacademy.meetup.config.di.qualifier.ApplicationContext;
+import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationFactory;
 import com.telerikacademy.meetup.provider.base.LocationProvider;

@@ -1,8 +1,10 @@
 package com.telerikacademy.meetup.config.di.module;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
-import com.telerikacademy.meetup.config.di.qualifier.ControllerScope;
+import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
+import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
@@ -24,6 +26,25 @@ public class ControllerModule {
     public ControllerModule(Activity activity, FragmentManager fragmentManager) {
         this.activity = activity;
         this.fragmentManager = fragmentManager;
+    }
+
+    @Provides
+    @ControllerScope
+    Activity provideActivity() {
+        return activity;
+    }
+
+    @Provides
+    @ActivityContext
+    @ControllerScope
+    Context provideContext() {
+        return activity;
+    }
+
+    @Provides
+    @ControllerScope
+    FragmentManager provideFragmentManager() {
+        return fragmentManager;
     }
 
     @Provides
