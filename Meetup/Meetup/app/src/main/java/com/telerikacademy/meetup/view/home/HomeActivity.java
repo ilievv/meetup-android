@@ -39,17 +39,17 @@ public class HomeActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        content = (HomeContentFragment) fragmentManager
-                .findFragmentById(R.id.fragment_home_content);
-        contentPresenter.setActivity(this);
-        content.setPresenter(contentPresenter);
-
         toolbar = (IToolbar) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
 
+        content = (HomeContentFragment) fragmentManager
+                .findFragmentById(R.id.fragment_home_content);
+        contentPresenter.initialize(content, this);
+        content.setPresenter(contentPresenter);
+
         header = (IHomeHeader) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
-        headerPresenter.setActivity(this);
+        headerPresenter.initialize(header, this);
         header.setPresenter(headerPresenter);
     }
 

@@ -12,9 +12,9 @@ public interface HomeContentContract {
     interface View extends BaseView<Presenter> {
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
 
-        void setActivity(HomeActivity activity);
+        void initialize(View view, HomeActivity activity);
 
         void navigate(Class<? extends Activity> cls);
 

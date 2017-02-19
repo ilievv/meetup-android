@@ -12,17 +12,18 @@ public class HomeContentPresenter implements HomeContentContract.Presenter {
 
     private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
 
-//    private final HomeContentContract.View view;
-
+    private HomeContentContract.View view;
     private HomeActivity activity;
 
-    /*public HomeContentPresenter(HomeContentContract.View view) {
-        this.view = view;
-    }*/
+    @Override
+    public void initialize(HomeContentContract.View view, HomeActivity activity) {
+        setView(view);
+        this.activity = activity;
+    }
 
     @Override
-    public void setActivity(HomeActivity homeActivity) {
-        activity = homeActivity;
+    public void setView(HomeContentContract.View view) {
+        this.view = view;
     }
 
     @Override
