@@ -6,7 +6,7 @@ import com.telerikacademy.meetup.provider.base.IHttpResponseFactory;
 import java.util.List;
 import java.util.Map;
 
-public class ResponseFactory implements IHttpResponseFactory {
+public class HttpResponseFactory implements IHttpResponseFactory {
 
     public IHttpResponse createResponse(
             final Map<String, List<String>> headers, final String body,

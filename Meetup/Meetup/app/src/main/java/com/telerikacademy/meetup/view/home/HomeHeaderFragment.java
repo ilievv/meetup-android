@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
@@ -129,6 +130,9 @@ public class HomeHeaderFragment extends ToolbarFragment
         BaseApplication
                 .from(getContext())
                 .getComponent()
+                .getControllerComponent(new ControllerModule(
+                        getActivity(), getFragmentManager()
+                ))
                 .inject(this);
     }
 }

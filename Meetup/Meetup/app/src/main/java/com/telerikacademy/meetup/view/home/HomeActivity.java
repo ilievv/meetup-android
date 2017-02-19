@@ -9,6 +9,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
@@ -66,6 +67,9 @@ public class HomeActivity extends AppCompatActivity {
         BaseApplication
                 .from(this)
                 .getComponent()
+                .getControllerComponent(new ControllerModule(
+                        this, getSupportFragmentManager()
+                ))
                 .inject(this);
 
         ButterKnife.bind(this);

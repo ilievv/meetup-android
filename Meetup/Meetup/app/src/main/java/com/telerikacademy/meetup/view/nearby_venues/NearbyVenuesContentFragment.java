@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
 
 import javax.inject.Inject;
@@ -55,6 +56,9 @@ public class NearbyVenuesContentFragment extends Fragment {
         BaseApplication
                 .from(getContext())
                 .getComponent()
+                .getControllerComponent(new ControllerModule(
+                        getActivity(), getFragmentManager()
+                ))
                 .inject(this);
     }
 }

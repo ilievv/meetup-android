@@ -14,6 +14,7 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
@@ -210,6 +211,9 @@ public class ToolbarFragment extends Fragment
         BaseApplication
                 .from(getContext())
                 .getComponent()
+                .getControllerComponent(new ControllerModule(
+                        currentActivity, getFragmentManager()
+                ))
                 .inject(this);
     }
 }
