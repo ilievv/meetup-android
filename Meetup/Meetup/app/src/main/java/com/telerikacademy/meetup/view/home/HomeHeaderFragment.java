@@ -7,7 +7,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +15,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.model.base.ILocation;
-import com.telerikacademy.meetup.provider.base.LocationProvider;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
-import com.telerikacademy.meetup.view.home.base.HomeHeaderContract;
-import com.telerikacademy.meetup.view.home.base.IHomeHeader;
+import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
 import javax.inject.Inject;
 
 public class HomeHeaderFragment extends ToolbarFragment
-        implements IHomeHeader {
+        implements IHomeHeaderContract.View {
 
-    private static final String TAG = HomeHeaderFragment.class.getSimpleName();
-
-    @Inject
-    LocationProvider locationProvider;
     @Inject
     IPermissionHandler permissionHandler;
     @Inject
@@ -44,14 +36,14 @@ public class HomeHeaderFragment extends ToolbarFragment
     @BindView(R.id.tv_location_subtitle)
     TextView locationSubtitle;
 
-    private HomeHeaderContract.Presenter presenter;
-    private ILocation currentLocation;
+    private IHomeHeaderContract.Presenter presenter;
+    private LocationManager locationManager;
 
     public HomeHeaderFragment() {
     }
 
     @Override
-    public void setPresenter(HomeHeaderContract.Presenter presenter) {
+    public void setPresenter(IHomeHeaderContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -68,72 +60,55 @@ public class HomeHeaderFragment extends ToolbarFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
+
         dialogFactory.initialize(getActivity());
 
-        locationProvider.setOnLocationChangeListener(new LocationProvider.IOnLocationChangeListener() {
-            @Override
-            public void onLocationChange(ILocation location) {
-                currentLocation = location;
-            }
-        });
-        locationProvider.setOnConnectedListener(new LocationProvider.IOnConnectedListener() {
-            @Override
-            public void onConnected(ILocation location) {
-                currentLocation = location;
-                setTextViewTitle(currentLocation);
-            }
-        });
-        locationProvider.setOnConnectionFailedListener(new LocationProvider.IOnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(String errorMessage) {
-                setTextViewTitle(currentLocation);
-                Log.e(TAG, errorMessage);
-            }
-        });
+        locationManager = (LocationManager) getActivity()
+                .getSystemService(Context.LOCATION_SERVICE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        locationProvider.connect();
+        presenter.subscribe();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        locationProvider.disconnect();
+        presenter.unsubscribe();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        locationTitle.setText(title);
+    }
+
+    @Override
+    public void setSubtitle(String subtitle) {
+        locationSubtitle.setText(subtitle);
     }
 
     public void updateLocation() {
-        requestPermissions();
-        showEnableLocationDialog();
-
-        if (checkPermissions() &&
-                !locationProvider.isConnected() &&
-                !locationProvider.isConnecting()) {
-
-            locationProvider.connect();
-        }
-
-        setTextViewTitle(currentLocation);
+        presenter.update();
     }
 
-    protected boolean checkPermissions() {
+    @Override
+    public boolean checkPermissions() {
         return permissionHandler.checkPermissions(getActivity(),
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
-    protected void requestPermissions() {
+    @Override
+    public void requestPermissions() {
         permissionHandler.requestPermissions(getActivity(),
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
-    protected void showEnableLocationDialog() {
-        LocationManager locationManager = (LocationManager) getActivity()
-                .getSystemService(Context.LOCATION_SERVICE);
-
+    @Override
+    public void showEnableLocationDialog() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             dialogFactory
                     .createDialog()
@@ -147,45 +122,6 @@ public class HomeHeaderFragment extends ToolbarFragment
                     .withNegativeButton(R.string.enable_location_dialog_negative, null)
                     .withIcon(R.drawable.ic_location_gps)
                     .show();
-        }
-    }
-
-    private void setTextViewTitle(ILocation location) {
-        final String LOCATION_NOT_FOUND = "Unknown location";
-
-        if (location == null) {
-            locationTitle.setText(LOCATION_NOT_FOUND);
-            return;
-        }
-
-        String locality = location.getLocality();
-        String thoroughfare = location.getThoroughfare();
-        String subThoroughfare = location.getSubThoroughfare();
-
-        locality = locality == null ? "" : locality;
-        thoroughfare = thoroughfare == null ? "" : thoroughfare;
-        subThoroughfare = subThoroughfare == null ? "" : subThoroughfare;
-
-        if (locality.isEmpty() && thoroughfare.isEmpty()) {
-            locationTitle.setText(LOCATION_NOT_FOUND);
-        } else if (locality.isEmpty()) {
-            locationTitle.setText(thoroughfare);
-            locationSubtitle.setText(subThoroughfare);
-        } else {
-            locationTitle.setText(locality);
-
-            String subtitle;
-            if (!thoroughfare.isEmpty()) {
-                subtitle = thoroughfare;
-
-                if (!subThoroughfare.isEmpty()) {
-                    subtitle = String.format("%s, %s", thoroughfare, subThoroughfare);
-                }
-            } else {
-                subtitle = subThoroughfare;
-            }
-
-            locationSubtitle.setText(subtitle);
         }
     }
 

@@ -10,25 +10,24 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
-import com.telerikacademy.meetup.view.home.base.HomeContentContract;
-import com.telerikacademy.meetup.view.home.base.HomeHeaderContract;
-import com.telerikacademy.meetup.view.home.base.IHomeHeader;
+import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
+import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
 import javax.inject.Inject;
 
 public class HomeActivity extends AppCompatActivity {
 
     @Inject
-    HomeContentContract.Presenter contentPresenter;
+    IHomeContentContract.Presenter contentPresenter;
     @Inject
-    HomeHeaderContract.Presenter headerPresenter;
+    IHomeHeaderContract.Presenter headerPresenter;
 
     @BindView(R.id.btn_update_location)
     FloatingActionButton updateLocationButton;
 
     private FragmentManager fragmentManager;
     private HomeContentFragment content;
-    private IHomeHeader header;
+    private HomeHeaderFragment header;
     private IToolbar toolbar;
 
     @Override
@@ -44,12 +43,12 @@ public class HomeActivity extends AppCompatActivity {
 
         content = (HomeContentFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_content);
-        contentPresenter.initialize(content, this);
+        contentPresenter.setView(content);
         content.setPresenter(contentPresenter);
 
-        header = (IHomeHeader) fragmentManager
+        header = (HomeHeaderFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
-        headerPresenter.initialize(header, this);
+        headerPresenter.setView(header);
         header.setPresenter(headerPresenter);
     }
 

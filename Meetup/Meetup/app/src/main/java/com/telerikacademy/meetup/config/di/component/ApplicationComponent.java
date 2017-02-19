@@ -31,7 +31,7 @@ public interface ApplicationComponent {
 
     void inject(HomeContentFragment homeContentFragment);
 
-    void inject(HomeHeaderFragment homeToolbarFragment);
+    void inject(HomeHeaderFragment homeHeaderFragment);
 
     void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 
