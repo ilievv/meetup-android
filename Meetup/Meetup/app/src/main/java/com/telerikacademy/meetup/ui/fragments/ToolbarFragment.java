@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.ui.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -100,8 +99,10 @@ public class ToolbarFragment extends Fragment
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         createDrawerBuilder();
 
-        final Intent homeIntent = createIntent(HomeActivity.class);
-        final Intent nearbyVenuesIntent = createIntent(NearbyVenuesActivity.class);
+        final Intent homeIntent = BaseApplication
+                .createIntent(currentActivity, HomeActivity.class);
+        final Intent nearbyVenuesIntent = BaseApplication
+                .createIntent(currentActivity, NearbyVenuesActivity.class);
 
         if (userSession.isUserLoggedIn()) {
             DrawerItem itemSignOut = drawerItemFactory
@@ -144,8 +145,10 @@ public class ToolbarFragment extends Fragment
                     .withName(R.string.nav_sign_up)
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
-            final Intent signInIntent = createIntent(SignInActivity.class);
-            final Intent signUpIntent = createIntent(SignUpActivity.class);
+            final Intent signInIntent = BaseApplication
+                    .createIntent(currentActivity, SignInActivity.class);
+            final Intent signUpIntent = BaseApplication
+                    .createIntent(currentActivity, SignUpActivity.class);
 
             navigationDrawer
                     .withDrawerItems(
@@ -201,12 +204,6 @@ public class ToolbarFragment extends Fragment
                         itemNearbyVenues,
                         drawerItemFactory.createDividerDrawerItem()
                 );
-    }
-
-    private Intent createIntent(Class<? extends Activity> cls) {
-        Intent intent = new Intent(currentActivity, cls);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        return intent;
     }
 
     private void injectDependencies() {

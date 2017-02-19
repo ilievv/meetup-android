@@ -3,9 +3,9 @@
     <string name="no_account_yet_create_one">No account yet? Create one</string>
     <string name="sign_in_username">Username</string>
     <string name="sign_in_password">Password</string>
-    <string name="nav_sign_in">Sign in</string>
     <string name="enter_username">Please enter username</string>
     <string name="enter_password">Please enter password</string>
     <string name="invalid_details">Invalid username or password</string>
     <string name="sign_in_successfull">You are now signed in as </string>
+    <string name="sign_in_btn">Sign in</string>
 </resources>
