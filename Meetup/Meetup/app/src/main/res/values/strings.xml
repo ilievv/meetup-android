@@ -17,4 +17,5 @@
     <string name="search">Search all venues</string>
     <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
     <string name="sign_up">Sign up</string>
+    <string name="recently_viewed">Recently viewed</string>
 </resources>
