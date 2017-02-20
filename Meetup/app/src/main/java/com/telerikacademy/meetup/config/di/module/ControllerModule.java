@@ -17,12 +17,16 @@ import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
-import com.telerikacademy.meetup.util.base.IPermissionHandler;
+import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;
 import com.telerikacademy.meetup.view.home.HomeHeaderPresenter;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
+import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesPresenter;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesRecyclerAdapter;
+import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
+import com.telerikacademy.meetup.view.sign_in.SignInPresenter;
+import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
 import dagger.Module;
 import dagger.Provides;
 
@@ -86,6 +90,34 @@ public class ControllerModule {
         return new NearbyVenuesRecyclerAdapter(venueData);
     }
 
+    @Provides
+    @ControllerScope
+    IHomeContentContract.Presenter provideHomeContentPresenter() {
+        return new HomeContentPresenter();
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IHomeHeaderContract.Presenter provideHomeHeaderPresenter(LocationProvider locationProvider) {
+        return new HomeHeaderPresenter(locationProvider);
+    }
+
+    @Provides
+    @ControllerScope
+    INearbyVenuesContract.Presenter provideNearbyVenuesPresenter() {
+        return new NearbyVenuesPresenter();
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    ISignInContract.Presenter provideSignInPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
+                                                     IUserSession userSession, IHashProvider hashProvider) {
+
+        return new SignInPresenter(httpRequester, jsonParser, userSession, hashProvider);
+    }
+
     @Inject
     @Provides
     @ControllerScope
@@ -98,19 +130,6 @@ public class ControllerModule {
     @ControllerScope
     IPermissionHandler providePermissionHandler(Activity activity) {
         return new PermissionHandler(activity);
-    }
-
-    @Provides
-    @ControllerScope
-    IHomeContentContract.Presenter provideHomeContentPresenter() {
-        return new HomeContentPresenter();
-    }
-
-    @Inject
-    @Provides
-    @ControllerScope
-    IHomeHeaderContract.Presenter provideHomeHeaderPresenter(LocationProvider locationProvider) {
-        return new HomeHeaderPresenter(locationProvider);
     }
 
     @Inject

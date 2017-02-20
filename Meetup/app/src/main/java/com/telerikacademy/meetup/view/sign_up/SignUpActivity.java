@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -15,7 +14,6 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import io.reactivex.Observer;
@@ -56,36 +54,22 @@ public class SignUpActivity extends AppCompatActivity {
         injectDependencies();
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        IToolbar toolbar = (IToolbar)
-                fragmentManager.findFragmentById(R.id.fragment_home_header);
-
-        if (toolbar != null) {
-            toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
-        }
-
-        return true;
-    }
-
     @OnClick(R.id.btn_sign_up)
     void signUpUser() {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
         if (!validator.isUsernameValid(username)) {
-            this.usernameEditText.setError(this.getString(R.string.short_username));
+            this.usernameEditText.setError(this.getString(R.string.invalid_username));
             return;
         }
 
         if (!validator.isPasswordValid(password)) {
-            this.passwordEditText.setError(this.getString(R.string.short_password));
+            this.passwordEditText.setError(this.getString(R.string.invalid_password));
             return;
         }
 
-        String passHash = this.hashProvider.providePasswordHash(password);
+        String passHash = this.hashProvider.hashPassword(password);
 
         Map<String, String> map = new HashMap<>();
         map.put("username", username);

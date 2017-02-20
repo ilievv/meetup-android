@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 
 public class SHA1HashProvider implements IHashProvider {
 
-    public String providePasswordHash(String password) {
+    public String hashPassword(String password) {
         return this.SHA1(password);
     }
 

@@ -9,11 +9,14 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
+import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 
 import javax.inject.Inject;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
 
+    @Inject
+    INearbyVenuesContract.Presenter presenter;
     @Inject
     FragmentManager fragmentManager;
     @Inject
@@ -35,6 +38,8 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         content = (NearbyVenuesContentFragment) fragmentManager.
                 findFragmentById(R.id.fragment_nearby_venues_content);
         content.setAdapter(recyclerAdapter);
+        content.setPresenter(presenter);
+        presenter.setView(content);
 
         searchBar = (ISearchBar) fragmentManager
                 .findFragmentById(R.id.fragment_search_header);
