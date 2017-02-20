@@ -10,7 +10,7 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
+import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
@@ -22,14 +22,15 @@ public class HomeActivity extends AppCompatActivity {
     IHomeContentContract.Presenter contentPresenter;
     @Inject
     IHomeHeaderContract.Presenter headerPresenter;
+    @Inject
+    FragmentManager fragmentManager;
 
     @BindView(R.id.btn_update_location)
     FloatingActionButton updateLocationButton;
 
-    private FragmentManager fragmentManager;
     private HomeContentFragment content;
     private HomeHeaderFragment header;
-    private IToolbar toolbar;
+    private ToolbarFragment toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         injectDependencies();
 
-        fragmentManager = getSupportFragmentManager();
-
-        toolbar = (IToolbar) fragmentManager
+        toolbar = (ToolbarFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
 
         content = (HomeContentFragment) fragmentManager

@@ -6,8 +6,14 @@ import android.support.v4.app.FragmentManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
+import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
+import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
+import com.telerikacademy.meetup.util.PermissionHandler;
+import com.telerikacademy.meetup.util.base.IPermissionHandler;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;
 import com.telerikacademy.meetup.view.home.HomeHeaderPresenter;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
@@ -47,6 +53,27 @@ public class ControllerModule {
         return fragmentManager;
     }
 
+    @Inject
+    @Provides
+    @ControllerScope
+    Drawer provideNavigationDrawer(Activity activity) {
+        return new MaterialDrawer(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    Dialog provideDialog(Activity activity) {
+        return new MaterialDialog(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IPermissionHandler providePermissionHandler(Activity activity) {
+        return new PermissionHandler(activity);
+    }
+
     @Provides
     @ControllerScope
     IHomeContentContract.Presenter provideHomeContentPresenter() {
@@ -60,9 +87,10 @@ public class ControllerModule {
         return new HomeHeaderPresenter(locationProvider);
     }
 
+    @Inject
     @Provides
     @ControllerScope
-    Drawer provideNavigationDrawer() {
-        return new MaterialDrawer();
+    IDialogFactory provideDialogFactory(Activity activity) {
+        return new DialogFactory(activity);
     }
 }

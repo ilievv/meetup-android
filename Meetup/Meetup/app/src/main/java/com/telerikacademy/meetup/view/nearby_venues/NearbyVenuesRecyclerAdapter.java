@@ -12,8 +12,8 @@ import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

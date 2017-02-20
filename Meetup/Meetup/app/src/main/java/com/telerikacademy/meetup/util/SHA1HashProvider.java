@@ -5,6 +5,7 @@ import com.telerikacademy.meetup.util.base.IHashProvider;
 import java.security.MessageDigest;
 
 public class SHA1HashProvider implements IHashProvider {
+
     public String providePasswordHash(String password) {
         return this.SHA1(password);
     }
@@ -30,7 +31,7 @@ public class SHA1HashProvider implements IHashProvider {
             byte[] sha1hash = md.digest();
             return convertToHex(sha1hash);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
     }

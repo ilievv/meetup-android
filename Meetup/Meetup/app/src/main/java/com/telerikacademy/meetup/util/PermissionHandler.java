@@ -1,18 +1,26 @@
 package com.telerikacademy.meetup.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
 
+import javax.inject.Inject;
+
 public class PermissionHandler implements IPermissionHandler {
 
-    public boolean checkPermissions(Context context, @NonNull String... permissions) {
+    private final Activity activity;
+
+    @Inject
+    public PermissionHandler(Activity activity) {
+        this.activity = activity;
+    }
+
+    public boolean checkPermissions(@NonNull String... permissions) {
         for (String permission : permissions) {
-            int permissionRes = ContextCompat.checkSelfPermission(context, permission);
+            int permissionRes = ContextCompat.checkSelfPermission(activity, permission);
             if (permissionRes != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -21,7 +29,7 @@ public class PermissionHandler implements IPermissionHandler {
         return true;
     }
 
-    public void requestPermissions(Activity activity, @NonNull String... permissions) {
+    public void requestPermissions(@NonNull String... permissions) {
         for (String permission : permissions) {
             int permissionRes = ContextCompat.checkSelfPermission(activity, permission);
             if (permissionRes != PackageManager.PERMISSION_GRANTED) {

@@ -83,6 +83,7 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
 
         if (location == null) {
             view.setTitle(LOCATION_NOT_FOUND);
+            view.setSubtitle("");
             return;
         }
 
@@ -96,6 +97,7 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
 
         if (locality.isEmpty() && thoroughfare.isEmpty()) {
             view.setTitle(LOCATION_NOT_FOUND);
+            view.setSubtitle("");
         } else if (locality.isEmpty()) {
             view.setTitle(thoroughfare);
             view.setSubtitle(subThoroughfare);

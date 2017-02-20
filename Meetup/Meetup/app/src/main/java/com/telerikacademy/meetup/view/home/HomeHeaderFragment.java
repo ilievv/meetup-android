@@ -62,8 +62,6 @@ public class HomeHeaderFragment extends ToolbarFragment
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
 
-        dialogFactory.initialize(getActivity());
-
         locationManager = (LocationManager) getActivity()
                 .getSystemService(Context.LOCATION_SERVICE);
     }
@@ -96,14 +94,14 @@ public class HomeHeaderFragment extends ToolbarFragment
 
     @Override
     public boolean checkPermissions() {
-        return permissionHandler.checkPermissions(getActivity(),
+        return permissionHandler.checkPermissions(
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     @Override
     public void requestPermissions() {
-        permissionHandler.requestPermissions(getActivity(),
+        permissionHandler.requestPermissions(
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_FINE_LOCATION);
     }

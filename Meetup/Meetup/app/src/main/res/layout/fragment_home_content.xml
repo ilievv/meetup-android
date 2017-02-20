@@ -32,10 +32,10 @@
                         android:layout_alignParentStart="true"
                         android:text="@string/select_a_place"
                         android:textStyle="bold"
+                        android:textColor="@color/secondaryText"
                         android:textSize="16sp"/>
 
                 <View
-                        style="@style/AppTheme.TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="1.2dp"
                         android:layout_marginStart="10dp"
@@ -136,10 +136,9 @@
                         android:layout_alignParentStart="true"
                         android:text="@string/recently_viewed"
                         android:textStyle="bold"
+                        android:textColor="@color/secondaryText"
                         android:textSize="16sp"/>
-
                 <View
-                        style="@style/AppTheme.TextView"
                         android:layout_width="wrap_content"
                         android:layout_height="1.2dp"
                         android:layout_marginStart="10dp"

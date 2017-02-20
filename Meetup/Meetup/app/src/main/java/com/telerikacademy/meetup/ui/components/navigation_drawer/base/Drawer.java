@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.ui.components.navigation_drawer.base;
 
-import android.app.Activity;
 import android.support.annotation.Dimension;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -11,8 +10,6 @@ import java.util.List;
 public abstract class Drawer {
 
     private final static int DP = 0;
-
-    public abstract Drawer initialize(Activity activity);
 
     public abstract Drawer withDrawerItems(@NonNull DrawerItem... drawerItems);
 

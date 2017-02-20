@@ -17,11 +17,7 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
-import com.telerikacademy.meetup.util.base.IHashProvider;
-import com.telerikacademy.meetup.util.base.IHttpRequester;
-import com.telerikacademy.meetup.util.base.IHttpResponse;
-import com.telerikacademy.meetup.util.base.IJsonParser;
-import com.telerikacademy.meetup.util.base.IUserSession;
+import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 import io.reactivex.Observer;
@@ -43,31 +39,29 @@ public class SignInActivity extends AppCompatActivity {
     IUserSession userSession;
     @Inject
     IHashProvider hashProvider;
+    @Inject
+    FragmentManager fragmentManager;
 
     @BindView(R.id.username)
     EditText usernameEditText;
     @BindView(R.id.password)
     EditText passwordEditText;
 
-    private FragmentManager fragmentManager;
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         injectDependencies();
-
-        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        IToolbar menuInflater = (IToolbar)
+        IToolbar toolbar = (IToolbar)
                 fragmentManager.findFragmentById(R.id.fragment_home_header);
 
-        if (menuInflater != null) {
-            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
+        if (toolbar != null) {
+            toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
         }
 
         return true;
@@ -144,8 +138,7 @@ public class SignInActivity extends AppCompatActivity {
 
     @OnClick(R.id.link_signup)
     void redirectToSignUp() {
-        Intent signUpIntent = new Intent(this, SignUpActivity.class);
-        signUpIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        Intent signUpIntent = BaseApplication.createIntent(this, SignUpActivity.class);
         startActivity(signUpIntent);
     }
 

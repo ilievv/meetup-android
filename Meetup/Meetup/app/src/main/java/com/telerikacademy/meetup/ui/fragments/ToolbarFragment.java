@@ -72,8 +72,6 @@ public class ToolbarFragment extends Fragment
         toolbar = (Toolbar) currentActivity.findViewById(R.id.toolbar);
         currentActivity.setSupportActionBar(toolbar);
         actionBar = currentActivity.getSupportActionBar();
-
-        navigationDrawer.initialize(currentActivity);
     }
 
     public void setNavigationOnClickListener() {
@@ -212,7 +210,7 @@ public class ToolbarFragment extends Fragment
                 .from(getContext())
                 .getComponent()
                 .getControllerComponent(new ControllerModule(
-                        currentActivity, getFragmentManager()
+                        getActivity(), getFragmentManager()
                 ))
                 .inject(this);
     }

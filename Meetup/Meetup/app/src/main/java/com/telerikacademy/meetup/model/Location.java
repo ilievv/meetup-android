@@ -12,6 +12,19 @@ public class Location implements ILocation {
     private String thoroughfare;
     private String subThoroughfare;
 
+    public Location() {
+    }
+
+    public Location(double latitude, double longitude, String locality,
+                    String thoroughfare, String subThoroughfare) {
+
+        setLatitude(latitude);
+        setLongitude(longitude);
+        setLocality(locality);
+        setThoroughfare(thoroughfare);
+        setSubThoroughfare(subThoroughfare);
+    }
+
     public double getLatitude() {
         return latitude;
     }

@@ -1,9 +1,9 @@
 package com.telerikacademy.meetup.config.di.component;
 
+import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.config.di.module.ApplicationModule;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.config.di.module.ServiceModule;
-import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import dagger.Component;
 
 @ApplicationScope

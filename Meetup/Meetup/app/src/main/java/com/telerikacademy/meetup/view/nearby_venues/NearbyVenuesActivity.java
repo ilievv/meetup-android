@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
-import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private NearbyVenuesContentFragment content;
 
-    private IToolbar toolbar;
+    private ToolbarFragment toolbar;
     private ISearchBar searchBar;
 
     @Override
@@ -27,7 +27,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        toolbar = (IToolbar) fragmentManager
+        toolbar = (ToolbarFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
 
         NearbyVenuesRecyclerAdapter recyclerAdapter =

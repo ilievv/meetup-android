@@ -10,12 +10,15 @@ public class Venue implements IVenue {
     private String[] types;
     private float rating;
 
+    public Venue() {
+    }
+
     public Venue(String id, String name, String address, String[] types, float rating) {
-        this.setId(id);
-        this.setName(name);
-        this.setAddress(address);
-        this.setTypes(types);
-        this.setRating(rating);
+        setId(id);
+        setName(name);
+        setAddress(address);
+        setTypes(types);
+        setRating(rating);
     }
 
     public String getId() {

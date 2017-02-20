@@ -16,12 +16,7 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
-import com.telerikacademy.meetup.util.base.IHashProvider;
-import com.telerikacademy.meetup.util.base.IHttpRequester;
-import com.telerikacademy.meetup.util.base.IHttpResponse;
-import com.telerikacademy.meetup.util.base.IJsonParser;
-import com.telerikacademy.meetup.util.base.IUserSession;
-import com.telerikacademy.meetup.util.base.IValidator;
+import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -44,31 +39,30 @@ public class SignUpActivity extends AppCompatActivity {
     IValidator validator;
     @Inject
     IHashProvider hashProvider;
+    @Inject
+    FragmentManager fragmentManager;
 
     @BindView(R.id.username)
     EditText usernameEditText;
     @BindView(R.id.password)
     EditText passwordEditText;
 
-    private FragmentManager fragmentManager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         injectDependencies();
-
-        fragmentManager = getSupportFragmentManager();
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        IToolbar menuInflater = (IToolbar)
+        IToolbar toolbar = (IToolbar)
                 fragmentManager.findFragmentById(R.id.fragment_home_header);
 
-        if (menuInflater != null) {
-            menuInflater.inflateMenu(R.menu.main, menu, getMenuInflater());
+        if (toolbar != null) {
+            toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
         }
 
         return true;
@@ -79,12 +73,12 @@ public class SignUpActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        if(!validator.isUsernameValid(username)){
+        if (!validator.isUsernameValid(username)) {
             this.usernameEditText.setError(this.getString(R.string.short_username));
             return;
         }
 
-        if(!validator.isPasswordValid(password)){
+        if (!validator.isPasswordValid(password)) {
             this.passwordEditText.setError(this.getString(R.string.short_password));
             return;
         }
@@ -127,8 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(currentActivity, getString(R.string.sign_up_successfull), Toast.LENGTH_LONG).show();
                         Toast.makeText(currentActivity, getString(R.string.sign_in_redirect), Toast.LENGTH_LONG).show();
 
-                        Intent signInIntent = new Intent(currentActivity, SignInActivity.class);
-                        signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        Intent signInIntent = BaseApplication.createIntent(currentActivity, SignInActivity.class);
                         startActivity(signInIntent);
                     }
 
@@ -145,8 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.link_signin)
     void redirectToSignIn() {
-        Intent signInIntent = new Intent(this, SignInActivity.class);
-        signInIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        Intent signInIntent = BaseApplication.createIntent(this, SignInActivity.class);
         startActivity(signInIntent);
     }
 

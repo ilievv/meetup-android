@@ -1,7 +1,7 @@
 package com.telerikacademy.meetup.config.di.component;
 
-import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.home.HomeHeaderFragment;

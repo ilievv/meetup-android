@@ -8,10 +8,13 @@ import android.support.annotation.StringRes;
 import com.afollestad.materialdialogs.DialogAction;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 
+import javax.inject.Inject;
+
 public class MaterialDialog extends Dialog {
 
     private final com.afollestad.materialdialogs.MaterialDialog.Builder dialogBuilder;
 
+    @Inject
     public MaterialDialog(@NonNull Activity activity) {
         dialogBuilder = new com.afollestad.materialdialogs.MaterialDialog.Builder(activity);
     }

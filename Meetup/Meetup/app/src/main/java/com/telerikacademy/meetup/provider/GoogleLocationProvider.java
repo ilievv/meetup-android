@@ -28,8 +28,8 @@ public class GoogleLocationProvider extends LocationProvider
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
-    private static final int INTERVAL = 10000;
-    private static final int FASTEST_INTERVAL = 10000;
+    private static final int INTERVAL = 5000;
+    private static final int FASTEST_INTERVAL = 5000;
 
     private final Context context;
     private final ILocationFactory locationFactory;
@@ -48,24 +48,24 @@ public class GoogleLocationProvider extends LocationProvider
         this.context = context;
         this.locationFactory = locationFactory;
 
-        this.buildGoogleApiClient();
-        this.createLocationRequest();
+        buildGoogleApiClient();
+        createLocationRequest();
     }
 
     public void connect() {
-        this.googleApiClient.connect();
+        googleApiClient.connect();
     }
 
     public void disconnect() {
-        this.googleApiClient.disconnect();
+        googleApiClient.disconnect();
     }
 
     public boolean isConnected() {
-        return this.googleApiClient.isConnected();
+        return googleApiClient.isConnected();
     }
 
     public boolean isConnecting() {
-        return this.googleApiClient.isConnecting();
+        return googleApiClient.isConnecting();
     }
 
     public void setOnConnectedListener(IOnConnectedListener onConnectedListener) {
@@ -87,17 +87,17 @@ public class GoogleLocationProvider extends LocationProvider
                     .getLastLocation(googleApiClient);
 
             LocationServices.FusedLocationApi
-                    .requestLocationUpdates(this.googleApiClient, locationRequest, this);
+                    .requestLocationUpdates(googleApiClient, locationRequest, this);
 
-            if (this.onConnectedListener != null) {
-                this.onConnectedListener.onConnected(this.parseLocation(location));
+            if (onConnectedListener != null) {
+                onConnectedListener.onConnected(parseLocation(location));
             }
 
-            GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this.context);
+            GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
 
         } catch (SecurityException ex) {
-            if (this.onConnectionFailedListener != null) {
-                this.onConnectionFailedListener.onConnectionFailed(ex.getMessage());
+            if (onConnectionFailedListener != null) {
+                onConnectionFailedListener.onConnectionFailed(ex.getMessage());
             }
         }
     }
@@ -108,22 +108,22 @@ public class GoogleLocationProvider extends LocationProvider
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        if (this.onConnectionFailedListener != null) {
-            this.onConnectionFailedListener.onConnectionFailed(
+        if (onConnectionFailedListener != null) {
+            onConnectionFailedListener.onConnectionFailed(
                     connectionResult.getErrorCode() + " " + connectionResult.getErrorMessage());
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if (this.onLocationChangeListener != null) {
-            this.onLocationChangeListener.onLocationChange(this.parseLocation(location));
+        if (onLocationChangeListener != null) {
+            onLocationChangeListener.onLocationChange(this.parseLocation(location));
         }
     }
 
     protected synchronized void buildGoogleApiClient() {
-        if (this.googleApiClient == null) {
-            this.googleApiClient = new GoogleApiClient.Builder(this.context)
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this.context)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
@@ -132,8 +132,8 @@ public class GoogleLocationProvider extends LocationProvider
     }
 
     protected synchronized void createLocationRequest() {
-        if (this.locationRequest == null) {
-            this.locationRequest = LocationRequest.create()
+        if (locationRequest == null) {
+            locationRequest = LocationRequest.create()
                     .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                     .setInterval(INTERVAL)
                     .setFastestInterval(FASTEST_INTERVAL);

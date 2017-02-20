@@ -12,8 +12,6 @@ import com.telerikacademy.meetup.provider.base.IHttpResponseFactory;
 import com.telerikacademy.meetup.provider.base.ILocationFactory;
 import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
-import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
-import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 import com.telerikacademy.meetup.util.*;
@@ -44,12 +42,6 @@ public class ApplicationModule {
     @ApplicationScope
     LocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
         return new GoogleLocationProvider(context, locationFactory);
-    }
-
-    @Provides
-    @ApplicationScope
-    IPermissionHandler providePermissionHandler() {
-        return new PermissionHandler();
     }
 
     @Inject
@@ -100,12 +92,6 @@ public class ApplicationModule {
     @ApplicationScope
     ILocationFactory provideLocationFactory() {
         return new LocationFactory();
-    }
-
-    @Provides
-    @ApplicationScope
-    IDialogFactory provideDialogFactory() {
-        return new DialogFactory();
     }
 
     @Inject
