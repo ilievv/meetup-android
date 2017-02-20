@@ -33,16 +33,16 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         injectDependencies();
 
         toolbar = (ToolbarFragment) fragmentManager
-                .findFragmentById(R.id.fragment_home_header);
+                .findFragmentById(R.id.fragment_nearby_venues_toolbar);
 
         content = (NearbyVenuesContentFragment) fragmentManager.
-                findFragmentById(R.id.fragment_sign_in_content);
+                findFragmentById(R.id.fragment_nearby_venues_content);
         content.setAdapter(recyclerAdapter);
         content.setPresenter(presenter);
         presenter.setView(content);
 
         searchBar = (ISearchBar) fragmentManager
-                .findFragmentById(R.id.fragment_search_header);
+                .findFragmentById(R.id.fragment_nearby_venues_search_header);
         searchBar.setFilter(recyclerAdapter);
     }
 

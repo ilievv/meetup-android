@@ -12,6 +12,7 @@ import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import com.telerikacademy.meetup.view.sign_in.SignInContentFragment;
 import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 import com.telerikacademy.meetup.view.sign_up.SignUpContentFragment;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 import dagger.Subcomponent;
 
 @ControllerScope
@@ -27,6 +28,8 @@ public interface ControllerComponent {
     void inject(NearbyVenuesActivity nearbyVenuesActivity);
 
     void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
+
+    void inject(VenueDetailsActivity venueDetailsActivity);
 
     void inject(SignInActivity signInActivity);
 

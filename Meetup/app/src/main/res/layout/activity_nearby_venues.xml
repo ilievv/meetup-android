@@ -9,19 +9,19 @@
         tools:context="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity">
 
     <fragment
-            android:id="@+id/fragment_home_header"
+            android:id="@+id/fragment_nearby_venues_toolbar"
             android:name="com.telerikacademy.meetup.ui.fragments.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"/>
 
     <fragment
-            android:id="@+id/fragment_search_header"
+            android:id="@+id/fragment_nearby_venues_search_header"
             android:name="com.telerikacademy.meetup.ui.fragments.SearchHeaderFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
     <fragment
-            android:id="@+id/fragment_sign_in_content"
+            android:id="@+id/fragment_nearby_venues_content"
             android:name="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

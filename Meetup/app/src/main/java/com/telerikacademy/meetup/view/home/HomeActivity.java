@@ -9,7 +9,6 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
@@ -29,16 +28,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeContentFragment content;
     private HomeHeaderFragment header;
-    private ToolbarFragment toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         injectDependencies();
-
-        toolbar = (ToolbarFragment) fragmentManager
-                .findFragmentById(R.id.fragment_home_header);
 
         content = (HomeContentFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_content);
@@ -58,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        toolbar.setNavigationDrawer(R.layout.activity_home);
+        header.setNavigationDrawer(R.layout.activity_home);
     }
 
     private void injectDependencies() {
