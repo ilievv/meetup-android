@@ -16,6 +16,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.User;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.home.HomeActivity;
@@ -39,6 +40,8 @@ public class SignInActivity extends AppCompatActivity {
     IUserSession userSession;
     @Inject
     IHashProvider hashProvider;
+    @Inject
+    IIntentFactory intentFactory;
     @Inject
     FragmentManager fragmentManager;
 
@@ -138,19 +141,18 @@ public class SignInActivity extends AppCompatActivity {
 
     @OnClick(R.id.link_signup)
     void redirectToSignUp() {
-        Intent signUpIntent = BaseApplication.createIntent(this, SignUpActivity.class);
+        Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
         startActivity(signUpIntent);
     }
 
     private void injectDependencies() {
         BaseApplication
+                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(
                         this, getSupportFragmentManager()
                 ))
                 .inject(this);
-
-        ButterKnife.bind(this);
     }
 }

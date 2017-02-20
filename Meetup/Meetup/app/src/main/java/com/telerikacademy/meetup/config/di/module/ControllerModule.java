@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
+import com.telerikacademy.meetup.provider.IntentFactory;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
 import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
@@ -65,6 +67,13 @@ public class ControllerModule {
     @ControllerScope
     Dialog provideDialog(Activity activity) {
         return new MaterialDialog(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IIntentFactory provideIntentFactory(@ActivityContext Context context) {
+        return new IntentFactory(context);
     }
 
     @Inject

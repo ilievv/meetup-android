@@ -4,6 +4,7 @@ import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.HomeActivity;
+import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.home.HomeHeaderFragment;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
@@ -17,6 +18,8 @@ public interface ControllerComponent {
     void inject(HomeActivity homeActivity);
 
     void inject(HomeHeaderFragment homeHeaderFragment);
+
+    void inject(HomeContentFragment homeContentFragment);
 
     void inject(SignInActivity signInActivity);
 

@@ -5,7 +5,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
@@ -64,13 +63,12 @@ public class HomeActivity extends AppCompatActivity {
 
     private void injectDependencies() {
         BaseApplication
+                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(
                         this, getSupportFragmentManager()
                 ))
                 .inject(this);
-
-        ButterKnife.bind(this);
     }
 }

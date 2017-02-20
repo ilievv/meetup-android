@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filterable;
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
 
@@ -29,7 +29,7 @@ public class SearchHeaderFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_search_header, container, false);
-        ButterKnife.bind(this, view);
+        BaseApplication.bind(this, view);
         return view;
     }
 

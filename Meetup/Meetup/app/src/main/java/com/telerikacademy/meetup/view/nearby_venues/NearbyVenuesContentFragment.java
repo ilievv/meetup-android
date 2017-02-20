@@ -31,9 +31,9 @@ public class NearbyVenuesContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_nearby_venues_content, container, false);
-        ButterKnife.bind(this, root);
-        return root;
+        View view = inflater.inflate(R.layout.fragment_nearby_venues_content, container, false);
+        BaseApplication.bind(this, view);
+        return view;
     }
 
     @Override

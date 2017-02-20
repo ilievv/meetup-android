@@ -87,6 +87,7 @@ public class NearbyVenuesRecyclerAdapter
             Context context = itemView.getContext();
 
             Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
+            showVenueIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             showVenueIntent.putExtra(VENUE_KEY, this.venue);
             context.startActivity(showVenueIntent);
         }

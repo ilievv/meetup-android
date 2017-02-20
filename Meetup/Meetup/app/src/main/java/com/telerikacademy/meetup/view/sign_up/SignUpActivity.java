@@ -9,12 +9,12 @@ import android.view.Menu;
 import android.widget.EditText;
 import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.User;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
@@ -39,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     IValidator validator;
     @Inject
     IHashProvider hashProvider;
+    @Inject
+    IIntentFactory intentFactory;
     @Inject
     FragmentManager fragmentManager;
 
@@ -121,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(currentActivity, getString(R.string.sign_up_successfull), Toast.LENGTH_LONG).show();
                         Toast.makeText(currentActivity, getString(R.string.sign_in_redirect), Toast.LENGTH_LONG).show();
 
-                        Intent signInIntent = BaseApplication.createIntent(currentActivity, SignInActivity.class);
+                        Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
                         startActivity(signInIntent);
                     }
 
@@ -138,19 +140,18 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.link_signin)
     void redirectToSignIn() {
-        Intent signInIntent = BaseApplication.createIntent(this, SignInActivity.class);
+        Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
         startActivity(signInIntent);
     }
 
     private void injectDependencies() {
         BaseApplication
+                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(
                         this, getSupportFragmentManager()
                 ))
                 .inject(this);
-
-        ButterKnife.bind(this);
     }
 }

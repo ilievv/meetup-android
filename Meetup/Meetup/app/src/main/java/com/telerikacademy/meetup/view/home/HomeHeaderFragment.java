@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
@@ -53,7 +52,7 @@ public class HomeHeaderFragment extends ToolbarFragment
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home_header, container, false);
-        ButterKnife.bind(this, view);
+        BaseApplication.bind(this, view);
         return view;
     }
 

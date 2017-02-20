@@ -15,6 +15,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
@@ -41,6 +42,8 @@ public class ToolbarFragment extends Fragment
     Drawer navigationDrawer;
     @Inject
     IUserSession userSession;
+    @Inject
+    IIntentFactory intentFactory;
     @Inject
     IDrawerItemFactory drawerItemFactory;
 
@@ -98,10 +101,8 @@ public class ToolbarFragment extends Fragment
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         createDrawerBuilder();
 
-        final Intent homeIntent = BaseApplication
-                .createIntent(currentActivity, HomeActivity.class);
-        final Intent nearbyVenuesIntent = BaseApplication
-                .createIntent(currentActivity, NearbyVenuesActivity.class);
+        final Intent homeIntent = intentFactory.createIntentToFront(HomeActivity.class);
+        final Intent nearbyVenuesIntent = intentFactory.createIntentToFront(NearbyVenuesActivity.class);
 
         if (userSession.isUserLoggedIn()) {
             DrawerItem itemSignOut = drawerItemFactory
@@ -144,10 +145,8 @@ public class ToolbarFragment extends Fragment
                     .withName(R.string.nav_sign_up)
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
 
-            final Intent signInIntent = BaseApplication
-                    .createIntent(currentActivity, SignInActivity.class);
-            final Intent signUpIntent = BaseApplication
-                    .createIntent(currentActivity, SignUpActivity.class);
+            final Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
+            final Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
 
             navigationDrawer
                     .withDrawerItems(

@@ -3,8 +3,9 @@ package com.telerikacademy.meetup;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.view.View;
+import butterknife.ButterKnife;
 import com.telerikacademy.meetup.config.di.component.ApplicationComponent;
 import com.telerikacademy.meetup.config.di.component.DaggerApplicationComponent;
 import com.telerikacademy.meetup.config.di.module.ApplicationModule;
@@ -31,9 +32,12 @@ public class BaseApplication extends Application {
         return (BaseApplication) context.getApplicationContext();
     }
 
-    public static Intent createIntent(Context packageContext, Class<? extends Activity> cls) {
-        Intent intent = new Intent(packageContext, cls);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        return intent;
+    public static BaseApplication bind(@NonNull Activity activity) {
+        ButterKnife.bind(activity);
+        return (BaseApplication) activity.getApplicationContext();
+    }
+
+    public static void bind(@NonNull Object object, @NonNull View source) {
+        ButterKnife.bind(object, source);
     }
 }
