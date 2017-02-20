@@ -36,7 +36,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 .findFragmentById(R.id.fragment_home_header);
 
         content = (NearbyVenuesContentFragment) fragmentManager.
-                findFragmentById(R.id.fragment_nearby_venues_content);
+                findFragmentById(R.id.fragment_sign_in_content);
         content.setAdapter(recyclerAdapter);
         content.setPresenter(presenter);
         presenter.setView(content);

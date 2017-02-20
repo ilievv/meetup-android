@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"/>
 
     <fragment
-            android:id="@+id/fragment_nearby_venues_content"
+            android:id="@+id/fragment_sign_in_content"
             android:name="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

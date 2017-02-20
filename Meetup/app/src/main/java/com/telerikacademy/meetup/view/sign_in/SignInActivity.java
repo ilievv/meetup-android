@@ -25,7 +25,7 @@ public class SignInActivity extends AppCompatActivity {
         injectDependencies();
 
         contentFragment = (SignInContentFragment) fragmentManager
-                .findFragmentById(R.id.fragment_nearby_venues_content);
+                .findFragmentById(R.id.fragment_sign_in_content);
         contentFragment.setPresenter(presenter);
         presenter.setView(contentFragment);
     }

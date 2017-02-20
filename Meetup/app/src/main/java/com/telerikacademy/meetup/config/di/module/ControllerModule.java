@@ -27,6 +27,8 @@ import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesRecyclerAdapter;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 import com.telerikacademy.meetup.view.sign_in.SignInPresenter;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
+import com.telerikacademy.meetup.view.sign_up.SignUpPresenter;
+import com.telerikacademy.meetup.view.sign_up.base.ISignUpContract;
 import dagger.Module;
 import dagger.Provides;
 
@@ -116,6 +118,16 @@ public class ControllerModule {
                                                      IUserSession userSession, IHashProvider hashProvider) {
 
         return new SignInPresenter(httpRequester, jsonParser, userSession, hashProvider);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    ISignUpContract.Presenter provideSignUpPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
+                                                     IUserSession userSession, IValidator validator,
+                                                     IHashProvider hashProvider) {
+
+        return new SignUpPresenter(httpRequester, jsonParser, userSession, validator, hashProvider);
     }
 
     @Inject
