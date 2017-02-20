@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
+import com.telerikacademy.meetup.network.VenueData;
+import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.GoogleLocationProvider;
 import com.telerikacademy.meetup.provider.HttpResponseFactory;
 import com.telerikacademy.meetup.provider.LocationFactory;
@@ -42,6 +44,12 @@ public class ApplicationModule {
     @ApplicationScope
     LocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
         return new GoogleLocationProvider(context, locationFactory);
+    }
+
+    @Provides
+    @ApplicationScope
+    IVenueData provideVenueData() {
+        return new VenueData();
     }
 
     @Inject

@@ -3,8 +3,10 @@ package com.telerikacademy.meetup.config.di.module;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
+import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
@@ -20,6 +22,7 @@ import com.telerikacademy.meetup.view.home.HomeContentPresenter;
 import com.telerikacademy.meetup.view.home.HomeHeaderPresenter;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
+import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesRecyclerAdapter;
 import dagger.Module;
 import dagger.Provides;
 
@@ -58,6 +61,13 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
+    LinearLayoutManager provideLinearLayoutManager(Activity activity) {
+        return new LinearLayoutManager(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
     Drawer provideNavigationDrawer(Activity activity) {
         return new MaterialDrawer(activity);
     }
@@ -67,6 +77,13 @@ public class ControllerModule {
     @ControllerScope
     Dialog provideDialog(Activity activity) {
         return new MaterialDialog(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    NearbyVenuesRecyclerAdapter provideNearbyVenuesRecyclerAdapter(IVenueData venueData) {
+        return new NearbyVenuesRecyclerAdapter(venueData);
     }
 
     @Inject

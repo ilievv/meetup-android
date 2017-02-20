@@ -12,16 +12,22 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
+import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 
 import javax.inject.Inject;
 
-public class NearbyVenuesContentFragment extends Fragment {
+public class NearbyVenuesContentFragment extends Fragment
+        implements INearbyVenuesContract.View {
 
+    @Inject
+    LinearLayoutManager linearLayoutManager;
     @Inject
     IRecyclerDecorationFactory decorationFactory;
 
     @BindView(R.id.rv_venues)
     RecyclerView recyclerView;
+
+    private INearbyVenuesContract.Presenter presenter;
 
     public NearbyVenuesContentFragment() {
     }
@@ -40,11 +46,15 @@ public class NearbyVenuesContentFragment extends Fragment {
         super.onStart();
         injectDependencies();
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.addItemDecoration(decorationFactory.createDividerDecoration(
                 linearLayoutManager.getOrientation()
         ));
         recyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override
+    public void setPresenter(INearbyVenuesContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {

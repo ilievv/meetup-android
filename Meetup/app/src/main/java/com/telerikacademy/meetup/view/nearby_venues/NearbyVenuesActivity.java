@@ -4,19 +4,22 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
-import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager;
-    private NearbyVenuesContentFragment content;
+    @Inject
+    FragmentManager fragmentManager;
+    @Inject
+    NearbyVenuesRecyclerAdapter recyclerAdapter;
 
+    private NearbyVenuesContentFragment content;
     private ToolbarFragment toolbar;
     private ISearchBar searchBar;
 
@@ -24,14 +27,10 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_venues);
-
-        fragmentManager = getSupportFragmentManager();
+        injectDependencies();
 
         toolbar = (ToolbarFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
-
-        NearbyVenuesRecyclerAdapter recyclerAdapter =
-                new NearbyVenuesRecyclerAdapter(generateSampleData());
 
         content = (NearbyVenuesContentFragment) fragmentManager.
                 findFragmentById(R.id.fragment_nearby_venues_content);
@@ -55,18 +54,14 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         return true;
     }
 
-    private List<Venue> generateSampleData() {
-        List<Venue> venues = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            Venue venue = new Venue(Integer.toString(i),
-                    "Pri Ilyo #" + i, "zh.k. Lyulin " + i + 1, new String[]{"food"}, i % 5f);
-            venues.add(venue);
-        }
-        Venue someVen = new Venue("123", "Gosho",
-                "Kostinbrod", new String[]{"restaurant", "bar", "club", "food"}, 3.2f);
-        venues.add(someVen);
-
-        return venues;
+    private void injectDependencies() {
+        BaseApplication
+                .bind(this)
+                .from(this)
+                .getComponent()
+                .getControllerComponent(new ControllerModule(
+                        this, getSupportFragmentManager()
+                ))
+                .inject(this);
     }
 }

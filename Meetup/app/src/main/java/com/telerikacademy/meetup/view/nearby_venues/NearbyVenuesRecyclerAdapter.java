@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import java.util.ArrayList;
@@ -29,9 +30,9 @@ public class NearbyVenuesRecyclerAdapter
 
     private VenueFilter venueFilter;
 
-    public NearbyVenuesRecyclerAdapter(List<Venue> venues) {
-        this.venues = venues;
-        this.filteredVenues = new ArrayList<>(venues);
+    public NearbyVenuesRecyclerAdapter(IVenueData venueData) {
+        venues = venueData.getSampleData();
+        filteredVenues = new ArrayList<>(venues);
     }
 
     @Override
