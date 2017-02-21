@@ -1,16 +1,37 @@
 package com.telerikacademy.meetup.network;
 
+import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
+import com.telerikacademy.meetup.util.base.IHttpRequester;
+import com.telerikacademy.meetup.util.base.IHttpResponse;
+import com.telerikacademy.meetup.util.base.IJsonParser;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VenueData implements IVenueData {
 
+    private final IGoogleApiConstants googleApiConstants;
+    private final IHttpRequester httpRequester;
+    private final IJsonParser jsonParser;
+
+    @Inject
+    public VenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
+                     IJsonParser jsonParser) {
+
+        this.googleApiConstants = googleApiConstants;
+        this.httpRequester = httpRequester;
+        this.jsonParser = jsonParser;
+    }
+
     @Override
-    public List<Venue> getSampleData() {
-        List<Venue> venues = new ArrayList<>();
+    public List<IVenue> getSampleData() {
+        List<IVenue> venues = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             Venue venue = new Venue(Integer.toString(i),
@@ -22,5 +43,22 @@ public class VenueData implements IVenueData {
         venues.add(someVen);
 
         return venues;
+    }
+
+    @Override
+    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius) {
+        String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius);
+        return httpRequester
+                .get(nearbySearchUrl)
+                .map(new Function<IHttpResponse, List<IVenue>>() {
+                    @Override
+                    public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
+                        String body = iHttpResponse.getBody();
+
+                        List<IVenue> venues = new ArrayList<>();
+
+                        return venues;
+                    }
+                });
     }
 }

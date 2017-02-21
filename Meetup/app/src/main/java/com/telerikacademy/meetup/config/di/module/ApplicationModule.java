@@ -2,6 +2,10 @@ package com.telerikacademy.meetup.config.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import com.telerikacademy.meetup.config.ApiDevelopmentConstants;
+import com.telerikacademy.meetup.config.GoogleApiDevelopmentConstants;
+import com.telerikacademy.meetup.config.base.IApiConstants;
+import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.network.VenueData;
@@ -48,8 +52,23 @@ public class ApplicationModule {
 
     @Provides
     @ApplicationScope
-    IVenueData provideVenueData() {
-        return new VenueData();
+    IApiConstants provideApiConstants() {
+        return new ApiDevelopmentConstants();
+    }
+
+    @Provides
+    @ApplicationScope
+    IGoogleApiConstants provideGoogleApiConstants() {
+        return new GoogleApiDevelopmentConstants();
+    }
+
+    @Inject
+    @Provides
+    @ApplicationScope
+    IVenueData provideVenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
+                                IJsonParser jsonParser) {
+
+        return new VenueData(googleApiConstants, httpRequester, jsonParser);
     }
 
     @Inject

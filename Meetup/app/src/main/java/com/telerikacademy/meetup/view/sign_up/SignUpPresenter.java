@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.sign_up;
 
+import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.sign_up.base.ISignUpContract;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class SignUpPresenter implements ISignUpContract.Presenter {
 
     private ISignUpContract.View view;
+    private IApiConstants apiConstants;
     private IHttpRequester httpRequester;
     private IJsonParser jsonParser;
     private IUserSession userSession;
@@ -22,10 +24,11 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
     private IHashProvider hashProvider;
 
     @Inject
-    public SignUpPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
-                           IUserSession userSession, IValidator validator,
-                           IHashProvider hashProvider) {
+    public SignUpPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
+                           IJsonParser jsonParser, IUserSession userSession,
+                           IValidator validator, IHashProvider hashProvider) {
 
+        this.apiConstants = apiConstants;
         this.httpRequester = httpRequester;
         this.jsonParser = jsonParser;
         this.userSession = userSession;
@@ -59,10 +62,7 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
         map.put("username", username);
         map.put("passHash", passHash);
 
-        // TODO: Extract to shared pref
-        final String url = "https://telerik-meetup.herokuapp.com/auth/register";
-
-        this.httpRequester.post(url, map)
+        httpRequester.post(apiConstants.signUpUrl(), map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<IHttpResponse>() {

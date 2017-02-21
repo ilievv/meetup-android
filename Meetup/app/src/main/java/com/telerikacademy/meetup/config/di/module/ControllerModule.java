@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
+import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.network.base.IVenueData;
@@ -114,20 +115,21 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    ISignInContract.Presenter provideSignInPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
-                                                     IUserSession userSession, IHashProvider hashProvider) {
+    ISignInContract.Presenter provideSignInPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
+                                                     IJsonParser jsonParser, IUserSession userSession,
+                                                     IHashProvider hashProvider) {
 
-        return new SignInPresenter(httpRequester, jsonParser, userSession, hashProvider);
+        return new SignInPresenter(apiConstants, httpRequester, jsonParser, userSession, hashProvider);
     }
 
     @Inject
     @Provides
     @ControllerScope
-    ISignUpContract.Presenter provideSignUpPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
-                                                     IUserSession userSession, IValidator validator,
-                                                     IHashProvider hashProvider) {
+    ISignUpContract.Presenter provideSignUpPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
+                                                     IJsonParser jsonParser, IUserSession userSession,
+                                                     IValidator validator, IHashProvider hashProvider) {
 
-        return new SignUpPresenter(httpRequester, jsonParser, userSession, validator, hashProvider);
+        return new SignUpPresenter(apiConstants, httpRequester, jsonParser, userSession, validator, hashProvider);
     }
 
     @Inject
