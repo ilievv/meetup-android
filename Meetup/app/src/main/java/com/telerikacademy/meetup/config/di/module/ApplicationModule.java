@@ -62,10 +62,13 @@ public class ApplicationModule {
         return new GoogleApiDevelopmentConstants();
     }
 
+    @Inject
     @Provides
     @ApplicationScope
-    IVenueData provideVenueData() {
-        return new VenueData();
+    IVenueData provideVenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
+                                IJsonParser jsonParser) {
+
+        return new VenueData(googleApiConstants, httpRequester, jsonParser);
     }
 
     @Inject

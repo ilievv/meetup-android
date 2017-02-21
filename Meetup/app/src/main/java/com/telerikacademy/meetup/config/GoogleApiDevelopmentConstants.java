@@ -11,7 +11,7 @@ public class GoogleApiDevelopmentConstants implements IGoogleApiConstants {
 
     @Override
     public String nearbySearchUrl(double latitude, double longitude, int radius, String venueType) {
-        String url = String.format("%s?location=%d,%d&radius=%dtype=%s&key=%s",
+        String url = String.format("%s?location=%s,%s&radius=%dtype=%s&key=%s",
                 nearbySearchUrl, latitude, longitude, radius, venueType, googleApiKey);
 
         return url;
@@ -19,7 +19,7 @@ public class GoogleApiDevelopmentConstants implements IGoogleApiConstants {
 
     @Override
     public String nearbySearchUrl(double latitude, double longitude, int radius) {
-        String url = String.format("%s?location=%d,%d&radius=%d&key=%s",
+        String url = String.format("%s?location=%s,%s&radius=%d&type=restaurant&key=%s",
                 nearbySearchUrl, latitude, longitude, radius, googleApiKey);
 
         return url;

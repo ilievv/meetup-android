@@ -61,7 +61,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
     private void injectDependencies() {
         BaseApplication
-                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(

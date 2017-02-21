@@ -13,6 +13,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.Venue;
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
@@ -25,12 +26,13 @@ public class NearbyVenuesRecyclerAdapter
 
     private static String VENUE_KEY = "venue";
 
-    private List<Venue> venues;
-    private List<Venue> filteredVenues;
+    private List<IVenue> venues;
+    private List<IVenue> filteredVenues;
 
     private VenueFilter venueFilter;
 
     public NearbyVenuesRecyclerAdapter(IVenueData venueData) {
+        // TODO: Change
         venues = venueData.getSampleData();
         filteredVenues = new ArrayList<>(venues);
     }
@@ -45,7 +47,7 @@ public class NearbyVenuesRecyclerAdapter
 
     @Override
     public void onBindViewHolder(VenueHolder holder, int position) {
-        Venue venue = this.filteredVenues.get(position);
+        IVenue venue = filteredVenues.get(position);
         holder.bindVenue(venue);
     }
 
@@ -56,8 +58,8 @@ public class NearbyVenuesRecyclerAdapter
 
     @Override
     public Filter getFilter() {
-        if (this.venueFilter == null) {
-            this.venueFilter = new VenueFilter(this, venues);
+        if (venueFilter == null) {
+            venueFilter = new VenueFilter(this, venues);
         }
 
         return venueFilter;
@@ -66,7 +68,7 @@ public class NearbyVenuesRecyclerAdapter
     static class VenueHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Venue venue;
+        private IVenue venue;
         private TextView venueName;
         private TextView venueTypes;
         private TextView venueAddress;
@@ -93,14 +95,14 @@ public class NearbyVenuesRecyclerAdapter
             context.startActivity(showVenueIntent);
         }
 
-        void bindVenue(Venue venue) {
+        void bindVenue(IVenue venue) {
             this.venue = venue;
-            this.venueName.setText(venue.getName());
-            this.venueAddress.setText(venue.getAddress());
-            this.venueRating.setRating(venue.getRating());
+            venueName.setText(venue.getName());
+            venueAddress.setText(venue.getAddress());
+            venueRating.setRating(venue.getRating());
 
             if (venue.getTypes() != null) {
-                this.venueTypes.setText(TextUtils.join(", ", venue.getTypes()));
+                venueTypes.setText(TextUtils.join(", ", venue.getTypes()));
             }
         }
     }
@@ -108,15 +110,15 @@ public class NearbyVenuesRecyclerAdapter
     private class VenueFilter extends Filter {
 
         private NearbyVenuesRecyclerAdapter adapter;
-        private List<Venue> originalList;
-        private List<Venue> filteredList;
+        private List<IVenue> originalList;
+        private List<IVenue> filteredList;
 
-        private VenueFilter(NearbyVenuesRecyclerAdapter adapter, List<Venue> venues) {
+        private VenueFilter(NearbyVenuesRecyclerAdapter adapter, List<IVenue> venues) {
             super();
 
             this.adapter = adapter;
-            this.originalList = venues;
-            this.filteredList = new ArrayList<>();
+            originalList = venues;
+            filteredList = new ArrayList<>();
         }
 
         @Override
@@ -130,7 +132,7 @@ public class NearbyVenuesRecyclerAdapter
             } else {
                 final String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (final Venue venue : originalList) {
+                for (final IVenue venue : originalList) {
                     String venueName = venue.getName();
                     if (venueName != null &&
                             venueName.toLowerCase().contains(filterPattern)) {
