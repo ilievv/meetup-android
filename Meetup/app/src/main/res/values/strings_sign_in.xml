@@ -6,6 +6,6 @@
     <string name="enter_username">Please enter username</string>
     <string name="enter_password">Please enter password</string>
     <string name="invalid_details">Invalid username or password</string>
-    <string name="sign_in_successfull">You are now signed in as </string>
+    <string name="sign_in_successfull">You have signed in successfully</string>
     <string name="sign_in_btn">Sign in</string>
 </resources>

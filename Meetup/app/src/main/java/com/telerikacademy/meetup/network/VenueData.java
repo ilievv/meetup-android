@@ -48,15 +48,14 @@ public class VenueData implements IVenueData {
     @Override
     public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius) {
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius);
+
         return httpRequester
                 .get(nearbySearchUrl)
                 .map(new Function<IHttpResponse, List<IVenue>>() {
                     @Override
                     public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
                         String body = iHttpResponse.getBody();
-
                         List<IVenue> venues = new ArrayList<>();
-
                         return venues;
                     }
                 });

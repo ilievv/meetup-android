@@ -1,10 +1,8 @@
 package com.telerikacademy.meetup.view.home;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import butterknife.BindView;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
@@ -22,9 +20,6 @@ public class HomeActivity extends AppCompatActivity {
     IHomeHeaderContract.Presenter headerPresenter;
     @Inject
     FragmentManager fragmentManager;
-
-    @BindView(R.id.btn_update_location)
-    FloatingActionButton updateLocationButton;
 
     private HomeContentFragment content;
     private HomeHeaderFragment header;

@@ -142,7 +142,7 @@ public class OkHttpRequester implements IHttpRequester {
 
     private Observable<IHttpResponse> createResponse(Request request) {
         try {
-            Response response = this.httpClient.newCall(request).execute();
+            Response response = httpClient.newCall(request).execute();
 
             IHttpResponse responseParsed = responseFactory.createResponse(
                     response.headers().toMultimap(), response.body().string(),

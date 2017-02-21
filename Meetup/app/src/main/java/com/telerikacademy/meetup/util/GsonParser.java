@@ -11,18 +11,11 @@ import java.lang.reflect.Type;
 public class GsonParser implements IJsonParser {
 
     @Override
-    public String toJson(Object obj) {
-        return null;
-    }
+    public String toJson(Object src) {
+        Gson gson = new Gson();
+        String json = gson.toJson(src);
 
-    @Override
-    public String toJsonFromResponseBody(String responseBodyString) {
-        String resultJsonFromHttp = responseBodyString;
-        JsonParser jsonParser = new JsonParser();
-        JsonObject rootObj = jsonParser.parse(resultJsonFromHttp).getAsJsonObject();
-        String jsonObject = rootObj.getAsJsonObject("result").toString();
-
-        return jsonObject;
+        return json;
     }
 
     @Override
@@ -32,5 +25,14 @@ public class GsonParser implements IJsonParser {
         T result = gson.fromJson(json, classOfT);
 
         return result;
+    }
+
+    @Override
+    public String toJsonFromResponseBody(String responseBodyString) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject rootObj = jsonParser.parse(responseBodyString).getAsJsonObject();
+        String jsonObject = rootObj.getAsJsonObject("result").toString();
+
+        return jsonObject;
     }
 }
