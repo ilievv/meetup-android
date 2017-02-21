@@ -56,13 +56,13 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
             return;
         }
 
-        String passHash = this.hashProvider.hashPassword(password);
+        String passHash = hashProvider.hashPassword(password);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("username", username);
-        map.put("passHash", passHash);
+        Map<String, String> userCredentials = new HashMap<>();
+        userCredentials.put("username", username);
+        userCredentials.put("passHash", passHash);
 
-        httpRequester.post(apiConstants.signUpUrl(), map)
+        httpRequester.post(apiConstants.signUpUrl(), userCredentials)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<IHttpResponse>() {
@@ -76,13 +76,8 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
                         String userJsonObject;
                         User resultUser;
 
-                        try {
-                            userJsonObject = jsonParser.toJsonFromResponseBody(responseBody);
-                            resultUser = jsonParser.fromJson(userJsonObject, User.class);
-                        } catch (IllegalStateException e) {
-                            view.setPasswordError();
-                            return;
-                        }
+                        userJsonObject = jsonParser.getDirectMember(responseBody, "result");
+                        resultUser = jsonParser.fromJson(userJsonObject, User.class);
 
                         view.notifySuccessful();
                         view.redirectToSignIn();

@@ -28,11 +28,14 @@ public class GsonParser implements IJsonParser {
     }
 
     @Override
-    public String toJsonFromResponseBody(String responseBodyString) {
+    public String getDirectMember(String json, String memberName) {
         JsonParser jsonParser = new JsonParser();
-        JsonObject rootObj = jsonParser.parse(responseBodyString).getAsJsonObject();
-        String jsonObject = rootObj.getAsJsonObject("result").toString();
+        JsonObject parent = jsonParser
+                .parse(json)
+                .getAsJsonObject();
 
-        return jsonObject;
+        JsonObject member = parent.getAsJsonObject(memberName);
+
+        return member.toString();
     }
 }

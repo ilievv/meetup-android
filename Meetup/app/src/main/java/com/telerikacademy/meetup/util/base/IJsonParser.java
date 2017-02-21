@@ -8,5 +8,5 @@ public interface IJsonParser {
 
     <T> T fromJson(String json, Type classOfT);
 
-    String toJsonFromResponseBody(String responseBodyString);
+    String getDirectMember(String json, String memberName);
 }
