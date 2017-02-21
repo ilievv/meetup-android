@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.sign_in;
 
+import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.util.base.*;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
@@ -16,15 +17,18 @@ public class SignInPresenter implements ISignInContract.Presenter {
 
     private static final String STRING_EMPTY = "";
 
+    private IApiConstants apiConstants;
     private IHttpRequester httpRequester;
     private IJsonParser jsonParser;
     private IUserSession userSession;
     private IHashProvider hashProvider;
 
     @Inject
-    public SignInPresenter(IHttpRequester httpRequester, IJsonParser jsonParser,
-                           IUserSession userSession, IHashProvider hashProvider) {
+    public SignInPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
+                           IJsonParser jsonParser, IUserSession userSession,
+                           IHashProvider hashProvider) {
 
+        this.apiConstants = apiConstants;
         this.httpRequester = httpRequester;
         this.jsonParser = jsonParser;
         this.userSession = userSession;
@@ -58,10 +62,7 @@ public class SignInPresenter implements ISignInContract.Presenter {
         map.put("username", username);
         map.put("passHash", passHash);
 
-        // TODO: Extract into shared pref
-        String url = "https://telerik-meetup.herokuapp.com/auth/login";
-
-        httpRequester.post(url, map)
+        httpRequester.post(apiConstants.signInUrl(), map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<IHttpResponse>() {
