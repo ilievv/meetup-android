@@ -2,6 +2,10 @@ package com.telerikacademy.meetup.config.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import com.telerikacademy.meetup.config.ApiDevelopmentConstants;
+import com.telerikacademy.meetup.config.GoogleApiDevelopmentConstants;
+import com.telerikacademy.meetup.config.base.IApiConstants;
+import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.network.VenueData;
@@ -44,6 +48,18 @@ public class ApplicationModule {
     @ApplicationScope
     LocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
         return new GoogleLocationProvider(context, locationFactory);
+    }
+
+    @Provides
+    @ApplicationScope
+    IApiConstants provideApiConstants() {
+        return new ApiDevelopmentConstants();
+    }
+
+    @Provides
+    @ApplicationScope
+    IGoogleApiConstants provideGoogleApiConstants() {
+        return new GoogleApiDevelopmentConstants();
     }
 
     @Provides
