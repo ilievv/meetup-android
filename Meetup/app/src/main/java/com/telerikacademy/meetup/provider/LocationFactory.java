@@ -8,10 +8,7 @@ public class LocationFactory implements ILocationFactory {
 
     @Override
     public ILocation createLocation(double latitude, double longitude) {
-        Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        return location;
+        return new Location(latitude, longitude);
     }
 
     @Override
@@ -19,12 +16,7 @@ public class LocationFactory implements ILocationFactory {
                                     String locality, String thoroughfare,
                                     String subThoroughfare) {
 
-        Location location = new Location();
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setLocality(locality);
-        location.setThoroughfare(thoroughfare);
-        location.setSubThoroughfare(subThoroughfare);
-        return location;
+        return new Location(latitude, longitude,
+                locality, thoroughfare, subThoroughfare);
     }
 }

@@ -1,8 +1,6 @@
 package com.telerikacademy.meetup.model;
 
-import com.telerikacademy.meetup.model.base.IVenue;
-
-public class Venue implements IVenue {
+public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
 
     private String id;
     private String name;

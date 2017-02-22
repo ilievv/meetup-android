@@ -8,6 +8,8 @@ import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
+import com.telerikacademy.meetup.config.di.annotation.UserModel;
+import com.telerikacademy.meetup.model.gson.User;
 import com.telerikacademy.meetup.network.UserData;
 import com.telerikacademy.meetup.network.VenueData;
 import com.telerikacademy.meetup.network.base.IUserData;
@@ -28,6 +30,7 @@ import dagger.Module;
 import dagger.Provides;
 
 import javax.inject.Inject;
+import java.lang.reflect.Type;
 
 @Module
 public class ApplicationModule {
@@ -54,6 +57,13 @@ public class ApplicationModule {
 
     @Provides
     @ApplicationScope
+    @UserModel
+    Type provideUserModelType() {
+        return User.class;
+    }
+
+    @Provides
+    @ApplicationScope
     IApiConstants provideApiConstants() {
         return new ApiDevelopmentConstants();
     }
@@ -69,9 +79,10 @@ public class ApplicationModule {
     @ApplicationScope
     IUserData provideUserData(IApiConstants apiConstants, IHttpRequester httpRequester,
                               IJsonParser jsonParser, IUserSession userSession,
-                              IHashProvider hashProvider, IValidator validator) {
+                              IHashProvider hashProvider, IValidator validator,
+                              @UserModel Type userModelType) {
 
-        return new UserData(apiConstants, httpRequester, jsonParser, userSession, hashProvider, validator);
+        return new UserData(apiConstants, httpRequester, jsonParser, userSession, hashProvider, validator, userModelType);
     }
 
     @Inject

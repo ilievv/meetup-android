@@ -2,7 +2,6 @@ package com.telerikacademy.meetup.network;
 
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.model.Venue;
-import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
@@ -30,8 +29,8 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public List<IVenue> getSampleData() {
-        List<IVenue> venues = new ArrayList<>();
+    public List<com.telerikacademy.meetup.model.base.IVenue> getSampleData() {
+        List<com.telerikacademy.meetup.model.base.IVenue> venues = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             Venue venue = new Venue(Integer.toString(i),
@@ -46,17 +45,17 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius) {
+    public Observable<List<com.telerikacademy.meetup.model.base.IVenue>> getNearby(double latitude, double longitude, int radius) {
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius);
 
         return httpRequester
                 .get(nearbySearchUrl)
-                .map(new Function<IHttpResponse, List<IVenue>>() {
+                .map(new Function<IHttpResponse, List<com.telerikacademy.meetup.model.base.IVenue>>() {
                     @Override
-                    public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
+                    public List<com.telerikacademy.meetup.model.base.IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
                         String body = iHttpResponse.getBody();
 //                        String latitude = jsonParser.getDirectMember(body, "results", "geometry", "location", "lat");
-                        List<IVenue> venues = new ArrayList<>();
+                        List<com.telerikacademy.meetup.model.base.IVenue> venues = new ArrayList<>();
                         return venues;
                     }
                 });

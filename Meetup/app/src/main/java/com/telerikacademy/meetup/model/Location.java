@@ -12,7 +12,9 @@ public class Location implements ILocation {
     private String thoroughfare;
     private String subThoroughfare;
 
-    public Location() {
+    public Location(double latitude, double longitude) {
+        setLatitude(latitude);
+        setLongitude(longitude);
     }
 
     public Location(double latitude, double longitude, String locality,
@@ -29,39 +31,39 @@ public class Location implements ILocation {
         return latitude;
     }
 
+    private void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public double getLongitude() {
         return longitude;
+    }
+
+    private void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getLocality() {
         return locality;
     }
 
+    private void setLocality(String locality) {
+        this.locality = locality;
+    }
+
     public String getThoroughfare() {
         return thoroughfare;
+    }
+
+    private void setThoroughfare(String thoroughfare) {
+        this.thoroughfare = thoroughfare;
     }
 
     public String getSubThoroughfare() {
         return subThoroughfare;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setLocality(String locality) {
-        this.locality = locality;
-    }
-
-    public void setThoroughfare(String thoroughfare) {
-        this.thoroughfare = thoroughfare;
-    }
-
-    public void setSubThoroughfare(String subThoroughfare) {
+    private void setSubThoroughfare(String subThoroughfare) {
         this.subThoroughfare = subThoroughfare;
     }
 

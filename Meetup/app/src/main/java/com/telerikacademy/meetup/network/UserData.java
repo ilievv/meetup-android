@@ -1,7 +1,6 @@
 package com.telerikacademy.meetup.network;
 
 import com.telerikacademy.meetup.config.base.IApiConstants;
-import com.telerikacademy.meetup.model.User;
 import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.util.base.*;
@@ -9,6 +8,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 import javax.inject.Inject;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,11 +20,13 @@ public class UserData implements IUserData {
     private final IUserSession userSession;
     private final IHashProvider hashProvider;
     private final IValidator validator;
+    private final Type userModelType;
 
     @Inject
     public UserData(IApiConstants apiConstants, IHttpRequester httpRequester,
                     IJsonParser jsonParser, IUserSession userSession,
-                    IHashProvider hashProvider, IValidator validator) {
+                    IHashProvider hashProvider, IValidator validator,
+                    Type userModelType) {
 
         this.apiConstants = apiConstants;
         this.httpRequester = httpRequester;
@@ -32,6 +34,7 @@ public class UserData implements IUserData {
         this.userSession = userSession;
         this.hashProvider = hashProvider;
         this.validator = validator;
+        this.userModelType = userModelType;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class UserData implements IUserData {
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
                         String responseBody = iHttpResponse.getBody().toString();
                         String userJson = jsonParser.getDirectMember(responseBody, "result");
-                        IUser resultUser = jsonParser.fromJson(userJson, User.class);
+                        IUser resultUser = jsonParser.fromJson(userJson, userModelType);
 
                         userSession.setUsername(resultUser.getUsername());
                         userSession.setId(resultUser.getId());
@@ -72,7 +75,7 @@ public class UserData implements IUserData {
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
                         String responseBody = iHttpResponse.getBody().toString();
                         String userJson = jsonParser.getDirectMember(responseBody, "result");
-                        IUser resultUser = jsonParser.fromJson(userJson, User.class);
+                        IUser resultUser = jsonParser.fromJson(userJson, userModelType);
 
                         return resultUser;
                     }

@@ -11,6 +11,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import butterknife.BindView;
+import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.Venue;
 import com.telerikacademy.meetup.model.base.IVenue;
@@ -92,20 +94,20 @@ public class NearbyVenuesRecyclerAdapter
     static class VenueHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
+        @BindView(R.id.venue_name)
+        TextView venueName;
+        @BindView(R.id.venue_types)
+        TextView venueTypes;
+        @BindView(R.id.venue_address)
+        TextView venueAddress;
+        @BindView(R.id.venue_rating)
+        RatingBar venueRating;
+
         private IVenue venue;
-        private TextView venueName;
-        private TextView venueTypes;
-        private TextView venueAddress;
-        private RatingBar venueRating;
 
         private VenueHolder(View itemView) {
             super(itemView);
-
-            this.venueName = (TextView) itemView.findViewById(R.id.venue_name);
-            this.venueTypes = (TextView) itemView.findViewById(R.id.venue_types);
-            this.venueAddress = (TextView) itemView.findViewById(R.id.venue_address);
-            this.venueRating = (RatingBar) itemView.findViewById(R.id.venue_rating);
-
+            BaseApplication.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -139,7 +141,6 @@ public class NearbyVenuesRecyclerAdapter
 
         private VenueFilter(NearbyVenuesRecyclerAdapter adapter, List<IVenue> venues) {
             super();
-
             this.adapter = adapter;
             originalList = venues;
             filteredList = new ArrayList<>();
