@@ -64,13 +64,16 @@ public class VenueData implements IVenueData {
     }
 
     private String[] parseVenueTypes(String[] venueTypes) {
+        final char OLD_SEPARATOR = '_';
+        final char NEW_SEPARATOR = ' ';
         final int MAX_VENUE_TYPES = 3;
-        final int venueTypesCount = Math.min(venueTypes.length, MAX_VENUE_TYPES);
 
+        final int venueTypesCount = Math.min(venueTypes.length, MAX_VENUE_TYPES);
         String[] parsedVenueTypes = new String[venueTypesCount];
+
         for (int i = 0; i < venueTypesCount; i++) {
             String venueType = venueTypes[i];
-            venueType = venueType.replace('_', ' ');
+            venueType = venueType.replace(OLD_SEPARATOR, NEW_SEPARATOR);
             parsedVenueTypes[i] = venueType;
         }
 
