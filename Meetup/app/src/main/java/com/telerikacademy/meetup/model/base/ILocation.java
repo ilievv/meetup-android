@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.model.base;
 
-public interface ILocation {
+import java.io.Serializable;
+
+public interface ILocation extends Serializable {
 
     double getLatitude();
 

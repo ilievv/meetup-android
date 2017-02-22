@@ -7,12 +7,15 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.model.base.ILocation;
+import com.telerikacademy.meetup.provider.base.ILocationProvider;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
 import javax.inject.Inject;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity
+        implements ILocationProvider {
 
     @Inject
     IHomeContentContract.Presenter contentPresenter;
@@ -32,24 +35,36 @@ public class HomeActivity extends AppCompatActivity {
 
         content = (HomeContentFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_content);
-        contentPresenter.setView(content);
-        content.setPresenter(contentPresenter);
 
         header = (HomeHeaderFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
-        headerPresenter.setView(header);
-        header.setPresenter(headerPresenter);
+
+        setup();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
+    }
+
+    @Override
+    public ILocation getLocation() {
+        ILocation currentLocation = headerPresenter.getLocation();
+        return currentLocation;
     }
 
     @OnClick(R.id.btn_update_location)
     void updateLocation() {
         header.updateLocation();
+    }
+
+    private void setup() {
+        contentPresenter.setView(content);
+        content.setPresenter(contentPresenter);
+
+        headerPresenter.setView(header);
+        header.setPresenter(headerPresenter);
     }
 
     private void injectDependencies() {

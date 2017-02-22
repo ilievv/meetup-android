@@ -13,6 +13,7 @@ import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
+import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,6 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
+
+    private static final String EXTRA_VENUE_TYPE =
+            HomeContentFragment.class.getCanonicalName() + ".VENUE_TYPE";
+    private static final String EXTRA_CURRENT_LATITUDE =
+            HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LATITUDE";
+    private static final String EXTRA_CURRENT_LONGITUDE =
+            HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LONGITUDE";
 
     @Inject
     INearbyVenuesContract.Presenter presenter;
@@ -37,6 +45,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     private NearbyVenuesRecyclerAdapter recyclerAdapter;
     private NearbyVenuesContentFragment content;
     private ToolbarFragment toolbar;
+    private Dialog progressDialog;
     private ISearchBar searchBar;
 
     @Override
@@ -50,23 +59,47 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
         content = (NearbyVenuesContentFragment) fragmentManager.
                 findFragmentById(R.id.fragment_nearby_venues_content);
-        content.setPresenter(presenter);
-        presenter.setView(content);
 
         searchBar = (ISearchBar) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_search_header);
 
-        recyclerAdapter = new NearbyVenuesRecyclerAdapter(new ArrayList<IVenue>());
-        content.setAdapter(recyclerAdapter);
-        searchBar.setFilter(recyclerAdapter);
-
-        final Dialog progressDialog = dialogFactory
+        progressDialog = dialogFactory
                 .createDialog()
-                .cancelable(true)
                 .withContent(R.string.dialog_loading_content)
                 .withProgress();
 
-        venueData.getNearby(42.692923, 23.320057, 50)
+        double latitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LATITUDE, 0);
+        double longitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LONGITUDE, 0);
+        String venueType = getIntent().getStringExtra(EXTRA_VENUE_TYPE);
+
+        setup();
+        showNearbyVenues(latitude, longitude, 50, venueType);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
+        return true;
+    }
+
+    private void setup() {
+        content.setPresenter(presenter);
+        presenter.setView(content);
+
+        recyclerAdapter = new NearbyVenuesRecyclerAdapter(new ArrayList<IVenue>());
+        content.setAdapter(recyclerAdapter);
+        searchBar.setFilter(recyclerAdapter);
+    }
+
+    private void showNearbyVenues(double latitude, double longitude, int radius, String venueType) {
+        venueData.getNearby(latitude, longitude, radius)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<IVenue>>() {
@@ -89,19 +122,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                         progressDialog.hide();
                     }
                 });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
-        return true;
     }
 
     private void injectDependencies() {

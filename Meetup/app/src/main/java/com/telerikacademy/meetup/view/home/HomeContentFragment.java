@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
+import com.telerikacademy.meetup.provider.base.ILocationProvider;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 
@@ -20,16 +22,28 @@ import javax.inject.Inject;
 public class HomeContentFragment extends Fragment
         implements IHomeContentContract.View {
 
-    private static final String VENUE_TYPE_TAG = "VENUE_TYPE";
+    private static final String EXTRA_VENUE_TYPE =
+            HomeContentFragment.class.getCanonicalName() + ".VENUE_TYPE";
+    private static final String EXTRA_CURRENT_LATITUDE =
+            HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LATITUDE";
+    private static final String EXTRA_CURRENT_LONGITUDE =
+            HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LONGITUDE";
 
     @Inject
     IIntentFactory intentFactory;
 
     private IHomeContentContract.Presenter presenter;
+    private ILocationProvider locationProvider;
 
     @Override
     public void setPresenter(IHomeContentContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        locationProvider = (ILocationProvider) context;
     }
 
     @Nullable
@@ -50,50 +64,55 @@ public class HomeContentFragment extends Fragment
 
     @OnClick(R.id.btn_restaurant)
     void showNearbyRestaurants() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "restaurant");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "restaurant");
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_cafe)
     void showNearbyCafes() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "cafe");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "cafe");
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_pub)
     void showNearbyPubs() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "pub");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "pub");
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_fast_food)
     void showNearbyFastFoodRestaurants() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "fast_food");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "fast_food");
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_night_club)
     void showNightClubs() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "night_club");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "night_club");
         startActivity(intent);
     }
 
     @OnClick(R.id.btn_other)
     void showOtherVenues() {
-        Intent intent = intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(VENUE_TYPE_TAG, "other");
+        Intent intent = createNearbyVenuesIntent()
+                .putExtra(EXTRA_VENUE_TYPE, "other");
         startActivity(intent);
+    }
+
+    private Intent createNearbyVenuesIntent() {
+        return intentFactory
+                .createIntentToFront(NearbyVenuesActivity.class)
+                .putExtra(EXTRA_CURRENT_LATITUDE, locationProvider
+                        .getLocation()
+                        .getLatitude())
+                .putExtra(EXTRA_CURRENT_LONGITUDE, locationProvider
+                        .getLocation()
+                        .getLongitude());
     }
 
     private void injectDependencies() {

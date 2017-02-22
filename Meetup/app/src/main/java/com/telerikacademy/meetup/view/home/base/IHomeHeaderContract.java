@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.home.base;
 
+import com.telerikacademy.meetup.provider.base.ILocationProvider;
 import com.telerikacademy.meetup.view.base.BasePresenter;
 import com.telerikacademy.meetup.view.base.BaseView;
 
@@ -18,7 +19,7 @@ public interface IHomeHeaderContract {
         void showEnableLocationDialog();
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface Presenter extends BasePresenter<View>, ILocationProvider {
 
         void subscribe();
 
