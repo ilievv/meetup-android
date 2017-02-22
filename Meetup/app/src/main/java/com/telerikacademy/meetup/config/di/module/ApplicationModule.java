@@ -8,7 +8,9 @@ import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
+import com.telerikacademy.meetup.network.UserData;
 import com.telerikacademy.meetup.network.VenueData;
+import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.GoogleLocationProvider;
 import com.telerikacademy.meetup.provider.HttpResponseFactory;
@@ -60,6 +62,16 @@ public class ApplicationModule {
     @ApplicationScope
     IGoogleApiConstants provideGoogleApiConstants() {
         return new GoogleApiDevelopmentConstants();
+    }
+
+    @Inject
+    @Provides
+    @ApplicationScope
+    IUserData provideUserData(IApiConstants apiConstants, IHttpRequester httpRequester,
+                              IJsonParser jsonParser, IUserSession userSession,
+                              IHashProvider hashProvider, IValidator validator) {
+
+        return new UserData(apiConstants, httpRequester, jsonParser, userSession, hashProvider, validator);
     }
 
     @Inject

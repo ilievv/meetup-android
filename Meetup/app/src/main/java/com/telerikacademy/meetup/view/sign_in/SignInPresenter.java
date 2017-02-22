@@ -1,8 +1,8 @@
 package com.telerikacademy.meetup.view.sign_in;
 
-import com.telerikacademy.meetup.config.base.IApiConstants;
-import com.telerikacademy.meetup.model.User;
-import com.telerikacademy.meetup.util.base.*;
+import com.telerikacademy.meetup.model.base.IUser;
+import com.telerikacademy.meetup.network.base.IUserData;
+import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -10,32 +10,19 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignInPresenter implements ISignInContract.Presenter {
 
-    private static final String STRING_EMPTY = "";
-
-    private IApiConstants apiConstants;
-    private IHttpRequester httpRequester;
-    private IJsonParser jsonParser;
-    private IUserSession userSession;
-    private IHashProvider hashProvider;
-
-    @Inject
-    public SignInPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
-                           IJsonParser jsonParser, IUserSession userSession,
-                           IHashProvider hashProvider) {
-
-        this.apiConstants = apiConstants;
-        this.httpRequester = httpRequester;
-        this.jsonParser = jsonParser;
-        this.userSession = userSession;
-        this.hashProvider = hashProvider;
-    }
+    private final IUserData userData;
+    private final IValidator validator;
 
     private ISignInContract.View view;
+
+    @Inject
+    public SignInPresenter(IUserData userData, IValidator validator) {
+        this.userData = userData;
+        this.validator = validator;
+    }
 
     public void load() {
     }
@@ -47,41 +34,26 @@ public class SignInPresenter implements ISignInContract.Presenter {
 
     @Override
     public void signIn(String username, String password) {
-        if (username.equals(STRING_EMPTY)) {
+        if (!validator.isUsernameValid(username)) {
             view.setUsernameError();
             return;
         }
 
-        if (password.equals(STRING_EMPTY)) {
+        if (!validator.isPasswordValid(password)) {
             view.setPasswordError();
             return;
         }
 
-        String passHash = hashProvider.hashPassword(password);
-        Map<String, String> userCredentials = new HashMap<>();
-        userCredentials.put("username", username);
-        userCredentials.put("passHash", passHash);
-
-        httpRequester.post(apiConstants.signInUrl(), userCredentials)
+        userData.signIn(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<IHttpResponse>() {
+                .subscribe(new Observer<IUser>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(IHttpResponse value) {
-                        String responseBody = value.getBody().toString();
-                        String userJsonObject;
-                        User resultUser;
-
-                        userJsonObject = jsonParser.getDirectMember(responseBody, "result");
-                        resultUser = jsonParser.fromJson(userJsonObject, User.class);
-
-                        userSession.setUsername(resultUser.getUsername());
-                        userSession.setId(resultUser.getId());
-
+                    public void onNext(IUser value) {
                         view.notifySuccessful();
                         view.redirectToHome();
                     }

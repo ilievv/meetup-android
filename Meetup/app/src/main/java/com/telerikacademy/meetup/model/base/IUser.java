@@ -1,9 +1,12 @@
 package com.telerikacademy.meetup.model.base;
 
-/**
- * Created by georgivelikov on 12-Feb-17.
- */
-
 public interface IUser {
 
+    String getId();
+
+    void setId(String id);
+
+    String getUsername();
+
+    void setUsername(String username);
 }

@@ -103,6 +103,8 @@ public class ToolbarFragment extends Fragment
 
         final Intent homeIntent = intentFactory.createIntentToFront(HomeActivity.class);
         final Intent nearbyVenuesIntent = intentFactory.createIntentToFront(NearbyVenuesActivity.class);
+        final Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
+        final Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
 
         if (userSession.isUserLoggedIn()) {
             DrawerItem itemSignOut = drawerItemFactory
@@ -124,8 +126,7 @@ public class ToolbarFragment extends Fragment
                                     break;
                                 case NAV_SIGN_OUT_ID:
                                     userSession.clearSession();
-                                    currentActivity.finish();
-                                    startActivity(homeIntent);
+                                    startActivity(signInIntent);
                                     break;
                             }
 
@@ -144,9 +145,6 @@ public class ToolbarFragment extends Fragment
                     .withIdentifier(R.layout.activity_sign_up)
                     .withName(R.string.nav_sign_up)
                     .withIcon(GoogleMaterial.Icon.gmd_person_add);
-
-            final Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
-            final Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
 
             navigationDrawer
                     .withDrawerItems(

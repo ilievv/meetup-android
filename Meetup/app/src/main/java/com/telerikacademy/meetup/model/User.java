@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.model;
 
-public class User {
+import com.telerikacademy.meetup.model.base.IUser;
+
+public class User implements IUser {
 
     private String username;
     private String id;

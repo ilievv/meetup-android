@@ -26,6 +26,9 @@ import javax.inject.Inject;
 public class HomeHeaderFragment extends ToolbarFragment
         implements IHomeHeaderContract.View {
 
+    private static final String LOCATION_TITLE = "location title";
+    private static final String LOCATION_SUBTITLE = "location subtitle";
+
     @Inject
     IPermissionHandler permissionHandler;
     @Inject
@@ -61,8 +64,20 @@ public class HomeHeaderFragment extends ToolbarFragment
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
 
+        if (savedInstanceState != null) {
+            locationTitle.setText(savedInstanceState.getString(LOCATION_TITLE));
+            locationSubtitle.setText(savedInstanceState.getString(LOCATION_SUBTITLE));
+        }
+
         locationManager = (LocationManager) getActivity()
                 .getSystemService(Context.LOCATION_SERVICE);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(LOCATION_TITLE, locationTitle.getText().toString());
+        outState.putString(LOCATION_SUBTITLE, locationSubtitle.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -41,14 +41,15 @@ public class HomeActivity extends AppCompatActivity {
         header.setPresenter(headerPresenter);
     }
 
-    @OnClick(R.id.btn_update_location)
-    void updateLocation() {
-        header.updateLocation();
-    }
-
+    @Override
     protected void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
+    }
+
+    @OnClick(R.id.btn_update_location)
+    void updateLocation() {
+        header.updateLocation();
     }
 
     private void injectDependencies() {

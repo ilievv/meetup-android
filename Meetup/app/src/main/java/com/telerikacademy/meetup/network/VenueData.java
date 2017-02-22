@@ -55,6 +55,7 @@ public class VenueData implements IVenueData {
                     @Override
                     public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
                         String body = iHttpResponse.getBody();
+//                        String latitude = jsonParser.getDirectMember(body, "results", "geometry", "location", "lat");
                         List<IVenue> venues = new ArrayList<>();
                         return venues;
                     }

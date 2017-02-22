@@ -59,6 +59,9 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
         locationProvider.setOnLocationChangeListener(new LocationProvider.IOnLocationChangeListener() {
             @Override
             public void onLocationChange(ILocation location) {
+                if (currentLocation == null) {
+                    setTitle(location);
+                }
                 currentLocation = location;
             }
         });

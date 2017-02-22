@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
-import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
+import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
@@ -18,7 +18,8 @@ import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
-import com.telerikacademy.meetup.util.base.*;
+import com.telerikacademy.meetup.util.base.IPermissionHandler;
+import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;
 import com.telerikacademy.meetup.view.home.HomeHeaderPresenter;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
@@ -115,21 +116,15 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    ISignInContract.Presenter provideSignInPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
-                                                     IJsonParser jsonParser, IUserSession userSession,
-                                                     IHashProvider hashProvider) {
-
-        return new SignInPresenter(apiConstants, httpRequester, jsonParser, userSession, hashProvider);
+    ISignInContract.Presenter provideSignInPresenter(IUserData userdata, IValidator validator) {
+        return new SignInPresenter(userdata, validator);
     }
 
     @Inject
     @Provides
     @ControllerScope
-    ISignUpContract.Presenter provideSignUpPresenter(IApiConstants apiConstants, IHttpRequester httpRequester,
-                                                     IJsonParser jsonParser, IUserSession userSession,
-                                                     IValidator validator, IHashProvider hashProvider) {
-
-        return new SignUpPresenter(apiConstants, httpRequester, jsonParser, userSession, validator, hashProvider);
+    ISignUpContract.Presenter provideSignUpPresenter(IUserData userData, IValidator validator) {
+        return new SignUpPresenter(userData, validator);
     }
 
     @Inject
