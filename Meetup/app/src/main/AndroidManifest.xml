@@ -14,13 +14,13 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
 
         <activity
-                android:name=".view.home.HomeActivity">
+                android:name=".SplashActivity"
+                android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,31 +28,29 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <activity android:name=".view.home.HomeActivity">
+        </activity>
         <activity
                 android:name=".view.nearby_venues.NearbyVenuesActivity"
                 android:label="@string/local_venues_label"
                 android:parentActivityName=".view.home.HomeActivity">
         </activity>
-
         <activity
                 android:name=".view.venue_details.VenueDetailsActivity"
                 android:parentActivityName=".view.nearby_venues.NearbyVenuesActivity">
         </activity>
-
         <activity
                 android:name=".view.sign_in.SignInActivity"
                 android:theme="@style/SignInTheme">
         </activity>
-
         <activity
                 android:name=".view.sign_up.SignUpActivity"
                 android:theme="@style/SignInTheme">
         </activity>
 
         <uses-library
-                android:required="false"
-                android:name="com.sec.android.app.multiwindow"/>
+                android:name="com.sec.android.app.multiwindow"
+                android:required="false"/>
 
         <meta-data
                 android:name="com.sec.android.support.multiwindow"
