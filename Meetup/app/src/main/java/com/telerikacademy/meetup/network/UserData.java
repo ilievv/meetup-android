@@ -19,21 +19,18 @@ public class UserData implements IUserData {
     private final IJsonParser jsonParser;
     private final IUserSession userSession;
     private final IHashProvider hashProvider;
-    private final IValidator validator;
     private final Type userModelType;
 
     @Inject
     public UserData(IApiConstants apiConstants, IHttpRequester httpRequester,
                     IJsonParser jsonParser, IUserSession userSession,
-                    IHashProvider hashProvider, IValidator validator,
-                    Type userModelType) {
+                    IHashProvider hashProvider, Type userModelType) {
 
         this.apiConstants = apiConstants;
         this.httpRequester = httpRequester;
         this.jsonParser = jsonParser;
         this.userSession = userSession;
         this.hashProvider = hashProvider;
-        this.validator = validator;
         this.userModelType = userModelType;
     }
 

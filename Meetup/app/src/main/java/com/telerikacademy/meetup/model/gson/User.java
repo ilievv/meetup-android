@@ -9,15 +9,6 @@ public class User implements IUser {
     private String id;
     private String username;
 
-
-    public User() {
-    }
-
-    public User(String username, String id) {
-        setUsername(username);
-        setId(id);
-    }
-
     public String getId() {
         return this.id;
     }

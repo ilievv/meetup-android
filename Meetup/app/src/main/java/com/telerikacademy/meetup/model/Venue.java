@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.model;
 
-public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
+import com.telerikacademy.meetup.model.base.IVenue;
+
+public class Venue implements IVenue {
 
     private String id;
     private String name;
@@ -8,7 +10,9 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
     private String[] types;
     private float rating;
 
-    public Venue() {
+    public Venue(String id, String name) {
+        setId(id);
+        setName(name);
     }
 
     public Venue(String id, String name, String address, String[] types, float rating) {
@@ -23,7 +27,7 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
         return id;
     }
 
-    private void setId(String id) {
+    public void setId(String id) {
         if (id == null) {
             throw new IllegalArgumentException("Venues.setId parameter cannot be null");
         }
@@ -35,7 +39,7 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Venue.setName parameter cannot be null.");
         }
@@ -47,7 +51,7 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
         return address;
     }
 
-    private void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -55,7 +59,7 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
         return types;
     }
 
-    private void setTypes(String[] types) {
+    public void setTypes(String[] types) {
         this.types = types;
     }
 
@@ -63,7 +67,7 @@ public class Venue implements com.telerikacademy.meetup.model.base.IVenue {
         return rating;
     }
 
-    private void setRating(float rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 }

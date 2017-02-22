@@ -31,7 +31,7 @@ public class Location implements ILocation {
         return latitude;
     }
 
-    private void setLatitude(double latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -39,7 +39,7 @@ public class Location implements ILocation {
         return longitude;
     }
 
-    private void setLongitude(double longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -47,7 +47,7 @@ public class Location implements ILocation {
         return locality;
     }
 
-    private void setLocality(String locality) {
+    public void setLocality(String locality) {
         this.locality = locality;
     }
 
@@ -55,7 +55,7 @@ public class Location implements ILocation {
         return thoroughfare;
     }
 
-    private void setThoroughfare(String thoroughfare) {
+    public void setThoroughfare(String thoroughfare) {
         this.thoroughfare = thoroughfare;
     }
 
@@ -63,7 +63,7 @@ public class Location implements ILocation {
         return subThoroughfare;
     }
 
-    private void setSubThoroughfare(String subThoroughfare) {
+    public void setSubThoroughfare(String subThoroughfare) {
         this.subThoroughfare = subThoroughfare;
     }
 

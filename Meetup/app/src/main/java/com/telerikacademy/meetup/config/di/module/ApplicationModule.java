@@ -14,14 +14,8 @@ import com.telerikacademy.meetup.network.UserData;
 import com.telerikacademy.meetup.network.VenueData;
 import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.network.base.IVenueData;
-import com.telerikacademy.meetup.provider.GoogleLocationProvider;
-import com.telerikacademy.meetup.provider.HttpResponseFactory;
-import com.telerikacademy.meetup.provider.LocationFactory;
-import com.telerikacademy.meetup.provider.RecyclerDecorationFactory;
-import com.telerikacademy.meetup.provider.base.IHttpResponseFactory;
-import com.telerikacademy.meetup.provider.base.ILocationFactory;
-import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
-import com.telerikacademy.meetup.provider.base.LocationProvider;
+import com.telerikacademy.meetup.provider.*;
+import com.telerikacademy.meetup.provider.base.*;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 import com.telerikacademy.meetup.util.*;
@@ -79,19 +73,18 @@ public class ApplicationModule {
     @ApplicationScope
     IUserData provideUserData(IApiConstants apiConstants, IHttpRequester httpRequester,
                               IJsonParser jsonParser, IUserSession userSession,
-                              IHashProvider hashProvider, IValidator validator,
-                              @UserModel Type userModelType) {
+                              IHashProvider hashProvider, @UserModel Type userModelType) {
 
-        return new UserData(apiConstants, httpRequester, jsonParser, userSession, hashProvider, validator, userModelType);
+        return new UserData(apiConstants, httpRequester, jsonParser, userSession, hashProvider, userModelType);
     }
 
     @Inject
     @Provides
     @ApplicationScope
     IVenueData provideVenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
-                                IJsonParser jsonParser) {
+                                IJsonParser jsonParser, IVenueFactory venueFactory) {
 
-        return new VenueData(googleApiConstants, httpRequester, jsonParser);
+        return new VenueData(googleApiConstants, httpRequester, jsonParser, venueFactory);
     }
 
     @Inject
@@ -134,14 +127,20 @@ public class ApplicationModule {
 
     @Provides
     @ApplicationScope
-    IRecyclerDecorationFactory provideRecyclerDecorationFactory(@ApplicationContext Context context) {
-        return new RecyclerDecorationFactory(context);
+    IVenueFactory provideVenueFactory() {
+        return new VenueFactory();
     }
 
     @Provides
     @ApplicationScope
     ILocationFactory provideLocationFactory() {
         return new LocationFactory();
+    }
+
+    @Provides
+    @ApplicationScope
+    IRecyclerDecorationFactory provideRecyclerDecorationFactory(@ApplicationContext Context context) {
+        return new RecyclerDecorationFactory(context);
     }
 
     @Inject

@@ -1,12 +1,11 @@
 package com.telerikacademy.meetup.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.telerikacademy.meetup.util.base.IJsonParser;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GsonParser implements IJsonParser {
 
@@ -37,5 +36,25 @@ public class GsonParser implements IJsonParser {
         JsonObject member = parent.getAsJsonObject(memberName);
 
         return member.toString();
+    }
+
+    @Override
+    public <T> List<T> getDirectArray(String json, String memberName, Class<T> elementType) {
+        JsonParser jsonParser = new JsonParser();
+        JsonObject parent = jsonParser
+                .parse(json)
+                .getAsJsonObject();
+
+        JsonArray memberArray = parent.getAsJsonArray(memberName);
+
+        Gson gson = new Gson();
+
+        List<T> list = new ArrayList<>();
+        for (final JsonElement element : memberArray) {
+            T entity = gson.fromJson(element, elementType);
+            list.add(entity);
+        }
+
+        return list;
     }
 }

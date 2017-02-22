@@ -6,11 +6,21 @@ public interface IVenue extends Serializable {
 
     String getId();
 
+    void setId(String id);
+
     String getName();
+
+    void setName(String name);
 
     String getAddress();
 
+    void setAddress(String address);
+
     String[] getTypes();
 
+    void setTypes(String[] types);
+
     float getRating();
+
+    void setRating(float rating);
 }
