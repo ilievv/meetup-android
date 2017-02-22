@@ -33,22 +33,6 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public List<IVenue> getSampleData() {
-        List<IVenue> venues = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            com.telerikacademy.meetup.model.Venue venue = new com.telerikacademy.meetup.model.Venue(Integer.toString(i),
-                    "Pri Ilyo #" + i, "zh.k. Lyulin " + i + 1, new String[]{"food"}, i % 5f);
-            venues.add(venue);
-        }
-        com.telerikacademy.meetup.model.Venue someVen = new com.telerikacademy.meetup.model.Venue("123", "Gosho",
-                "Kostinbrod", new String[]{"restaurant", "bar", "club", "food"}, 3.2f);
-        venues.add(someVen);
-
-        return venues;
-    }
-
-    @Override
     public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius) {
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius);
 
@@ -62,12 +46,12 @@ public class VenueData implements IVenueData {
                         List<Venue> venues = jsonParser.getDirectArray(responseBody, "results", Venue.class);
                         List<IVenue> parsedVenues = new ArrayList<>();
 
-                        for (Venue venue : venues) {
+                        for (final Venue venue : venues) {
                             IVenue parsedVenue = venueFactory.createVenue(
                                     venue.getId(),
                                     venue.getName(),
                                     venue.getAddress(),
-                                    venue.getTypes(),
+                                    parseVenueTypes(venue.getTypes()),
                                     venue.getRating()
                             );
 
@@ -77,5 +61,19 @@ public class VenueData implements IVenueData {
                         return parsedVenues;
                     }
                 });
+    }
+
+    private String[] parseVenueTypes(String[] venueTypes) {
+        final int MAX_VENUE_TYPES = 3;
+        final int venueTypesCount = Math.min(venueTypes.length, MAX_VENUE_TYPES);
+
+        String[] parsedVenueTypes = new String[venueTypesCount];
+        for (int i = 0; i < venueTypesCount; i++) {
+            String venueType = venueTypes[i];
+            venueType = venueType.replace('_', ' ');
+            parsedVenueTypes[i] = venueType;
+        }
+
+        return parsedVenueTypes;
     }
 }
