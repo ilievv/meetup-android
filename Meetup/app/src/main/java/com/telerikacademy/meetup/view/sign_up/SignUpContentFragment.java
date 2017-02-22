@@ -83,6 +83,12 @@ public class SignUpContentFragment extends Fragment
     }
 
     @Override
+    public void notifyError(String errorMessage) {
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
     @OnClick(R.id.link_signin)
     public void redirectToSignIn() {
         Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);

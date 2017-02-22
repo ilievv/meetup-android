@@ -4,6 +4,8 @@ import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.util.base.*;
+import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
@@ -46,6 +48,11 @@ public class UserData implements IUserData {
                 .map(new Function<IHttpResponse, IUser>() {
                     @Override
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
+
+                        if(iHttpResponse.getCode() == apiConstants.responseErrorCode()){
+                            throw new Error(iHttpResponse.getMessage());
+                        }
+
                         String responseBody = iHttpResponse.getBody().toString();
                         String userJson = jsonParser.getDirectMember(responseBody, "result");
                         IUser resultUser = jsonParser.fromJson(userJson, userModelType);
@@ -70,6 +77,11 @@ public class UserData implements IUserData {
                 .map(new Function<IHttpResponse, IUser>() {
                     @Override
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
+
+                        if(iHttpResponse.getCode() == apiConstants.responseErrorCode()){
+                            throw new Error(iHttpResponse.getMessage());
+                        }
+
                         String responseBody = iHttpResponse.getBody().toString();
                         String userJson = jsonParser.getDirectMember(responseBody, "result");
                         IUser resultUser = jsonParser.fromJson(userJson, userModelType);

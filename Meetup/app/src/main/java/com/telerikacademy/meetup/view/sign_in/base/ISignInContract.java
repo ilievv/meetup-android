@@ -18,6 +18,8 @@ public interface ISignInContract {
         void startLoading();
 
         void stopLoading();
+
+        void notifyError(String errorMessage);
     }
 
     interface Presenter extends BasePresenter<View> {

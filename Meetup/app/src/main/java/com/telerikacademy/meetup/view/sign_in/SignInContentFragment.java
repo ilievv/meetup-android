@@ -84,6 +84,12 @@ public class SignInContentFragment extends Fragment
     }
 
     @Override
+    public void notifyError(String errorMessage) {
+        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
     public void redirectToHome() {
         Intent homeIntent = intentFactory.createIntentToFront(HomeActivity.class);
         startActivity(homeIntent);

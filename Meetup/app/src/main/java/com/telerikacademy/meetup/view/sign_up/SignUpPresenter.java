@@ -61,6 +61,8 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        view.notifyError(e.getMessage());
+                        view.stopLoading();
                     }
 
                     @Override
