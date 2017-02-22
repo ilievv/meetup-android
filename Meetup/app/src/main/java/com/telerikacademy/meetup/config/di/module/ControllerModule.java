@@ -87,13 +87,6 @@ public class ControllerModule {
         return new MaterialDialog(activity);
     }
 
-    @Inject
-    @Provides
-    @ControllerScope
-    NearbyVenuesRecyclerAdapter provideNearbyVenuesRecyclerAdapter(IVenueData venueData) {
-        return new NearbyVenuesRecyclerAdapter(venueData);
-    }
-
     @Provides
     @ControllerScope
     IHomeContentContract.Presenter provideHomeContentPresenter() {

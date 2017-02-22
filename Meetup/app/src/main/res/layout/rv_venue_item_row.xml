@@ -22,12 +22,13 @@
                 <TextView
                         android:id="@+id/venue_name"
                         android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:layout_gravity="start"
                         android:textColor="@color/primaryText"
                         android:textStyle="bold"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
 
                 <!-- Wrapper -->
                 <LinearLayout
@@ -40,12 +41,12 @@
                             android:id="@+id/venue_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:progressTint="@color/accent"
                             android:secondaryProgressTint="@android:color/transparent"
                             android:progressBackgroundTint="@color/ratingBarBackground"
                             style="?android:attr/ratingBarStyleSmall"
                             android:numStars="5"/>
+
                 </LinearLayout>
 
             </TableRow>
@@ -57,8 +58,8 @@
                 <TextView
                         android:id="@+id/venue_types"
                         android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
                         android:layout_gravity="start"
                         android:textColor="@color/secondaryText"
                         android:textSize="12sp"/>
@@ -78,6 +79,7 @@
                         android:textColor="@color/secondaryText"
                         android:textSize="12sp"
                         android:textStyle="bold"/>
+
             </TableRow>
 
         </TableLayout>

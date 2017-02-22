@@ -16,11 +16,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.Venue;
 import com.telerikacademy.meetup.model.base.IVenue;
-import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,31 +32,9 @@ public class NearbyVenuesRecyclerAdapter
 
     private VenueFilter venueFilter;
 
-    public NearbyVenuesRecyclerAdapter(IVenueData venueData) {
-        // TODO: Change
-        venues = venueData.getSampleData();
-        venueData.getNearby(42.692923, 23.320057, 50)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<IVenue>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                    }
-
-                    @Override
-                    public void onNext(List<IVenue> value) {
-                        int a = 5;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
-                });
-
-        filteredVenues = new ArrayList<>(venues);
+    public NearbyVenuesRecyclerAdapter(List<IVenue> venues) {
+        this.venues = venues;
+        filteredVenues = new ArrayList<>(this.venues);
     }
 
     @Override
