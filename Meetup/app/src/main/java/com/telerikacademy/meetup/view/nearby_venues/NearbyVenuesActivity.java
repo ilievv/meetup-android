@@ -32,6 +32,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
             HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LATITUDE";
     private static final String EXTRA_CURRENT_LONGITUDE =
             HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LONGITUDE";
+    private static final int DEFAULT_RADIUS = 1000;
 
     @Inject
     INearbyVenuesContract.Presenter presenter;
@@ -73,7 +74,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         String venueType = getIntent().getStringExtra(EXTRA_VENUE_TYPE);
 
         setup();
-        showNearbyVenues(latitude, longitude, 50, venueType);
+        showNearbyVenues(latitude, longitude, DEFAULT_RADIUS, venueType);
     }
 
     @Override
@@ -99,7 +100,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     }
 
     private void showNearbyVenues(double latitude, double longitude, int radius, String venueType) {
-        venueData.getNearby(latitude, longitude, radius)
+        venueData.getNearby(latitude, longitude, radius, venueType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<IVenue>>() {

@@ -76,17 +76,17 @@ public class HomeContentFragment extends Fragment
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_pub)
-    void showNearbyPubs() {
+    @OnClick(R.id.btn_bar)
+    void showNearbyBars() {
         Intent intent = createNearbyVenuesIntent()
-                .putExtra(EXTRA_VENUE_TYPE, "pub");
+                .putExtra(EXTRA_VENUE_TYPE, "bar");
         startActivity(intent);
     }
 
-    @OnClick(R.id.btn_fast_food)
+    @OnClick(R.id.btn_casino)
     void showNearbyFastFoodRestaurants() {
         Intent intent = createNearbyVenuesIntent()
-                .putExtra(EXTRA_VENUE_TYPE, "fast_food");
+                .putExtra(EXTRA_VENUE_TYPE, "casino");
         startActivity(intent);
     }
 
@@ -99,8 +99,7 @@ public class HomeContentFragment extends Fragment
 
     @OnClick(R.id.btn_other)
     void showOtherVenues() {
-        Intent intent = createNearbyVenuesIntent()
-                .putExtra(EXTRA_VENUE_TYPE, "other");
+        Intent intent = createNearbyVenuesIntent();
         startActivity(intent);
     }
 

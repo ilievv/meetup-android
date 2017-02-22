@@ -74,28 +74,28 @@
                             android:drawablePadding="8dp"/>
 
                     <Button
-                            android:id="@+id/btn_pub"
-                            android:tag="pub"
+                            android:id="@+id/btn_bar"
+                            android:tag="bar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button.Borderless"
-                            android:text="@string/pub"
+                            android:text="@string/bar"
                             android:textAllCaps="false"
-                            android:drawableTop="@drawable/ic_solid_pub"
+                            android:drawableTop="@drawable/ic_solid_bar"
                             android:drawablePadding="8dp"/>
                 </TableRow>
 
                 <TableRow>
 
                     <Button
-                            android:id="@+id/btn_fast_food"
-                            android:tag="fast_food"
+                            android:id="@+id/btn_casino"
+                            android:tag="casino"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/AppTheme.Button.Borderless"
-                            android:text="@string/fast_food"
+                            android:text="@string/casino"
                             android:textAllCaps="false"
-                            android:drawableTop="@drawable/ic_solid_fast_food"
+                            android:drawableTop="@drawable/ic_solid_cards"
                             android:drawablePadding="8dp"/>
 
                     <Button

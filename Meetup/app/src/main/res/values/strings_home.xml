@@ -8,8 +8,8 @@
     <string name="select_a_place">Select a place</string>
     <string name="restaurant">Restaurant</string>
     <string name="cafe">Cafe</string>
-    <string name="pub">Pub</string>
-    <string name="fast_food">Fast food</string>
+    <string name="bar">Bar</string>
+    <string name="casino">Casino</string>
     <string name="night_club">Night club</string>
     <string name="other">Other</string>
     <string name="unknown_location">unknown</string>

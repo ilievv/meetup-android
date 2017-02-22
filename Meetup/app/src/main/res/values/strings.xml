@@ -12,7 +12,7 @@
         <item>Restaurant6</item>
     </string-array>
 
-    <string name="search">Search all venues</string>
+    <string name="search">Search all places</string>
     <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
     <string name="recently_viewed">Recently viewed</string>
 

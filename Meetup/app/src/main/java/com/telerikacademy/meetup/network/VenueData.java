@@ -13,7 +13,9 @@ import io.reactivex.functions.Function;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class VenueData implements IVenueData {
 
@@ -21,6 +23,7 @@ public class VenueData implements IVenueData {
     private final IHttpRequester httpRequester;
     private final IJsonParser jsonParser;
     private final IVenueFactory venueFactory;
+    private final Set<String> blacklistedTypes;
 
     @Inject
     public VenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
@@ -30,6 +33,8 @@ public class VenueData implements IVenueData {
         this.httpRequester = httpRequester;
         this.jsonParser = jsonParser;
         this.venueFactory = venueFactory;
+        blacklistedTypes = new HashSet<>();
+        populateBlacklist();
     }
 
     @Override
@@ -38,29 +43,56 @@ public class VenueData implements IVenueData {
 
         return httpRequester
                 .get(nearbySearchUrl)
-                .map(new Function<IHttpResponse, List<com.telerikacademy.meetup.model.base.IVenue>>() {
+                .map(new Function<IHttpResponse, List<IVenue>>() {
                     @Override
                     public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
                         String responseBody = iHttpResponse.getBody();
+                        List<Venue> venues = jsonParser
+                                .getDirectArray(responseBody, "results", Venue.class);
 
-                        List<Venue> venues = jsonParser.getDirectArray(responseBody, "results", Venue.class);
-                        List<IVenue> parsedVenues = new ArrayList<>();
-
-                        for (final Venue venue : venues) {
-                            IVenue parsedVenue = venueFactory.createVenue(
-                                    venue.getId(),
-                                    venue.getName(),
-                                    venue.getAddress(),
-                                    parseVenueTypes(venue.getTypes()),
-                                    venue.getRating()
-                            );
-
-                            parsedVenues.add(parsedVenue);
-                        }
-
-                        return parsedVenues;
+                        return parseVenues(venues);
                     }
                 });
+    }
+
+    @Override
+    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, String type) {
+        if (type == null || type.isEmpty()) {
+            return getNearby(latitude, longitude, radius);
+        }
+
+        String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius, type);
+
+        return httpRequester
+                .get(nearbySearchUrl)
+                .map(new Function<IHttpResponse, List<IVenue>>() {
+                    @Override
+                    public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
+                        String responseBody = iHttpResponse.getBody();
+                        List<Venue> venues = jsonParser
+                                .getDirectArray(responseBody, "results", Venue.class);
+
+                        return parseVenues(venues);
+                    }
+                });
+    }
+
+    private List<IVenue> parseVenues(List<Venue> venues) {
+        List<IVenue> parsedVenues = new ArrayList<>();
+
+        for (final Venue venue : venues) {
+            IVenue parsedVenue = venueFactory.createVenue(
+                    venue.getId(),
+                    venue.getName(),
+                    venue.getAddress(),
+                    parseVenueTypes(venue.getTypes()),
+                    venue.getRating()
+            );
+
+            parsedVenues.add(parsedVenue);
+        }
+
+        return parsedVenues;
     }
 
     private String[] parseVenueTypes(String[] venueTypes) {
@@ -69,14 +101,23 @@ public class VenueData implements IVenueData {
         final int MAX_VENUE_TYPES = 3;
 
         final int venueTypesCount = Math.min(venueTypes.length, MAX_VENUE_TYPES);
-        String[] parsedVenueTypes = new String[venueTypesCount];
+        List<String> parsedVenueTypes = new ArrayList<>();
 
         for (int i = 0; i < venueTypesCount; i++) {
             String venueType = venueTypes[i];
+            if (blacklistedTypes.contains(venueType)) {
+                continue;
+            }
+
             venueType = venueType.replace(OLD_SEPARATOR, NEW_SEPARATOR);
-            parsedVenueTypes[i] = venueType;
+            parsedVenueTypes.add(venueType);
         }
 
-        return parsedVenueTypes;
+        return parsedVenueTypes.toArray(new String[parsedVenueTypes.size()]);
+    }
+
+    private void populateBlacklist() {
+        blacklistedTypes.add("point_of_interest");
+        blacklistedTypes.add("establishment");
     }
 }
