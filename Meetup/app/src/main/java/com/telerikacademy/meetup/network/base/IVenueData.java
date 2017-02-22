@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface IVenueData {
 
-    List<IVenue> getSampleData();
-
     Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius);
 }

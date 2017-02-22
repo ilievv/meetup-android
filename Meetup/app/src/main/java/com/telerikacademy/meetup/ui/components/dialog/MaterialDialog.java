@@ -179,7 +179,7 @@ public class MaterialDialog extends Dialog {
     @Override
     public void hide() {
         if (dialog != null) {
-            dialog.hide();
+            dialog.dismiss();
         }
     }
 }

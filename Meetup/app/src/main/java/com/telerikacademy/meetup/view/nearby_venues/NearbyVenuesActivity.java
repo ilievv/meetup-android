@@ -20,6 +20,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyVenuesActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     @Inject
     IVenueData venueData;
 
+    private NearbyVenuesRecyclerAdapter recyclerAdapter;
     private NearbyVenuesContentFragment content;
     private ToolbarFragment toolbar;
     private ISearchBar searchBar;
@@ -54,8 +56,13 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         searchBar = (ISearchBar) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_search_header);
 
+        recyclerAdapter = new NearbyVenuesRecyclerAdapter(new ArrayList<IVenue>());
+        content.setAdapter(recyclerAdapter);
+        searchBar.setFilter(recyclerAdapter);
+
         final Dialog progressDialog = dialogFactory
                 .createDialog()
+                .cancelable(true)
                 .withContent(R.string.dialog_loading_content)
                 .withProgress();
 
@@ -70,9 +77,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(List<IVenue> value) {
-                        NearbyVenuesRecyclerAdapter recyclerAdapter = new NearbyVenuesRecyclerAdapter(value);
-                        content.setAdapter(recyclerAdapter);
-                        searchBar.setFilter(recyclerAdapter);
+                        recyclerAdapter.swapData(value);
                     }
 
                     @Override

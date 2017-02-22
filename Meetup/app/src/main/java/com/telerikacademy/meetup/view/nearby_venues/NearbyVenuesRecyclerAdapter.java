@@ -37,6 +37,13 @@ public class NearbyVenuesRecyclerAdapter
         filteredVenues = new ArrayList<>(this.venues);
     }
 
+    public void swapData(List<IVenue> venues) {
+        this.venues.clear();
+        this.venues.addAll(venues);
+        filteredVenues = new ArrayList<>(this.venues);
+        notifyDataSetChanged();
+    }
+
     @Override
     public VenueHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
