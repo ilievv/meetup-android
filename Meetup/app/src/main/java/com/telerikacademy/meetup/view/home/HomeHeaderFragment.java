@@ -125,6 +125,7 @@ public class HomeHeaderFragment extends ToolbarFragment
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             dialogFactory
                     .createDialog()
+                    .cancelable(true)
                     .withTitle(R.string.enable_location_dialog_title)
                     .withPositiveButton(R.string.enable_location_dialog_positive, new Dialog.OnOptionButtonClick() {
                         @Override

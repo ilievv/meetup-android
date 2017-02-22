@@ -19,6 +19,10 @@ public abstract class Dialog {
 
     public abstract Dialog withIcon(@DrawableRes int icon);
 
+    public abstract Dialog withProgress();
+
+    public abstract Dialog cancelable(boolean isCancelable);
+
     public abstract Dialog withPositiveButton(@StringRes int text, OnOptionButtonClick onPositiveListener);
 
     public abstract Dialog withPositiveButton(@NonNull CharSequence text, OnOptionButtonClick onPositiveListener);
@@ -32,6 +36,8 @@ public abstract class Dialog {
     public abstract Dialog withNegativeButton(@NonNull CharSequence text, OnOptionButtonClick onNegativeListener);
 
     public abstract void show();
+
+    public abstract void hide();
 
     public interface OnOptionButtonClick {
 

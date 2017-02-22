@@ -50,6 +50,7 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
                 .subscribe(new Observer<IUser>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        view.startLoading();
                     }
 
                     @Override
@@ -64,6 +65,7 @@ public class SignUpPresenter implements ISignUpContract.Presenter {
 
                     @Override
                     public void onComplete() {
+                        view.stopLoading();
                     }
                 });
     }

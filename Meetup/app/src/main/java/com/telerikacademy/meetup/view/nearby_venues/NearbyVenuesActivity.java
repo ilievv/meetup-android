@@ -9,6 +9,8 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
+import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
@@ -26,6 +28,8 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     INearbyVenuesContract.Presenter presenter;
     @Inject
     FragmentManager fragmentManager;
+    @Inject
+    IDialogFactory dialogFactory;
     @Inject
     IVenueData venueData;
 
@@ -50,18 +54,22 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         searchBar = (ISearchBar) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_search_header);
 
+        final Dialog progressDialog = dialogFactory
+                .createDialog()
+                .withContent(R.string.dialog_loading_content)
+                .withProgress();
+
         venueData.getNearby(42.692923, 23.320057, 50)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<IVenue>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        // start loading screen
+                        progressDialog.show();
                     }
 
                     @Override
                     public void onNext(List<IVenue> value) {
-                        // stop loading screen
                         NearbyVenuesRecyclerAdapter recyclerAdapter = new NearbyVenuesRecyclerAdapter(value);
                         content.setAdapter(recyclerAdapter);
                         searchBar.setFilter(recyclerAdapter);
@@ -73,6 +81,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
+                        progressDialog.hide();
                     }
                 });
     }

@@ -13,10 +13,12 @@ import javax.inject.Inject;
 public class MaterialDialog extends Dialog {
 
     private final com.afollestad.materialdialogs.MaterialDialog.Builder dialogBuilder;
+    private com.afollestad.materialdialogs.MaterialDialog dialog;
 
     @Inject
     public MaterialDialog(@NonNull Activity activity) {
         dialogBuilder = new com.afollestad.materialdialogs.MaterialDialog.Builder(activity);
+        dialogBuilder.cancelable(false);
     }
 
     @Override
@@ -52,6 +54,18 @@ public class MaterialDialog extends Dialog {
     @Override
     public Dialog withIcon(@DrawableRes int icon) {
         dialogBuilder.iconRes(icon);
+        return this;
+    }
+
+    @Override
+    public Dialog withProgress() {
+        dialogBuilder.progress(true, 0);
+        return this;
+    }
+
+    @Override
+    public Dialog cancelable(boolean isCancelable) {
+        dialogBuilder.cancelable(isCancelable);
         return this;
     }
 
@@ -159,6 +173,13 @@ public class MaterialDialog extends Dialog {
 
     @Override
     public void show() {
-        dialogBuilder.show();
+        dialog = dialogBuilder.show();
+    }
+
+    @Override
+    public void hide() {
+        if (dialog != null) {
+            dialog.hide();
+        }
     }
 }

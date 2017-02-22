@@ -15,6 +15,8 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
+import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
 import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
@@ -26,6 +28,8 @@ public class SignInContentFragment extends Fragment
 
     @Inject
     IIntentFactory intentFactory;
+    @Inject
+    IDialogFactory dialogFactory;
 
     @BindView(R.id.username)
     EditText usernameEditText;
@@ -33,6 +37,7 @@ public class SignInContentFragment extends Fragment
     EditText passwordEditText;
 
     private ISignInContract.Presenter presenter;
+    private Dialog progressDialog;
 
     public SignInContentFragment() {
     }
@@ -50,6 +55,11 @@ public class SignInContentFragment extends Fragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         injectDependencies();
+
+        progressDialog = dialogFactory
+                .createDialog()
+                .withContent(R.string.dialog_loading_content)
+                .withProgress();
     }
 
     @Override
@@ -77,6 +87,16 @@ public class SignInContentFragment extends Fragment
     public void redirectToHome() {
         Intent homeIntent = intentFactory.createIntentToFront(HomeActivity.class);
         startActivity(homeIntent);
+    }
+
+    @Override
+    public void startLoading() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        progressDialog.hide();
     }
 
     @OnClick(R.id.btn_sign_in)

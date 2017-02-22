@@ -14,6 +14,10 @@ public interface ISignInContract {
         void notifySuccessful();
 
         void redirectToHome();
+
+        void startLoading();
+
+        void stopLoading();
     }
 
     interface Presenter extends BasePresenter<View> {
