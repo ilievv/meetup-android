@@ -17,6 +17,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:visibility="gone"
-            android:text="There are currently no places around" />
+            android:text="There are currently no places around"/>
 
 </FrameLayout>

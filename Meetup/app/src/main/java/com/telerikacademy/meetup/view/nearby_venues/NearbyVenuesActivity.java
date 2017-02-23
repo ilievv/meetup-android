@@ -80,12 +80,8 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                 .withContent(R.string.dialog_loading_content)
                 .withProgress();
 
-        double latitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LATITUDE, 0);
-        double longitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LONGITUDE, 0);
-        String venueType = getIntent().getStringExtra(EXTRA_VENUE_TYPE);
-
         setup();
-        showNearbyVenues(latitude, longitude, DEFAULT_RADIUS, venueType);
+        showNearbyVenues();
     }
 
     @Override
@@ -110,8 +106,12 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         searchBar.setFilter(recyclerAdapter);
     }
 
-    private void showNearbyVenues(double latitude, double longitude, int radius, String venueType) {
-        venueData.getNearby(latitude, longitude, radius, venueType)
+    private void showNearbyVenues() {
+        double latitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LATITUDE, 0);
+        double longitude = getIntent().getDoubleExtra(EXTRA_CURRENT_LONGITUDE, 0);
+        String venueType = getIntent().getStringExtra(EXTRA_VENUE_TYPE);
+
+        venueData.getNearby(latitude, longitude, DEFAULT_RADIUS, venueType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<IVenue>>() {

@@ -22,8 +22,16 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     }
 
     @Override
-    public int responseSuccesCode() {return responseSuccessCode; };
+    public int responseSuccesCode() {
+        return responseSuccessCode;
+    }
+
+    ;
 
     @Override
-    public int responseErrorCode() { return responseErrorCode; };
+    public int responseErrorCode() {
+        return responseErrorCode;
+    }
+
+    ;
 }
