@@ -25,6 +25,9 @@ public class NearbyVenuesRecyclerAdapter
         extends RecyclerView.Adapter<NearbyVenuesRecyclerAdapter.VenueHolder>
         implements Filterable {
 
+    @BindView(R.id.tv_empty)
+    TextView textViewEmpty;
+
     private static String VENUE_KEY = "venue";
 
     private List<IVenue> venues;
@@ -46,10 +49,9 @@ public class NearbyVenuesRecyclerAdapter
 
     @Override
     public VenueHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View inflatedView = LayoutInflater.from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_venue_item_row, parent, false);
-
-        return new VenueHolder(inflatedView);
+        return new VenueHolder(view);
     }
 
     @Override

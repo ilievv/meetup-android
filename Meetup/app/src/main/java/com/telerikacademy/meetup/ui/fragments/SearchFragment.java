@@ -15,20 +15,20 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
 
-public class SearchHeaderFragment extends Fragment
+public class SearchFragment extends Fragment
         implements ISearchBar {
 
     @BindView(R.id.et_search)
     AutoCompleteTextView searchInput;
 
-    public SearchHeaderFragment() {
+    public SearchFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_search_header, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         BaseApplication.bind(this, view);
         return view;
     }

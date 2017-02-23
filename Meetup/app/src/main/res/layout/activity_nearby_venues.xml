@@ -16,7 +16,7 @@
 
     <fragment
             android:id="@+id/fragment_nearby_venues_search_header"
-            android:name="com.telerikacademy.meetup.ui.fragments.SearchHeaderFragment"
+            android:name="com.telerikacademy.meetup.ui.fragments.SearchFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

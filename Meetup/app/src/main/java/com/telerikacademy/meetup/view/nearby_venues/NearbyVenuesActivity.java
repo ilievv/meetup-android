@@ -3,7 +3,11 @@ package com.telerikacademy.meetup.view.nearby_venues;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
@@ -11,8 +15,8 @@ import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
+import com.telerikacademy.meetup.ui.fragments.SearchFragment;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
-import com.telerikacademy.meetup.ui.fragments.base.ISearchBar;
 import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 import io.reactivex.Observer;
@@ -43,11 +47,18 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     @Inject
     IVenueData venueData;
 
+    @BindView(R.id.fragment_nearby_venues_search_header)
+    View searchHeaderView;
+    @BindView(R.id.rv_venues)
+    RecyclerView venuesRecyclerView;
+    @BindView(R.id.tv_empty)
+    TextView emptyTextView;
+
     private NearbyVenuesRecyclerAdapter recyclerAdapter;
     private NearbyVenuesContentFragment content;
+    private SearchFragment searchBar;
     private ToolbarFragment toolbar;
     private Dialog progressDialog;
-    private ISearchBar searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +72,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         content = (NearbyVenuesContentFragment) fragmentManager.
                 findFragmentById(R.id.fragment_nearby_venues_content);
 
-        searchBar = (ISearchBar) fragmentManager
+        searchBar = (SearchFragment) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_search_header);
 
         progressDialog = dialogFactory
@@ -112,6 +123,15 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                     @Override
                     public void onNext(List<IVenue> value) {
                         recyclerAdapter.swapData(value);
+                        if (value == null || value.isEmpty()) {
+                            emptyTextView.setVisibility(View.VISIBLE);
+                            venuesRecyclerView.setVisibility(View.GONE);
+                            searchHeaderView.setVisibility(View.GONE);
+                        } else {
+                            emptyTextView.setVisibility(View.GONE);
+                            venuesRecyclerView.setVisibility(View.VISIBLE);
+                            searchHeaderView.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override
@@ -127,6 +147,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
     private void injectDependencies() {
         BaseApplication
+                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(

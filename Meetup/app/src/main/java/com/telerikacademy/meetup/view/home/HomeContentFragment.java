@@ -104,14 +104,20 @@ public class HomeContentFragment extends Fragment
     }
 
     private Intent createNearbyVenuesIntent() {
-        return intentFactory
-                .createIntentToFront(NearbyVenuesActivity.class)
-                .putExtra(EXTRA_CURRENT_LATITUDE, locationProvider
-                        .getLocation()
-                        .getLatitude())
-                .putExtra(EXTRA_CURRENT_LONGITUDE, locationProvider
-                        .getLocation()
-                        .getLongitude());
+        Intent nearbyVenuesIntent = intentFactory
+                .createIntentToFront(NearbyVenuesActivity.class);
+
+        if (locationProvider.getLocation() != null) {
+            nearbyVenuesIntent
+                    .putExtra(EXTRA_CURRENT_LATITUDE, locationProvider
+                            .getLocation()
+                            .getLatitude())
+                    .putExtra(EXTRA_CURRENT_LONGITUDE, locationProvider
+                            .getLocation()
+                            .getLongitude());
+        }
+
+        return nearbyVenuesIntent;
     }
 
     private void injectDependencies() {
