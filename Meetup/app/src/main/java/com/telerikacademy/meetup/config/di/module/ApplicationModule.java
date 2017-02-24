@@ -2,6 +2,8 @@ package com.telerikacademy.meetup.config.di.module;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import com.telerikacademy.meetup.config.ApiDevelopmentConstants;
 import com.telerikacademy.meetup.config.GoogleApiDevelopmentConstants;
 import com.telerikacademy.meetup.config.base.IApiConstants;
@@ -47,6 +49,13 @@ public class ApplicationModule {
     @ApplicationScope
     LocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
         return new GoogleLocationProvider(context, locationFactory);
+    }
+
+    @Inject
+    @Provides
+    @ApplicationScope
+    SharedPreferences provideSharedPreferences(@ApplicationContext Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
@@ -115,8 +124,8 @@ public class ApplicationModule {
     @Inject
     @Provides
     @ApplicationScope
-    IUserSession provideUserSession(@ApplicationContext Context context) {
-        return new UserSession(context);
+    IUserSession provideUserSession(SharedPreferences sharedPreferences) {
+        return new UserSession(sharedPreferences);
     }
 
     @Provides

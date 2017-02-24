@@ -1,51 +1,48 @@
 package com.telerikacademy.meetup.util;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.util.base.IUserSession;
 
 import javax.inject.Inject;
 
 public class UserSession implements IUserSession {
 
-    private SharedPreferences prefs;
+    private final SharedPreferences sharedPreferences;
 
     @Inject
-    public UserSession(@ApplicationContext Context context) {
-        this.prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public UserSession(SharedPreferences sharedPreferences) {
+        this.sharedPreferences = sharedPreferences;
     }
 
     @Override
     public String getUsername() {
-        String username = this.prefs.getString("username", null);
+        String username = sharedPreferences.getString("username", null);
         return username;
     }
 
     @Override
     public void setUsername(String username) {
-        this.prefs.edit().putString("username", username).commit();
+        sharedPreferences.edit().putString("username", username).commit();
     }
 
     @Override
     public String getId() {
-        String id = this.prefs.getString("id", null);
+        String id = sharedPreferences.getString("id", null);
         return id;
     }
 
     @Override
     public void setId(String id) {
-        this.prefs.edit().putString("id", id).commit();
+        sharedPreferences.edit().putString("id", id).commit();
     }
 
     public boolean isUserLoggedIn() {
-        String username = this.getUsername();
+        String username = getUsername();
         return username != null;
     }
 
     public void clearSession() {
-        this.setUsername(null);
-        this.setId(null);
+        setUsername(null);
+        setId(null);
     }
 }
