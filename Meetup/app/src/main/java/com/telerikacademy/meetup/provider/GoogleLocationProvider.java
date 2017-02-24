@@ -34,10 +34,6 @@ public class GoogleLocationProvider extends LocationProvider
     private final Context context;
     private final ILocationFactory locationFactory;
 
-    private IOnConnectedListener onConnectedListener;
-    private IOnConnectionFailedListener onConnectionFailedListener;
-    private IOnLocationChangeListener onLocationChangeListener;
-
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
 
@@ -68,18 +64,6 @@ public class GoogleLocationProvider extends LocationProvider
         return googleApiClient.isConnecting();
     }
 
-    public void setOnConnectedListener(IOnConnectedListener onConnectedListener) {
-        this.onConnectedListener = onConnectedListener;
-    }
-
-    public void setOnConnectionFailedListener(IOnConnectionFailedListener onConnectionFailedListener) {
-        this.onConnectionFailedListener = onConnectionFailedListener;
-    }
-
-    public void setOnLocationChangeListener(IOnLocationChangeListener onLocationChangeListener) {
-        this.onLocationChangeListener = onLocationChangeListener;
-    }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         try {
@@ -89,15 +73,15 @@ public class GoogleLocationProvider extends LocationProvider
             LocationServices.FusedLocationApi
                     .requestLocationUpdates(googleApiClient, locationRequest, this);
 
-            if (onConnectedListener != null) {
-                onConnectedListener.onConnected(parseLocation(location));
+            if (getOnConnectedListener() != null) {
+                getOnConnectedListener().onConnected(parseLocation(location));
             }
 
             GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
 
         } catch (SecurityException ex) {
-            if (onConnectionFailedListener != null) {
-                onConnectionFailedListener.onConnectionFailed(ex.getMessage());
+            if (getOnConnectionFailedListener() != null) {
+                getOnConnectionFailedListener().onConnectionFailed(ex.getMessage());
             }
         }
     }
@@ -108,16 +92,16 @@ public class GoogleLocationProvider extends LocationProvider
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        if (onConnectionFailedListener != null) {
-            onConnectionFailedListener.onConnectionFailed(
+        if (getOnConnectionFailedListener() != null) {
+            getOnConnectionFailedListener().onConnectionFailed(
                     connectionResult.getErrorCode() + " " + connectionResult.getErrorMessage());
         }
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if (onLocationChangeListener != null) {
-            onLocationChangeListener.onLocationChange(this.parseLocation(location));
+        if (getOnLocationChangeListener() != null) {
+            getOnLocationChangeListener().onLocationChange(this.parseLocation(location));
         }
     }
 

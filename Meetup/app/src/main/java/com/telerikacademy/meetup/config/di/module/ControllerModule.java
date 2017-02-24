@@ -7,8 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.network.base.IUserData;
+import com.telerikacademy.meetup.provider.GoogleVenuePhotoProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
+import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
 import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
@@ -137,5 +139,12 @@ public class ControllerModule {
     @ControllerScope
     IDialogFactory provideDialogFactory(Activity activity) {
         return new DialogFactory(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    VenuePhotoProvider provideVenuePhotoProvider(Activity activity) {
+        return new GoogleVenuePhotoProvider(activity);
     }
 }
