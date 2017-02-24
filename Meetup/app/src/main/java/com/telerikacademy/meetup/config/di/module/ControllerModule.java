@@ -10,8 +10,8 @@ import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.provider.GoogleVenuePhotoProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
 import com.telerikacademy.meetup.provider.base.LocationProvider;
+import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
 import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
@@ -31,6 +31,8 @@ import com.telerikacademy.meetup.view.sign_in.SignInPresenter;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
 import com.telerikacademy.meetup.view.sign_up.SignUpPresenter;
 import com.telerikacademy.meetup.view.sign_up.base.ISignUpContract;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsPresenter;
+import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import dagger.Module;
 import dagger.Provides;
 
@@ -118,6 +120,13 @@ public class ControllerModule {
     @ControllerScope
     ISignUpContract.Presenter provideSignUpPresenter(IUserData userData, IValidator validator) {
         return new SignUpPresenter(userData, validator);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(VenuePhotoProvider venuePhotoProvider) {
+        return new VenueDetailsPresenter(venuePhotoProvider);
     }
 
     @Inject

@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.venue_details;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,7 +28,24 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.subscribe();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.unsubscribe();
+    }
+
+    @Override
     public void setPresenter(IVenueDetailsContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void addPhoto(Bitmap photo) {
+
     }
 }

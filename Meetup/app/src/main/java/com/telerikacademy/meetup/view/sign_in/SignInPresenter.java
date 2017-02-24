@@ -24,9 +24,6 @@ public class SignInPresenter implements ISignInContract.Presenter {
         this.validator = validator;
     }
 
-    public void load() {
-    }
-
     @Override
     public void setView(ISignInContract.View view) {
         this.view = view;

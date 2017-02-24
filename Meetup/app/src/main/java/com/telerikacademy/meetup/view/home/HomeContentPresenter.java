@@ -10,8 +10,4 @@ public class HomeContentPresenter implements IHomeContentContract.Presenter {
     public void setView(IHomeContentContract.View view) {
         this.view = view;
     }
-
-    @Override
-    public void load() {
-    }
 }

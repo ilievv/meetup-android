@@ -27,10 +27,6 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
     }
 
     @Override
-    public void load() {
-    }
-
-    @Override
     public void subscribe() {
         locationProvider.connect();
     }

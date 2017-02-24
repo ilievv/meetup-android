@@ -1,10 +1,8 @@
 package com.telerikacademy.meetup.provider;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.PlacePhotoMetadata;
@@ -21,32 +19,30 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class GoogleVenuePhotoProvider extends VenuePhotoProvider
-        implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.OnConnectionFailedListener {
 
-    private final Activity activity;
+    private GoogleApiClient googleApiClient;
 
     @Inject
-    public GoogleVenuePhotoProvider(Activity activity) {
-        this.activity = activity;
+    public GoogleVenuePhotoProvider(Context context) {
+        buildGoogleApiClient(context);
     }
 
     @Override
-    public Observable<List<Bitmap>> getPhotos(String placeId) {
-        final GoogleVenuePhotoProvider that = this;
+    public void connect() {
+        googleApiClient.connect();
+    }
 
+    @Override
+    public void disconnect() {
+        googleApiClient.disconnect();
+    }
+
+    @Override
+    public Observable<List<Bitmap>> getPhotos(final String placeId) {
         return Observable.defer(new Callable<ObservableSource<List<Bitmap>>>() {
             @Override
             public ObservableSource<List<Bitmap>> call() throws Exception {
-                final String placeId = "ChIJ0b_NyW6FqkARJXGz7W-es9k";
-
-                GoogleApiClient googleApiClient = new GoogleApiClient.Builder(activity)
-                        .addApi(Places.GEO_DATA_API)
-                        .addApi(Places.PLACE_DETECTION_API)
-                        .addConnectionCallbacks(that)
-                        .addOnConnectionFailedListener(that)
-                        .build();
-
                 PlacePhotoMetadataResult res = Places.GeoDataApi.getPlacePhotos(googleApiClient, placeId).await();
                 PlacePhotoMetadataBuffer buffer = res.getPhotoMetadata();
 
@@ -62,13 +58,6 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        if (getOnConnectedListener() != null) {
-            getOnConnectedListener().onConnected(bundle);
-        }
-    }
-
-    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (getOnConnectionFailedListener() != null) {
             String errorMessage = connectionResult.getErrorCode() + " " + connectionResult.getErrorMessage();
@@ -76,7 +65,13 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
         }
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
+    protected synchronized void buildGoogleApiClient(Context context) {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(context)
+                    .addApi(Places.GEO_DATA_API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .addOnConnectionFailedListener(this)
+                    .build();
+        }
     }
 }

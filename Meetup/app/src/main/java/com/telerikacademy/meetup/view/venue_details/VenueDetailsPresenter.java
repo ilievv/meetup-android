@@ -1,16 +1,65 @@
 package com.telerikacademy.meetup.view.venue_details;
 
-import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
+import android.graphics.Bitmap;
+import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
+import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class VenueDetailsPresenter implements INearbyVenuesContract.Presenter {
+import javax.inject.Inject;
+import java.util.List;
 
-    private INearbyVenuesContract.View view;
+public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
-    public void load() {
+    private IVenueDetailsContract.View view;
+
+    private final VenuePhotoProvider venuePhotoProvider;
+
+    @Inject
+    public VenueDetailsPresenter(VenuePhotoProvider venuePhotoProvider) {
+        this.venuePhotoProvider = venuePhotoProvider;
     }
 
     @Override
-    public void setView(INearbyVenuesContract.View view) {
+    public void setView(IVenueDetailsContract.View view) {
         this.view = view;
+    }
+
+    @Override
+    public void subscribe() {
+        venuePhotoProvider.connect();
+    }
+
+    @Override
+    public void unsubscribe() {
+        venuePhotoProvider.disconnect();
+    }
+
+    @Override
+    public void loadPhotos(String venueId) {
+        venuePhotoProvider
+                .getPhotos(venueId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<List<Bitmap>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(List<Bitmap> photos) {
+                        for (final Bitmap photo : photos) {
+                            view.addPhoto(photo);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }
