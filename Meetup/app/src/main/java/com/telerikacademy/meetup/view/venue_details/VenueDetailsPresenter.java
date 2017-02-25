@@ -9,7 +9,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
-import java.util.List;
 
 public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
@@ -52,16 +51,14 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         venuePhotoProvider
                 .getPhotos(venue.getId())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<List<Bitmap>>() {
+                .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
-                    public void onNext(List<Bitmap> photos) {
-                        for (final Bitmap photo : photos) {
-                            view.addPhoto(photo);
-                        }
+                    public void onNext(Bitmap value) {
+                        view.addPhoto(value);
                     }
 
                     @Override
