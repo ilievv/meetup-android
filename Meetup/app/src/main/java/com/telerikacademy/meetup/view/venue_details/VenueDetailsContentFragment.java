@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.ui.fragments.base.IGallery;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 
 public class VenueDetailsContentFragment extends Fragment
         implements IVenueDetailsContract.View {
 
     private IVenueDetailsContract.Presenter presenter;
+    private IGallery gallery;
 
     public VenueDetailsContentFragment() {
     }
@@ -31,6 +33,8 @@ public class VenueDetailsContentFragment extends Fragment
     public void onStart() {
         super.onStart();
         presenter.subscribe();
+
+        presenter.loadPhotos("ChIJjet60BKFqkARD4zOrlZGoX8");
     }
 
     @Override
@@ -45,7 +49,17 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
-    public void addPhoto(Bitmap photo) {
+    public void setGallery(IGallery gallery) {
+        this.gallery = gallery;
+    }
 
+    @Override
+    public void addPhoto(final Bitmap photo) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                gallery.addPhoto(photo);
+            }
+        });
     }
 }

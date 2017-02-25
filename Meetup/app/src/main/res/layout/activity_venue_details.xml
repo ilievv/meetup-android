@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_venue_details"
+        tools:context="com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity">
+        android:orientation="vertical">
 
     <fragment
             android:id="@+id/fragment_toolbar"
@@ -13,4 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+    <fragment
+            android:id="@+id/fragment_venue_details_gallery"
+            android:name="com.telerikacademy.meetup.ui.fragments.GalleryFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <fragment
+            android:id="@+id/fragment_venue_details_content"
+            android:name="com.telerikacademy.meetup.view.venue_details.VenueDetailsContentFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>
