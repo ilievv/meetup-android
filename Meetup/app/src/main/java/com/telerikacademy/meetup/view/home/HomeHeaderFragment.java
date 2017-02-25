@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -83,7 +85,9 @@ public class HomeHeaderFragment extends ToolbarFragment
     @Override
     public void onStart() {
         super.onStart();
-        presenter.subscribe();
+        if (isNetworkAvailable()) {
+            presenter.subscribe();
+        }
     }
 
     @Override
@@ -103,7 +107,9 @@ public class HomeHeaderFragment extends ToolbarFragment
     }
 
     public void updateLocation() {
-        presenter.update();
+        if (isNetworkAvailable()) {
+            presenter.update();
+        }
     }
 
     @Override
@@ -137,6 +143,13 @@ public class HomeHeaderFragment extends ToolbarFragment
                     .withIcon(R.drawable.ic_location_gps)
                     .show();
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 
     private void injectDependencies() {

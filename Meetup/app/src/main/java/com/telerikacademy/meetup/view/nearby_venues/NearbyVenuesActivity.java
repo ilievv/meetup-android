@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,6 +139,9 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        progressDialog.hide();
+                        Toast.makeText(NearbyVenuesActivity.this,
+                                "An error has occured", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

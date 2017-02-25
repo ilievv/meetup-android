@@ -56,7 +56,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        int a = 5;
                     }
 
                     @Override
@@ -66,12 +65,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        int b = 5;
                     }
 
                     @Override
                     public void onComplete() {
-                        int c = 5;
                     }
                 });
     }
