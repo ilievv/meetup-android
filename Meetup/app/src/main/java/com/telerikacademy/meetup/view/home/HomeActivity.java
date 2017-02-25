@@ -32,13 +32,7 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         injectDependencies();
-
-        content = (HomeContentFragment) fragmentManager
-                .findFragmentById(R.id.fragment_home_content);
-
-        header = (HomeHeaderFragment) fragmentManager
-                .findFragmentById(R.id.fragment_home_header);
-
+        initialize();
         setup();
     }
 
@@ -59,10 +53,17 @@ public class HomeActivity extends AppCompatActivity
         header.updateLocation();
     }
 
+    private void initialize() {
+        content = (HomeContentFragment) fragmentManager
+                .findFragmentById(R.id.fragment_home_content);
+
+        header = (HomeHeaderFragment) fragmentManager
+                .findFragmentById(R.id.fragment_home_header);
+    }
+
     private void setup() {
         contentPresenter.setView(content);
         content.setPresenter(contentPresenter);
-
         headerPresenter.setView(header);
         header.setPresenter(headerPresenter);
     }

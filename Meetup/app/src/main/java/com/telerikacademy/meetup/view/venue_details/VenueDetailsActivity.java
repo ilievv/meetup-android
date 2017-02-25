@@ -33,7 +33,11 @@ public class VenueDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue_details);
         injectDependencies();
+        initialize();
+        setup();
+    }
 
+    private void initialize() {
         currentVenue = (IVenue) getIntent()
                 .getSerializableExtra(EXTRA_CURRENT_VENUE);
 
@@ -42,8 +46,6 @@ public class VenueDetailsActivity extends AppCompatActivity {
 
         galleryFragment = (GalleryFragment) fragmentManager
                 .findFragmentById(R.id.fragment_venue_details_gallery);
-
-        setup();
     }
 
     private void setup() {

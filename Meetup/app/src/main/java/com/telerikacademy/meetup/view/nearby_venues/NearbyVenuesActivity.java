@@ -65,21 +65,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_venues);
         injectDependencies();
-
-        toolbar = (ToolbarFragment) fragmentManager
-                .findFragmentById(R.id.fragment_nearby_venues_toolbar);
-
-        content = (NearbyVenuesContentFragment) fragmentManager.
-                findFragmentById(R.id.fragment_nearby_venues_content);
-
-        searchBar = (SearchFragment) fragmentManager
-                .findFragmentById(R.id.fragment_nearby_venues_search_header);
-
-        progressDialog = dialogFactory
-                .createDialog()
-                .withContent(R.string.dialog_loading_content)
-                .withProgress();
-
+        initialize();
         setup();
         showNearbyVenues();
     }
@@ -95,6 +81,22 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
         return true;
+    }
+
+    private void initialize() {
+        toolbar = (ToolbarFragment) fragmentManager
+                .findFragmentById(R.id.fragment_nearby_venues_toolbar);
+
+        content = (NearbyVenuesContentFragment) fragmentManager.
+                findFragmentById(R.id.fragment_nearby_venues_content);
+
+        searchBar = (SearchFragment) fragmentManager
+                .findFragmentById(R.id.fragment_nearby_venues_search_header);
+
+        progressDialog = dialogFactory
+                .createDialog()
+                .withContent(R.string.dialog_loading_content)
+                .withProgress();
     }
 
     private void setup() {
