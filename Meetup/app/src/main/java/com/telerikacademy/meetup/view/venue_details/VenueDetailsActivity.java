@@ -47,17 +47,6 @@ public class VenueDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void initialize() {
         currentVenue = (IVenue) getIntent()
                 .getSerializableExtra(EXTRA_CURRENT_VENUE);
