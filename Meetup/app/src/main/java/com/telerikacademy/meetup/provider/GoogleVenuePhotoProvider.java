@@ -53,7 +53,9 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
                                 .await()
                                 .getBitmap();
 
-                        emitter.onNext(photo);
+                        if (photo != null) {
+                            emitter.onNext(photo);
+                        }
                     }
 
                     buffer.release();
