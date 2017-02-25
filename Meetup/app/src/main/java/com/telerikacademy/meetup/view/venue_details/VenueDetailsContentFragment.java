@@ -59,7 +59,7 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
-    public void addPhoto(final Bitmap photo) {
+    public synchronized void addPhoto(final Bitmap photo) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

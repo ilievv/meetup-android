@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
@@ -137,6 +138,9 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
+                        progressDialog.hide();
+                        Toast.makeText(NearbyVenuesActivity.this,
+                                "An error has occured", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

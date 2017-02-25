@@ -13,6 +13,8 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:supportsRtl="true"
+            android:hardwareAccelerated="false"
+            android:largeHeap="true"
             android:theme="@style/AppTheme">
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
@@ -32,11 +34,12 @@
         </activity>
         <activity
                 android:name=".view.nearby_venues.NearbyVenuesActivity"
-                android:label="@string/label_nearby_venues"
-                android:parentActivityName=".view.home.HomeActivity">
+                android:launchMode="singleTop"
+                android:label="@string/label_nearby_venues">
         </activity>
         <activity
                 android:name=".view.venue_details.VenueDetailsActivity"
+                android:parentActivityName=".view.nearby_venues.NearbyVenuesActivity"
                 android:theme="@style/VenueDetailsTheme">
         </activity>
         <activity
