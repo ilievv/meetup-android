@@ -8,8 +8,7 @@ import android.view.View;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.AbstractBadgeableDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawer;
 
 import javax.inject.Inject;
 import java.lang.reflect.Type;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MaterialDrawer extends Drawer {
+public class MaterialDrawer implements IDrawer {
 
     private final static int DP = 0;
 
@@ -29,51 +28,53 @@ public class MaterialDrawer extends Drawer {
     }
 
     @Override
-    public Drawer withDrawerItems(@NonNull DrawerItem... drawerItems) {
+    public IDrawer withDrawerItems(
+            @NonNull com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem... drawerItems) {
         IDrawerItem[] parsedDrawerItems = parseDrawerItems(Arrays.asList(drawerItems));
         drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
     }
 
     @Override
-    public Drawer withDrawerItems(@NonNull List<DrawerItem> drawerItems) {
+    public IDrawer withDrawerItems(
+            @NonNull List<com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem> drawerItems) {
         IDrawerItem[] parsedDrawerItems = parseDrawerItems(drawerItems);
         drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
     }
 
     @Override
-    public Drawer withSelectedItem(long identifier) {
+    public IDrawer withSelectedItem(long identifier) {
         drawerBuilder.withSelectedItem(identifier);
         return this;
     }
 
     @Override
-    public Drawer withDrawerWidth(@Dimension(unit = DP) int drawerWidth) {
+    public IDrawer withDrawerWidth(@Dimension(unit = DP) int drawerWidth) {
         drawerBuilder.withDrawerWidthDp(drawerWidth);
         return this;
     }
 
     @Override
-    public Drawer withToolbar(@NonNull Toolbar toolbar) {
+    public IDrawer withToolbar(@NonNull Toolbar toolbar) {
         drawerBuilder.withToolbar(toolbar);
         return this;
     }
 
     @Override
-    public Drawer withActionBarDrawerToggleAnimated(boolean hasAnimation) {
+    public IDrawer withActionBarDrawerToggleAnimated(boolean hasAnimation) {
         drawerBuilder.withActionBarDrawerToggleAnimated(hasAnimation);
         return this;
     }
 
     @Override
-    public Drawer withTranslucentStatusBar(boolean isTranslucent) {
+    public IDrawer withTranslucentStatusBar(boolean isTranslucent) {
         drawerBuilder.withTranslucentStatusBar(isTranslucent);
         return this;
     }
 
     @Override
-    public Drawer withOnDrawerItemClickListener(final Drawer.OnDrawerItemClickListener onDrawerItemClickListener) {
+    public IDrawer withOnDrawerItemClickListener(final IDrawer.OnDrawerItemClickListener onDrawerItemClickListener) {
         drawerBuilder.withOnDrawerItemClickListener(new com.mikepenz.materialdrawer.Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -89,10 +90,11 @@ public class MaterialDrawer extends Drawer {
         drawerBuilder.build();
     }
 
-    private IDrawerItem[] parseDrawerItems(List<DrawerItem> drawerItems) {
-        List<IDrawerItem> materialDrawerItems = new ArrayList<>();
+    private IDrawerItem[] parseDrawerItems(
+            List<com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem> drawerItems) {
 
-        for (DrawerItem drawerItem : drawerItems) {
+        List<IDrawerItem> materialDrawerItems = new ArrayList<>();
+        for (com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem drawerItem : drawerItems) {
             Type drawerItemType = drawerItem.getDrawerItemType();
 
             IDrawerItem materialDrawerItem;

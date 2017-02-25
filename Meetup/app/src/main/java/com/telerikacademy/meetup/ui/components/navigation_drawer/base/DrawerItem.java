@@ -10,7 +10,7 @@ import com.mikepenz.iconics.typeface.IIcon;
 
 import java.lang.reflect.Type;
 
-public abstract class DrawerItem {
+public abstract class DrawerItem implements IDrawerItem {
 
     private final Context context;
     private final Type drawerItemType;
@@ -33,11 +33,11 @@ public abstract class DrawerItem {
     }
 
     public final Context getContext() {
-        return this.context;
+        return context;
     }
 
     public final Type getDrawerItemType() {
-        return this.drawerItemType;
+        return drawerItemType;
     }
 
     public DrawerItem withIdentifier(long identifier) {
@@ -71,7 +71,7 @@ public abstract class DrawerItem {
     }
 
     public long getIdentifier() {
-        return this.identifier;
+        return identifier;
     }
 
     public String getName() {

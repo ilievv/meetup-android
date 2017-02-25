@@ -1,20 +1,10 @@
 package com.telerikacademy.meetup.provider.base;
 
-import com.telerikacademy.meetup.model.base.ILocation;
-
-public abstract class LocationProvider {
+public abstract class LocationProvider implements ILocationProvider {
 
     private IOnConnectedListener onConnectedListener;
     private IOnConnectionFailedListener onConnectionFailedListener;
     private IOnLocationChangeListener onLocationChangeListener;
-
-    public abstract void connect();
-
-    public abstract void disconnect();
-
-    public abstract boolean isConnected();
-
-    public abstract boolean isConnecting();
 
     public void setOnConnectedListener(IOnConnectedListener onConnectedListener) {
         this.onConnectedListener = onConnectedListener;
@@ -38,17 +28,5 @@ public abstract class LocationProvider {
 
     protected IOnLocationChangeListener getOnLocationChangeListener() {
         return onLocationChangeListener;
-    }
-
-    public interface IOnConnectedListener {
-        void onConnected(ILocation location);
-    }
-
-    public interface IOnConnectionFailedListener {
-        void onConnectionFailed(String errorMessage);
-    }
-
-    public interface IOnLocationChangeListener {
-        void onLocationChange(ILocation location);
     }
 }

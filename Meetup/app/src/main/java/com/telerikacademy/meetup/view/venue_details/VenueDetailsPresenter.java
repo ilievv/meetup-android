@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
 import com.telerikacademy.meetup.model.base.IVenue;
-import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
+import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -15,10 +15,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     private IVenueDetailsContract.View view;
     private IVenue venue;
 
-    private final VenuePhotoProvider venuePhotoProvider;
+    private final IVenuePhotoProvider venuePhotoProvider;
 
     @Inject
-    public VenueDetailsPresenter(VenuePhotoProvider venuePhotoProvider) {
+    public VenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider) {
         this.venuePhotoProvider = venuePhotoProvider;
     }
 

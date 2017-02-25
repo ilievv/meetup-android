@@ -15,7 +15,7 @@ import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
@@ -127,7 +127,7 @@ public class HomeHeaderFragment extends ToolbarFragment
                     .createDialog()
                     .cancelable(true)
                     .withTitle(R.string.enable_location_dialog_title)
-                    .withPositiveButton(R.string.enable_location_dialog_positive, new Dialog.OnOptionButtonClick() {
+                    .withPositiveButton(R.string.enable_location_dialog_positive, new IDialog.OnOptionButtonClick() {
                         @Override
                         public void onClick() {
                             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));

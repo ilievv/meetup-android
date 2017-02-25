@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.view.home;
 
 import android.util.Log;
 import com.telerikacademy.meetup.model.base.ILocation;
-import com.telerikacademy.meetup.provider.base.LocationProvider;
+import com.telerikacademy.meetup.provider.base.ILocationProvider;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
 import javax.inject.Inject;
@@ -11,12 +11,12 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
 
     private static final String TAG = HomeHeaderPresenter.class.getSimpleName();
 
-    private LocationProvider locationProvider;
+    private ILocationProvider locationProvider;
     private IHomeHeaderContract.View view;
     private ILocation currentLocation;
 
     @Inject
-    public HomeHeaderPresenter(LocationProvider locationProvider) {
+    public HomeHeaderPresenter(ILocationProvider locationProvider) {
         this.locationProvider = locationProvider;
         setupLocationListeners();
     }
@@ -57,7 +57,7 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
     }
 
     private void setupLocationListeners() {
-        locationProvider.setOnLocationChangeListener(new LocationProvider.IOnLocationChangeListener() {
+        locationProvider.setOnLocationChangeListener(new ILocationProvider.IOnLocationChangeListener() {
             @Override
             public void onLocationChange(ILocation location) {
                 if (currentLocation == null) {
@@ -66,14 +66,14 @@ public class HomeHeaderPresenter implements IHomeHeaderContract.Presenter {
                 currentLocation = location;
             }
         });
-        locationProvider.setOnConnectedListener(new LocationProvider.IOnConnectedListener() {
+        locationProvider.setOnConnectedListener(new ILocationProvider.IOnConnectedListener() {
             @Override
             public void onConnected(ILocation location) {
                 currentLocation = location;
                 setTitle(location);
             }
         });
-        locationProvider.setOnConnectionFailedListener(new LocationProvider.IOnConnectionFailedListener() {
+        locationProvider.setOnConnectionFailedListener(new ILocationProvider.IOnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(String errorMessage) {
                 Log.e(TAG, errorMessage);

@@ -47,7 +47,7 @@ public class ApplicationModule {
     @Inject
     @Provides
     @ApplicationScope
-    LocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
+    ILocationProvider provideLocationProvider(@ApplicationContext Context context, ILocationFactory locationFactory) {
         return new GoogleLocationProvider(context, locationFactory);
     }
 

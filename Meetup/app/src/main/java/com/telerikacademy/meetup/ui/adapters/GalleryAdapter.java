@@ -6,7 +6,6 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.telerikacademy.meetup.R;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

@@ -10,14 +10,14 @@ import com.telerikacademy.meetup.network.base.IUserData;
 import com.telerikacademy.meetup.provider.GoogleVenuePhotoProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.provider.base.LocationProvider;
-import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
+import com.telerikacademy.meetup.provider.base.ILocationProvider;
+import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
 import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
-import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawer;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
 import com.telerikacademy.meetup.util.base.IValidator;
@@ -78,14 +78,14 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    Drawer provideNavigationDrawer(Activity activity) {
+    IDrawer provideNavigationDrawer(Activity activity) {
         return new MaterialDrawer(activity);
     }
 
     @Inject
     @Provides
     @ControllerScope
-    Dialog provideDialog(Activity activity) {
+    IDialog provideDialog(Activity activity) {
         return new MaterialDialog(activity);
     }
 
@@ -98,7 +98,7 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IHomeHeaderContract.Presenter provideHomeHeaderPresenter(LocationProvider locationProvider) {
+    IHomeHeaderContract.Presenter provideHomeHeaderPresenter(ILocationProvider locationProvider) {
         return new HomeHeaderPresenter(locationProvider);
     }
 
@@ -125,7 +125,7 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(VenuePhotoProvider venuePhotoProvider) {
+    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider) {
         return new VenueDetailsPresenter(venuePhotoProvider);
     }
 
@@ -153,7 +153,7 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    VenuePhotoProvider provideVenuePhotoProvider(Activity activity) {
+    IVenuePhotoProvider provideVenuePhotoProvider(Activity activity) {
         return new GoogleVenuePhotoProvider(activity);
     }
 }
