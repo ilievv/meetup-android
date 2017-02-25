@@ -28,6 +28,8 @@ public class HomeContentFragment extends Fragment
             HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LATITUDE";
     private static final String EXTRA_CURRENT_LONGITUDE =
             HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LONGITUDE";
+    private static final String EXTRA_CURRENT_LOCATION =
+            HomeContentFragment.class.getCanonicalName() + ".EXTRA_CURRENT_LOCATION";
 
     @Inject
     IIntentFactory intentFactory;
@@ -109,6 +111,7 @@ public class HomeContentFragment extends Fragment
 
         if (locationProvider.getLocation() != null) {
             nearbyVenuesIntent
+                    .putExtra(EXTRA_CURRENT_LOCATION, locationProvider.getLocation())
                     .putExtra(EXTRA_CURRENT_LATITUDE, locationProvider
                             .getLocation()
                             .getLatitude())

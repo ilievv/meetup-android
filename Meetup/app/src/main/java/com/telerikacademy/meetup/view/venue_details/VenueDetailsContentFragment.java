@@ -2,6 +2,7 @@ package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +31,15 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.loadPhotos();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         presenter.subscribe();
-
-        presenter.loadPhotos("ChIJjet60BKFqkARD4zOrlZGoX8");
     }
 
     @Override

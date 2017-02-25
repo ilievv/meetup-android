@@ -1,6 +1,7 @@
 package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import io.reactivex.Observer;
@@ -13,6 +14,7 @@ import java.util.List;
 public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     private IVenueDetailsContract.View view;
+    private IVenue venue;
 
     private final VenuePhotoProvider venuePhotoProvider;
 
@@ -27,6 +29,11 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     }
 
     @Override
+    public void setVenue(IVenue venue) {
+        this.venue = venue;
+    }
+
+    @Override
     public void subscribe() {
         venuePhotoProvider.connect();
     }
@@ -37,9 +44,13 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     }
 
     @Override
-    public void loadPhotos(String venueId) {
+    public void loadPhotos() {
+        if (venue == null) {
+            return;
+        }
+
         venuePhotoProvider
-                .getPhotos(venueId)
+                .getPhotos(venue.getId())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<Bitmap>>() {
                     @Override

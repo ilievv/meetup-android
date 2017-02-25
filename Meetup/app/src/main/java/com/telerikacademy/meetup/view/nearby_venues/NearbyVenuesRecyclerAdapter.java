@@ -77,6 +77,9 @@ public class NearbyVenuesRecyclerAdapter
     static class VenueHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
+        private static final String EXTRA_CURRENT_VENUE =
+                VenueHolder.class.getCanonicalName() + ".CURRENT_VENUE";
+
         @BindView(R.id.venue_name)
         TextView venueName;
         @BindView(R.id.venue_types)
@@ -100,7 +103,8 @@ public class NearbyVenuesRecyclerAdapter
 
             Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
             showVenueIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            showVenueIntent.putExtra(VENUE_KEY, this.venue);
+            showVenueIntent.putExtra(EXTRA_CURRENT_VENUE, venue);
+
             context.startActivity(showVenueIntent);
         }
 
