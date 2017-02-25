@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,12 +37,8 @@ public class HomeActivity extends AppCompatActivity
     @Inject
     ILocalData localData;
 
-    @BindView(R.id.rv_recent_venues)
-    RecyclerView recentVenuesRecyclerView;
-
     private HomeContentFragment content;
     private HomeHeaderFragment header;
-    //private RecentVenuesRecyclerAdapter recyclerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,9 +94,26 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showRecentVenues(){
-        List<IRecentVenue> result = this.localData.getRecentVenues();
+        List<IRecentVenue> results = this.localData.getRecentVenues();
 
-        Log.d(result.toString(), "");
+        for (int i = 0; i < 3; i++) {
+            IRecentVenue rv = results.get(i);
+            int buttonId = -1;
+            int imageId = -1;
+
+            try {
+                buttonId = R.id.class.getField("rv_button_" + i).getInt(0);
+                imageId = R.id.class.getField("rv_image_" + i).getInt(0);
+            } catch (Exception e){
+                Log.e(e.getMessage(), "");
+            }
+
+            Button button = (Button)findViewById(buttonId);
+            button.setText(rv.getName());
+
+            ImageView picture = (ImageView)findViewById(imageId);
+            picture.setImageBitmap(rv.getPicture());
+        }
 
     }
 }

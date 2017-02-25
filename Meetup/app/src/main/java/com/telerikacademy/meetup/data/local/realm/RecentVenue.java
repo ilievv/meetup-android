@@ -11,9 +11,9 @@ public class RecentVenue implements IRecentVenue {
     private Bitmap picture;
 
     public RecentVenue(String id, String name, Bitmap picture){
-        this.id = id;
-        this.name = name;
-        this.picture = picture;
+        this.setId(id);
+        this.setName(name);
+        this.setPicture(picture);
     }
 
     @Override
@@ -37,12 +37,12 @@ public class RecentVenue implements IRecentVenue {
     }
 
     @Override
-    public Bitmap getPictureBytes() {
+    public Bitmap getPicture() {
         return this.picture;
     }
 
     @Override
-    public void setPictureBytes(Bitmap picture) {
+    public void setPicture(Bitmap picture) {
         this.picture = picture;
     }
 }

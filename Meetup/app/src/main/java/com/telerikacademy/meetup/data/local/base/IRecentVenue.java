@@ -12,7 +12,7 @@ public interface IRecentVenue {
 
     void setId(String id);
 
-    Bitmap getPictureBytes();
+    Bitmap getPicture();
 
-    void setPictureBytes(Bitmap picture);
+    void setPicture(Bitmap picture);
 }
