@@ -5,6 +5,7 @@ import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -51,9 +52,11 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         venuePhotoProvider
                 .getPhotos(venue.getId())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        int a = 5;
                     }
 
                     @Override
@@ -63,10 +66,12 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        int b = 5;
                     }
 
                     @Override
                     public void onComplete() {
+                        int c = 5;
                     }
                 });
     }
