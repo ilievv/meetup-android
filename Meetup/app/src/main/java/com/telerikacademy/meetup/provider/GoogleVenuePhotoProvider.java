@@ -11,12 +11,10 @@ import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.Places;
 import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 public class GoogleVenuePhotoProvider extends VenuePhotoProvider
         implements GoogleApiClient.OnConnectionFailedListener {
@@ -39,20 +37,31 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
     }
 
     @Override
-    public Observable<List<Bitmap>> getPhotos(final String placeId) {
-        return Observable.defer(new Callable<ObservableSource<List<Bitmap>>>() {
+    public Observable<Bitmap> getPhotos(final String placeId) {
+        return Observable.create(new ObservableOnSubscribe<Bitmap>() {
             @Override
-            public ObservableSource<List<Bitmap>> call() throws Exception {
-                PlacePhotoMetadataResult res = Places.GeoDataApi.getPlacePhotos(googleApiClient, placeId).await();
-                PlacePhotoMetadataBuffer buffer = res.getPhotoMetadata();
+            public void subscribe(ObservableEmitter<Bitmap> emitter) throws Exception {
+                try {
+                    PlacePhotoMetadataResult res = Places.GeoDataApi
+                            .getPlacePhotos(googleApiClient, placeId)
+                            .await();
+                    PlacePhotoMetadataBuffer buffer = res.getPhotoMetadata();
 
-                List<Bitmap> photos = new ArrayList<>();
-                for (PlacePhotoMetadata photoMetadata : buffer) {
-                    photos.add(photoMetadata.getPhoto(googleApiClient).await().getBitmap());
+                    for (PlacePhotoMetadata photoMetadata : buffer) {
+                        Bitmap photo = photoMetadata
+                                .getPhoto(googleApiClient)
+                                .await()
+                                .getBitmap();
+
+                        emitter.onNext(photo);
+                    }
+
+                    buffer.release();
+                } catch (Exception ex) {
+                    emitter.onError(ex);
+                } finally {
+                    emitter.onComplete();
                 }
-
-                buffer.release();
-                return Observable.just(photos);
             }
         });
     }
