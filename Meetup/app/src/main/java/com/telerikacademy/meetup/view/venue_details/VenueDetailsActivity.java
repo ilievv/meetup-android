@@ -1,8 +1,11 @@
 package com.telerikacademy.meetup.view.venue_details;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
@@ -37,6 +40,24 @@ public class VenueDetailsActivity extends AppCompatActivity {
         setup();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initialize() {
         currentVenue = (IVenue) getIntent()
                 .getSerializableExtra(EXTRA_CURRENT_VENUE);
@@ -53,6 +74,11 @@ public class VenueDetailsActivity extends AppCompatActivity {
         presenter.setVenue(currentVenue);
         content.setPresenter(presenter);
         content.setGallery(galleryFragment);
+        setTitle(currentVenue.getName());
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        Drawable actionBarBackground = getDrawable(R.drawable.gradient_black_transparent);
+        actionBar.setBackgroundDrawable(actionBarBackground);
     }
 
     private void injectDependencies() {
