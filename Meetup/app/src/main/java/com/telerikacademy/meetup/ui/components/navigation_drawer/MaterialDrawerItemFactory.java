@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.ui.components.navigation_drawer;
 
 import android.content.Context;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 
 import javax.inject.Inject;
@@ -17,17 +17,17 @@ public class MaterialDrawerItemFactory implements IDrawerItemFactory {
     }
 
     @Override
-    public DrawerItem createPrimaryDrawerItem() {
+    public IDrawerItem createPrimaryDrawerItem() {
         return new PrimaryDrawerItem(context);
     }
 
     @Override
-    public DrawerItem createSecondaryDrawerItem() {
+    public IDrawerItem createSecondaryDrawerItem() {
         return new SecondaryDrawerItem(context);
     }
 
     @Override
-    public DrawerItem createDividerDrawerItem() {
+    public IDrawerItem createDividerDrawerItem() {
         return new DividerDrawerItem(context);
     }
 }

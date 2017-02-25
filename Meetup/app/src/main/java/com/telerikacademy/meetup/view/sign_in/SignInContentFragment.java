@@ -15,7 +15,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
@@ -37,7 +37,7 @@ public class SignInContentFragment extends Fragment
     EditText passwordEditText;
 
     private ISignInContract.Presenter presenter;
-    private Dialog progressDialog;
+    private IDialog progressDialog;
 
     public SignInContentFragment() {
     }

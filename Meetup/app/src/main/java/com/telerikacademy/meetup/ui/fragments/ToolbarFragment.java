@@ -16,8 +16,8 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.Drawer;
-import com.telerikacademy.meetup.ui.components.navigation_drawer.base.DrawerItem;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawer;
+import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItem;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.base.IDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragments.base.IToolbar;
 import com.telerikacademy.meetup.util.base.IUserSession;
@@ -39,7 +39,7 @@ public class ToolbarFragment extends Fragment
     private static final int NAV_DRAWER_WIDTH = 270;
 
     @Inject
-    Drawer navigationDrawer;
+    IDrawer navigationDrawer;
     @Inject
     IUserSession userSession;
     @Inject
@@ -107,14 +107,14 @@ public class ToolbarFragment extends Fragment
         final Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
 
         if (userSession.isUserLoggedIn()) {
-            DrawerItem itemSignOut = drawerItemFactory
+            IDrawerItem itemSignOut = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withName(R.string.nav_sign_out)
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
             navigationDrawer
                     .withDrawerItems(itemSignOut)
-                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    .withOnDrawerItemClickListener(new IDrawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onClick(View view, int position) {
                             switch (position) {
@@ -134,13 +134,13 @@ public class ToolbarFragment extends Fragment
                         }
                     });
         } else {
-            DrawerItem itemSignIn = drawerItemFactory
+            IDrawerItem itemSignIn = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_in)
                     .withName(R.string.nav_sign_in)
                     .withIcon(FontAwesome.Icon.faw_sign_in);
 
-            DrawerItem itemSignUp = drawerItemFactory
+            IDrawerItem itemSignUp = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withIdentifier(R.layout.activity_sign_up)
                     .withName(R.string.nav_sign_up)
@@ -151,7 +151,7 @@ public class ToolbarFragment extends Fragment
                             itemSignIn,
                             itemSignUp
                     )
-                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    .withOnDrawerItemClickListener(new IDrawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onClick(View view, int position) {
                             switch (position) {
@@ -178,13 +178,13 @@ public class ToolbarFragment extends Fragment
     }
 
     private void createDrawerBuilder() {
-        DrawerItem itemHome = drawerItemFactory
+        IDrawerItem itemHome = drawerItemFactory
                 .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_home)
                 .withName(R.string.nav_home)
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
-        DrawerItem itemNearbyVenues = drawerItemFactory
+        IDrawerItem itemNearbyVenues = drawerItemFactory
                 .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_nearby_venues)
                 .withName(R.string.nav_explore)

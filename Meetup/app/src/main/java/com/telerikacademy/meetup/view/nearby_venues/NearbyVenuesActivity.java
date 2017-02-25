@@ -13,7 +13,7 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.base.IVenueData;
-import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.SearchFragment;
 import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
@@ -58,7 +58,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     private NearbyVenuesContentFragment content;
     private SearchFragment searchBar;
     private ToolbarFragment toolbar;
-    private Dialog progressDialog;
+    private IDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

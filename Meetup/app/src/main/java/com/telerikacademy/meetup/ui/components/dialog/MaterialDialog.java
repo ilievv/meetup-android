@@ -6,11 +6,11 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import com.afollestad.materialdialogs.DialogAction;
-import com.telerikacademy.meetup.ui.components.dialog.base.Dialog;
+import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 
 import javax.inject.Inject;
 
-public class MaterialDialog extends Dialog {
+public class MaterialDialog implements IDialog {
 
     private final com.afollestad.materialdialogs.MaterialDialog.Builder dialogBuilder;
     private com.afollestad.materialdialogs.MaterialDialog dialog;
@@ -22,56 +22,56 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withTitle(@NonNull CharSequence title) {
+    public IDialog withTitle(@NonNull CharSequence title) {
         dialogBuilder.title(title);
         return this;
     }
 
     @Override
-    public Dialog withTitle(@StringRes int title) {
+    public IDialog withTitle(@StringRes int title) {
         dialogBuilder.title(title);
         return this;
     }
 
     @Override
-    public Dialog withContent(@NonNull CharSequence content) {
+    public IDialog withContent(@NonNull CharSequence content) {
         dialogBuilder.content(content);
         return this;
     }
 
     @Override
-    public Dialog withContent(@StringRes int content) {
+    public IDialog withContent(@StringRes int content) {
         dialogBuilder.content(content);
         return this;
     }
 
     @Override
-    public Dialog withIcon(@NonNull Drawable icon) {
+    public IDialog withIcon(@NonNull Drawable icon) {
         dialogBuilder.icon(icon);
         return this;
     }
 
     @Override
-    public Dialog withIcon(@DrawableRes int icon) {
+    public IDialog withIcon(@DrawableRes int icon) {
         dialogBuilder.iconRes(icon);
         return this;
     }
 
     @Override
-    public Dialog withProgress() {
+    public IDialog withProgress() {
         dialogBuilder.progress(true, 0);
         return this;
     }
 
     @Override
-    public Dialog cancelable(boolean isCancelable) {
+    public IDialog cancelable(boolean isCancelable) {
         dialogBuilder.cancelable(isCancelable);
         return this;
     }
 
     @Override
-    public Dialog withPositiveButton(@StringRes int text,
-                                     final OnOptionButtonClick onPositiveListener) {
+    public IDialog withPositiveButton(@StringRes int text,
+                                      final OnOptionButtonClick onPositiveListener) {
 
         dialogBuilder.positiveText(text);
         if (onPositiveListener != null) {
@@ -87,8 +87,8 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withPositiveButton(@NonNull CharSequence text,
-                                     final OnOptionButtonClick onPositiveListener) {
+    public IDialog withPositiveButton(@NonNull CharSequence text,
+                                      final OnOptionButtonClick onPositiveListener) {
 
         dialogBuilder.positiveText(text);
         if (onPositiveListener != null) {
@@ -104,8 +104,8 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withNeutralButton(@StringRes int text,
-                                    final OnOptionButtonClick onNeutralListener) {
+    public IDialog withNeutralButton(@StringRes int text,
+                                     final OnOptionButtonClick onNeutralListener) {
 
         dialogBuilder.neutralText(text);
         if (onNeutralListener != null) {
@@ -121,8 +121,8 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withNeutralButton(@NonNull CharSequence text,
-                                    final OnOptionButtonClick onNeutralListener) {
+    public IDialog withNeutralButton(@NonNull CharSequence text,
+                                     final OnOptionButtonClick onNeutralListener) {
 
         dialogBuilder.neutralText(text);
         if (onNeutralListener != null) {
@@ -138,8 +138,8 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withNegativeButton(@StringRes int text,
-                                     final OnOptionButtonClick onNegativeListener) {
+    public IDialog withNegativeButton(@StringRes int text,
+                                      final OnOptionButtonClick onNegativeListener) {
 
         dialogBuilder.negativeText(text);
         if (onNegativeListener != null) {
@@ -155,8 +155,8 @@ public class MaterialDialog extends Dialog {
     }
 
     @Override
-    public Dialog withNegativeButton(@NonNull CharSequence text,
-                                     final OnOptionButtonClick onNegativeListener) {
+    public IDialog withNegativeButton(@NonNull CharSequence text,
+                                      final OnOptionButtonClick onNegativeListener) {
 
         dialogBuilder.negativeText(text);
         if (onNegativeListener != null) {

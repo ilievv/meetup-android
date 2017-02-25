@@ -2,9 +2,9 @@ package com.telerikacademy.meetup.ui.components.navigation_drawer.base;
 
 public interface IDrawerItemFactory {
 
-    DrawerItem createPrimaryDrawerItem();
+    IDrawerItem createPrimaryDrawerItem();
 
-    DrawerItem createSecondaryDrawerItem();
+    IDrawerItem createSecondaryDrawerItem();
 
-    DrawerItem createDividerDrawerItem();
+    IDrawerItem createDividerDrawerItem();
 }

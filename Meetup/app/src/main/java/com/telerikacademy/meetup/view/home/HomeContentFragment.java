@@ -13,7 +13,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
-import com.telerikacademy.meetup.provider.base.ILocationProvider;
+import com.telerikacademy.meetup.provider.base.ILocationAware;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 
@@ -35,7 +35,7 @@ public class HomeContentFragment extends Fragment
     IIntentFactory intentFactory;
 
     private IHomeContentContract.Presenter presenter;
-    private ILocationProvider locationProvider;
+    private ILocationAware locationProvider;
 
     @Override
     public void setPresenter(IHomeContentContract.Presenter presenter) {
@@ -45,7 +45,7 @@ public class HomeContentFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        locationProvider = (ILocationProvider) context;
+        locationProvider = (ILocationAware) context;
     }
 
     @Nullable

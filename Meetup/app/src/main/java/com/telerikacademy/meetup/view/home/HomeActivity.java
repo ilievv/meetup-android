@@ -8,14 +8,14 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.ILocation;
-import com.telerikacademy.meetup.provider.base.ILocationProvider;
+import com.telerikacademy.meetup.provider.base.ILocationAware;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
 import javax.inject.Inject;
 
 public class HomeActivity extends AppCompatActivity
-        implements ILocationProvider {
+        implements ILocationAware {
 
     @Inject
     IHomeContentContract.Presenter contentPresenter;
