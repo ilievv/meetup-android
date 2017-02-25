@@ -1,6 +1,8 @@
 package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
+
+import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
@@ -12,14 +14,17 @@ import javax.inject.Inject;
 
 public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
+    private final IVenuePhotoProvider venuePhotoProvider;
+    private final ILocalData localData;
+
     private IVenueDetailsContract.View view;
     private IVenue venue;
 
-    private final IVenuePhotoProvider venuePhotoProvider;
-
     @Inject
-    public VenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider) {
+    public VenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider, ILocalData localData) {
         this.venuePhotoProvider = venuePhotoProvider;
+        this.localData = localData;
+
     }
 
     @Override
@@ -58,7 +63,9 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                     @Override
                     public void onNext(Bitmap value) {
+
                         view.addPhoto(value);
+                        localData.saveVenue(venue, value);
                     }
 
                     @Override

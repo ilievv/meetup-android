@@ -3,14 +3,23 @@ package com.telerikacademy.meetup.view.home;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import butterknife.BindView;
 import butterknife.OnClick;
+
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.data.local.base.ILocalData;
+import com.telerikacademy.meetup.data.local.base.IRecentVenue;
+import com.telerikacademy.meetup.data.local.realm.RealmRecentVenue;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,9 +32,15 @@ public class HomeActivity extends AppCompatActivity
     IHomeHeaderContract.Presenter headerPresenter;
     @Inject
     FragmentManager fragmentManager;
+    @Inject
+    ILocalData localData;
+
+    @BindView(R.id.rv_recent_venues)
+    RecyclerView recentVenuesRecyclerView;
 
     private HomeContentFragment content;
     private HomeHeaderFragment header;
+    //private RecentVenuesRecyclerAdapter recyclerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +55,7 @@ public class HomeActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
+        showRecentVenues();
     }
 
     @Override
@@ -78,4 +94,13 @@ public class HomeActivity extends AppCompatActivity
                 ))
                 .inject(this);
     }
+
+    private void showRecentVenues(){
+        List<IRecentVenue> result = this.localData.getRecentVenues();
+
+        Log.d(result.toString(), "");
+
+    }
 }
+
+

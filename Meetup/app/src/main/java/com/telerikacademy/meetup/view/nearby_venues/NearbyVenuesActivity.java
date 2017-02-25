@@ -12,7 +12,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
-import com.telerikacademy.meetup.network.base.IVenueData;
+import com.telerikacademy.meetup.data.network.base.IVenueData;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragments.SearchFragment;
@@ -102,7 +102,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     private void setup() {
         content.setPresenter(presenter);
         presenter.setView(content);
-
         recyclerAdapter = new NearbyVenuesRecyclerAdapter(new ArrayList<IVenue>());
         content.setAdapter(recyclerAdapter);
         searchBar.setFilter(recyclerAdapter);

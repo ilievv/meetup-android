@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
-import com.telerikacademy.meetup.network.base.IUserData;
+import com.telerikacademy.meetup.data.local.base.ILocalData;
+import com.telerikacademy.meetup.data.network.base.IUserData;
 import com.telerikacademy.meetup.provider.GoogleVenuePhotoProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
@@ -125,8 +126,8 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider) {
-        return new VenueDetailsPresenter(venuePhotoProvider);
+    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider, ILocalData localData) {
+        return new VenueDetailsPresenter(venuePhotoProvider, localData);
     }
 
     @Inject

@@ -1,9 +1,9 @@
-package com.telerikacademy.meetup.network;
+package com.telerikacademy.meetup.data.network;
 
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
+import com.telerikacademy.meetup.data.network.base.IVenueData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
-import com.telerikacademy.meetup.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueFactory;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;

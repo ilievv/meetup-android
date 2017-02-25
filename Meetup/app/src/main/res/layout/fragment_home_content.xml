@@ -146,7 +146,12 @@
                         android:layout_toRightOf="@id/tv_recently_viewed"
                         android:layout_alignBaseline="@id/tv_recently_viewed"
                         android:background="@color/secondaryText"/>
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_recent_venues"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:scrollbars="vertical"/>
             </RelativeLayout>
 
         </LinearLayout>

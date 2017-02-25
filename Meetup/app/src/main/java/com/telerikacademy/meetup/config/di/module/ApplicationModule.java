@@ -11,11 +11,13 @@ import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationContext;
 import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.config.di.annotation.UserModel;
+import com.telerikacademy.meetup.data.local.base.ILocalData;
+import com.telerikacademy.meetup.data.local.realm.RealmLocalData;
 import com.telerikacademy.meetup.model.gson.User;
-import com.telerikacademy.meetup.network.UserData;
-import com.telerikacademy.meetup.network.VenueData;
-import com.telerikacademy.meetup.network.base.IUserData;
-import com.telerikacademy.meetup.network.base.IVenueData;
+import com.telerikacademy.meetup.data.network.UserData;
+import com.telerikacademy.meetup.data.network.VenueData;
+import com.telerikacademy.meetup.data.network.base.IUserData;
+import com.telerikacademy.meetup.data.network.base.IVenueData;
 import com.telerikacademy.meetup.provider.*;
 import com.telerikacademy.meetup.provider.base.*;
 import com.telerikacademy.meetup.ui.components.navigation_drawer.MaterialDrawerItemFactory;
@@ -94,6 +96,14 @@ public class ApplicationModule {
                                 IJsonParser jsonParser, IVenueFactory venueFactory) {
 
         return new VenueData(googleApiConstants, httpRequester, jsonParser, venueFactory);
+    }
+
+    @Inject
+    @Provides
+    @ApplicationScope
+    ILocalData provideLocalData(@ApplicationContext Context context) {
+
+        return new RealmLocalData(context);
     }
 
     @Inject
