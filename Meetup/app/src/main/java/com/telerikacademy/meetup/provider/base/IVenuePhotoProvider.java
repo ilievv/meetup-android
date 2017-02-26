@@ -1,11 +1,11 @@
 package com.telerikacademy.meetup.provider.base;
 
 import android.graphics.Bitmap;
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
 public interface IVenuePhotoProvider {
 
-    Observable<Bitmap> getPhotos(String placeId);
+    Flowable<Bitmap> getPhotos(final String placeId);
 
     void connect();
 
