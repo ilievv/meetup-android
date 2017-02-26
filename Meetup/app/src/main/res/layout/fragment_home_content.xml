@@ -147,7 +147,7 @@
                         android:layout_alignBaseline="@id/tv_recently_viewed"
                         android:background="@color/secondaryText"/>
             </RelativeLayout>
-            <ScrollView
+            <!--<ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <LinearLayout
@@ -205,7 +205,7 @@
                             style="@style/AppTheme.Button.RecentVenueButton"/>
                     </LinearLayout>
                 </LinearLayout>
-            </ScrollView>
+            </ScrollView>-->
         </LinearLayout>
     </ScrollView>
 

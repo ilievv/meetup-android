@@ -25,7 +25,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     public VenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider, ILocalData localData) {
         this.venuePhotoProvider = venuePhotoProvider;
         this.localData = localData;
-
     }
 
     @Override
@@ -67,7 +66,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     public void onNext(Bitmap value) {
 
                         view.addPhoto(value);
-                        localData.saveVenue(venue, value);
+                        //localData.saveVenue(venue, value);
                     }
 
                     @Override

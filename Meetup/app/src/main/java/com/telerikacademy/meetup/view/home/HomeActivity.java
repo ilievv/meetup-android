@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
-        showRecentVenues();
+        //showRecentVenues();
     }
 
     @Override
@@ -96,7 +96,11 @@ public class HomeActivity extends AppCompatActivity
     private void showRecentVenues(){
         List<IRecentVenue> results = this.localData.getRecentVenues();
 
-        for (int i = 0; i < 3; i++) {
+        int len = results.size();
+        if(len > 2){ len = 2; }
+
+
+        for (int i = 0; i < len; i++) {
             IRecentVenue rv = results.get(i);
             int buttonId = -1;
             int imageId = -1;

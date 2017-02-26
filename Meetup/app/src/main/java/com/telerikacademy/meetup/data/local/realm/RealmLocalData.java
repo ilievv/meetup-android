@@ -21,41 +21,41 @@ public class RealmLocalData implements ILocalData {
 
     public RealmLocalData(Context context){
         this.context = context;
-        Realm.init(this.context);
+        //Realm.init(this.context);
     }
 
     @Override
     public void saveVenue(IVenue venue, Bitmap picture) {
         String id = venue.getId();
         String name = venue.getName();
-        byte[] pictureBytes = this.transformPictureToByteArray(picture);
+        //byte[] pictureBytes = this.transformPictureToByteArray(picture);
 
-        Realm realm = Realm.getDefaultInstance();
-
-        realm.beginTransaction();
+        //Realm realm = Realm.getDefaultInstance();
+        //realm.close();
+        /*realm.beginTransaction();
         RealmRecentVenue recentVenue = realm.createObject(RealmRecentVenue.class);
         recentVenue.setName(name);
         recentVenue.setId(id);
         recentVenue.setPictureBytes(pictureBytes);
-        realm.commitTransaction();
+        realm.commitTransaction();*/
     }
 
     @Override
     public List<IRecentVenue> getRecentVenues() {
-        Realm realm = Realm.getDefaultInstance();
+        /*Realm realm = Realm.getDefaultInstance();
 
-        /*realm.beginTransaction();
+        realm.beginTransaction();
         realm.deleteAll();
-        realm.commitTransaction();*/
+        realm.commitTransaction();
 
         List<RealmRecentVenue> dbResults = realm.where(RealmRecentVenue.class).findAll();
-
+        realm.close();
         List<IRecentVenue> results = new ArrayList<>();
         for (RealmRecentVenue v : dbResults) {
             RecentVenue r = new RecentVenue(v.getId(), v.getName(), this.transformByteArrayToPicture(v.getPictureBytes()));
             results.add(r);
-        }
-
+        } */
+        List<IRecentVenue> results = new ArrayList<>();
         return results;
     }
 
