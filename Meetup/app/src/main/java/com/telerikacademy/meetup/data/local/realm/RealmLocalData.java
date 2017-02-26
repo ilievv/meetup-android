@@ -19,6 +19,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class RealmLocalData implements ILocalData {
 
@@ -48,7 +49,6 @@ public class RealmLocalData implements ILocalData {
             public void execute(Realm bgRealm) {
                 RealmRecentVenue recentVenue = new RealmRecentVenue();
 
-                String id = venueForSave.getId();
                 String name = venueForSave.getName();
                 byte[] pictureBytes = imageUtil.transformPictureToByteArray(pictureForSave);
                 String username = userSession.getUsername();
@@ -56,13 +56,15 @@ public class RealmLocalData implements ILocalData {
                     username = constants.defaultUsername();
                 }
 
+                String id = venueForSave.getId() + username;
+
                 recentVenue.setId(id);
                 recentVenue.setName(name);
                 recentVenue.setPictureBytes(pictureBytes);
                 recentVenue.setViewerUsername(username);
                 //recentVenue.setDateViewed(new Date());
 
-                bgRealm.copyToRealm(recentVenue);
+                bgRealm.copyToRealmOrUpdate(recentVenue);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
