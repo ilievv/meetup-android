@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.data.local.base;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 
 import com.telerikacademy.meetup.data.local.realm.RealmRecentVenue;
@@ -10,6 +11,6 @@ import java.util.List;
 public interface ILocalData {
     void saveVenue(IVenue venue, Bitmap picture);
 
-    List<IRecentVenue> getRecentVenues();
+    void loadRecentVenues(Activity activity);
 }
 

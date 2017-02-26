@@ -12,5 +12,5 @@ public interface IApiConstants {
 
     String defaultUsername();
 
-    int recentVenuesCount();
+    int recentVenuesForDisplayCount();
 }

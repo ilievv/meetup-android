@@ -1,7 +1,10 @@
 package com.telerikacademy.meetup.data.local.realm;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.data.local.base.ILocalData;
@@ -73,7 +76,7 @@ public class RealmLocalData implements ILocalData {
     }
 
     @Override
-    public List<IRecentVenue> getRecentVenues() {
+    public void loadRecentVenues(Activity activity) {
 
         /*RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -85,15 +88,52 @@ public class RealmLocalData implements ILocalData {
         realm.commitTransaction();*/
 
         Realm realm = Realm.getDefaultInstance();
+        final Activity activityForTransaction = activity;
 
-        List<RealmRecentVenue> dbResults = realm.where(RealmRecentVenue.class).findAll();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm bgRealm) {
+                String currentUsername = userSession.getUsername();
 
-        List<IRecentVenue> results = new ArrayList<>();
-        for (RealmRecentVenue v : dbResults) {
-            RecentVenue r = new RecentVenue(v.getId(), v.getName(), imageUtil.transformByteArrayToPicture(v.getPictureBytes()));
-            results.add(r);
-        }
+                if(currentUsername == null){
+                    currentUsername = constants.defaultUsername();
+                }
 
-        return results;
+                List<RealmRecentVenue> results = bgRealm.where(RealmRecentVenue.class).equalTo("viewerUsername", currentUsername).findAll();
+
+                int size = results.size();
+                int venuesCountForDisplay = size - constants.recentVenuesForDisplayCount();
+                if(venuesCountForDisplay < 0) {
+                    venuesCountForDisplay = 0;
+                }
+
+                int position = 0;
+
+                for (int i = size - 1; i >= venuesCountForDisplay; i--) {
+                    String name = results.get(i).getName();
+                    byte[] pictureBytes = results.get(i).getPictureBytes();
+
+                    int buttonId = activityForTransaction.getResources().getIdentifier("rv_button_" + position,
+                            "id", activityForTransaction.getPackageName());
+                    Button button = (Button) activityForTransaction.findViewById(buttonId);
+                    button.setText(name);
+
+                    int imageId = activityForTransaction.getResources().getIdentifier("rv_image_" + position,
+                            "id", activityForTransaction.getPackageName());
+                    ImageView image = (ImageView) activityForTransaction.findViewById(imageId);
+                    image.setImageBitmap(imageUtil.transformByteArrayToPicture(pictureBytes));
+
+                    position++;
+                }
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+            }
+        });
     }
 }

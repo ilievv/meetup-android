@@ -37,5 +37,5 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     public String defaultUsername() { return defaultUsername; }
 
     @Override
-    public int recentVenuesCount() { return recentVenuesCount; }
+    public int recentVenuesForDisplayCount() { return recentVenuesCount; }
 }

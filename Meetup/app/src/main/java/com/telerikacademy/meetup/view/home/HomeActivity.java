@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.home;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -103,19 +104,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void showRecentVenues(){
-        List<IRecentVenue> results = this.localData.getRecentVenues();
-        int size = results.size();
-        for (int i = 0; i < 6; i++) {
-            int buttonId = getResources().getIdentifier("rv_button_" + i,
-                    "id", getPackageName());
-            Button button = (Button) findViewById(buttonId);
-            button.setText(results.get(size - 1 - i).getName());
-
-            int imageId = getResources().getIdentifier("rv_image_" + i,
-                    "id", getPackageName());
-            ImageView image = (ImageView) findViewById(imageId);
-            image.setImageBitmap(results.get(size - 1 - i).getPicture());
-        }
+        localData.loadRecentVenues(this);
     }
 }
 
