@@ -19,7 +19,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class RealmLocalData implements ILocalData {
 
@@ -69,6 +72,7 @@ public class RealmLocalData implements ILocalData {
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
+                realm.close();
             }
         }, new Realm.Transaction.OnError() {
             @Override
@@ -89,7 +93,7 @@ public class RealmLocalData implements ILocalData {
         realm.deleteAll();
         realm.commitTransaction();*/
 
-        Realm realm = Realm.getDefaultInstance();
+        final Realm realm = Realm.getDefaultInstance();
         final Activity activityForTransaction = activity;
 
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -101,7 +105,7 @@ public class RealmLocalData implements ILocalData {
                     currentUsername = constants.defaultUsername();
                 }
 
-                List<RealmRecentVenue> results = bgRealm.where(RealmRecentVenue.class).equalTo("viewerUsername", currentUsername).findAll();
+                RealmResults<RealmRecentVenue> results = bgRealm.where(RealmRecentVenue.class).equalTo("viewerUsername", currentUsername).findAll();
 
                 int size = results.size();
                 int venuesCountForDisplay = size - constants.recentVenuesForDisplayCount();
@@ -127,10 +131,12 @@ public class RealmLocalData implements ILocalData {
 
                     position++;
                 }
+
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
+                realm.close();
             }
         }, new Realm.Transaction.OnError() {
             @Override
