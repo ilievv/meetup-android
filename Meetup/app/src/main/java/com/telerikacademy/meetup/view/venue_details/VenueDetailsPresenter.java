@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import javax.inject.Inject;
 
@@ -49,22 +49,29 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
             return;
         }
 
-        venuePhotoProvider
-                .getPhotos(venue.getId())
+        venuePhotoProvider.getPhotos(venue.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Bitmap>() {
+                .subscribe(new Subscriber<Bitmap>() {
+
+                    private static final int ITEMS_PER_REQUEST = 1;
+
+                    private Subscription subscription;
+
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(Subscription subscription) {
+                        this.subscription = subscription;
+                        subscription.request(ITEMS_PER_REQUEST);
                     }
 
                     @Override
-                    public void onNext(Bitmap value) {
-                        view.addPhoto(value);
+                    public void onNext(Bitmap photo) {
+                        view.addPhoto(photo);
+                        subscription.request(ITEMS_PER_REQUEST);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(Throwable t) {
                     }
 
                     @Override

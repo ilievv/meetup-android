@@ -10,9 +10,10 @@ import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
 import com.google.android.gms.location.places.PlacePhotoMetadataResult;
 import com.google.android.gms.location.places.Places;
 import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 
 import javax.inject.Inject;
 
@@ -36,11 +37,10 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
         googleApiClient.disconnect();
     }
 
-    @Override
-    public Observable<Bitmap> getPhotos(final String placeId) {
-        return Observable.create(new ObservableOnSubscribe<Bitmap>() {
+    public Flowable<Bitmap> getPhotos(final String placeId) {
+        return Flowable.create(new FlowableOnSubscribe<Bitmap>() {
             @Override
-            public void subscribe(ObservableEmitter<Bitmap> emitter) throws Exception {
+            public void subscribe(FlowableEmitter<Bitmap> emitter) throws Exception {
                 try {
                     PlacePhotoMetadataResult res = Places.GeoDataApi
                             .getPlacePhotos(googleApiClient, placeId)
@@ -65,7 +65,7 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
                     emitter.onComplete();
                 }
             }
-        });
+        }, BackpressureStrategy.BUFFER);
     }
 
     @Override
