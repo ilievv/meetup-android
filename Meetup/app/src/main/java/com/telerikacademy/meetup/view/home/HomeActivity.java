@@ -17,8 +17,12 @@ import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.data.local.realm.RealmRecentVenue;
+import com.telerikacademy.meetup.data.local.realm.RecentVenue;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
+import com.telerikacademy.meetup.ui.fragments.GalleryFragment;
+import com.telerikacademy.meetup.ui.fragments.RecentVenuesFragment;
+import com.telerikacademy.meetup.util.ImageUtil;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 import java.util.List;
@@ -39,6 +43,7 @@ public class HomeActivity extends AppCompatActivity
 
     private HomeContentFragment content;
     private HomeHeaderFragment header;
+    private RecentVenuesFragment recentVenuesFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
-        //showRecentVenues();
+        showRecentVenues();
     }
 
     @Override
@@ -73,11 +78,15 @@ public class HomeActivity extends AppCompatActivity
 
         header = (HomeHeaderFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
+
+        recentVenuesFragment = (RecentVenuesFragment) fragmentManager
+                .findFragmentById(R.id.fragment_recent_venues);
     }
 
     private void setup() {
         contentPresenter.setView(content);
         content.setPresenter(contentPresenter);
+
         headerPresenter.setView(header);
         header.setPresenter(headerPresenter);
     }
@@ -96,29 +105,17 @@ public class HomeActivity extends AppCompatActivity
     private void showRecentVenues(){
         List<IRecentVenue> results = this.localData.getRecentVenues();
 
-        int len = results.size();
-        if(len > 2){ len = 2; }
+        for (int i = 0; i < 6; i++) {
+            int buttonId = getResources().getIdentifier("rv_button_" + i,
+                    "id", getPackageName());
+            Button button = (Button) findViewById(buttonId);
+            button.setText(results.get(i).getName());
 
-
-        for (int i = 0; i < len; i++) {
-            IRecentVenue rv = results.get(i);
-            int buttonId = -1;
-            int imageId = -1;
-
-            try {
-                buttonId = R.id.class.getField("rv_button_" + i).getInt(0);
-                imageId = R.id.class.getField("rv_image_" + i).getInt(0);
-            } catch (Exception e){
-                Log.e(e.getMessage(), "");
-            }
-
-            Button button = (Button)findViewById(buttonId);
-            button.setText(rv.getName());
-
-            ImageView picture = (ImageView)findViewById(imageId);
-            picture.setImageBitmap(rv.getPicture());
+            int imageId = getResources().getIdentifier("rv_image_" + i,
+                    "id", getPackageName());
+            ImageView image = (ImageView) findViewById(imageId);
+            image.setImageBitmap(results.get(i).getPicture());
         }
-
     }
 }
 

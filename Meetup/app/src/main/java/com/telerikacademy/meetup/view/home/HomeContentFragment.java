@@ -2,18 +2,24 @@ package com.telerikacademy.meetup.view.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
+import com.telerikacademy.meetup.ui.fragments.base.IRecentVenues;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 
@@ -36,6 +42,7 @@ public class HomeContentFragment extends Fragment
 
     private IHomeContentContract.Presenter presenter;
     private ILocationAware locationProvider;
+    private IRecentVenues recentVenues;
 
     @Override
     public void setPresenter(IHomeContentContract.Presenter presenter) {

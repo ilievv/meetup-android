@@ -9,4 +9,8 @@ public interface IApiConstants {
     int responseSuccesCode();
 
     int responseErrorCode();
+
+    String defaultUsername();
+
+    int recentVenuesCount();
 }

@@ -58,15 +58,18 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Bitmap>() {
+                    Bitmap pictureForRealm = null;
+
                     @Override
                     public void onSubscribe(Disposable d) {
                     }
 
                     @Override
                     public void onNext(Bitmap value) {
-
                         view.addPhoto(value);
-                        //localData.saveVenue(venue, value);
+                        if(pictureForRealm == null) {
+                            pictureForRealm = value;
+                        }
                     }
 
                     @Override
@@ -75,7 +78,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                     @Override
                     public void onComplete() {
+                        localData.saveVenue(venue, pictureForRealm);
                     }
                 });
+
+
     }
 }

@@ -10,6 +10,8 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     private static final String signUpUrl = apiUrl + "/auth/register";
     private static final int responseSuccessCode = 200;
     private static final int responseErrorCode = 404;
+    private static final String defaultUsername = "default";
+    private static final int recentVenuesCount = 6;
 
     @Override
     public String signInUrl() {
@@ -26,12 +28,14 @@ public final class ApiDevelopmentConstants implements IApiConstants {
         return responseSuccessCode;
     }
 
-    ;
-
     @Override
     public int responseErrorCode() {
         return responseErrorCode;
     }
 
-    ;
+    @Override
+    public String defaultUsername() { return defaultUsername; }
+
+    @Override
+    public int recentVenuesCount() { return recentVenuesCount; }
 }

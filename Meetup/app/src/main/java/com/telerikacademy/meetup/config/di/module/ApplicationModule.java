@@ -101,9 +101,9 @@ public class ApplicationModule {
     @Inject
     @Provides
     @ApplicationScope
-    ILocalData provideLocalData(@ApplicationContext Context context) {
+    ILocalData provideLocalData(@ApplicationContext Context context, IUserSession userSession, IImageUtil imageUtil) {
 
-        return new RealmLocalData(context);
+        return new RealmLocalData(context, userSession, imageUtil);
     }
 
     @Inject
@@ -136,6 +136,13 @@ public class ApplicationModule {
     @ApplicationScope
     IUserSession provideUserSession(SharedPreferences sharedPreferences) {
         return new UserSession(sharedPreferences);
+    }
+
+    @Inject
+    @Provides
+    @ApplicationScope
+    IImageUtil provideImageUtil() {
+        return new ImageUtil();
     }
 
     @Provides
