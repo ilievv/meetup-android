@@ -19,17 +19,16 @@ import io.realm.Realm;
 
 public class RealmLocalData implements ILocalData {
 
-    @Inject
-    IApiConstants constants;
-
     private final IUserSession userSession;
     private final IImageUtil imageUtil;
+    private final IApiConstants constants;
     private Context context;
 
-    public RealmLocalData(Context context, IUserSession userSession, IImageUtil imageUtil){
+    public RealmLocalData(Context context, IUserSession userSession, IImageUtil imageUtil, IApiConstants constants){
         this.context = context;
         this.userSession = userSession;
         this.imageUtil = imageUtil;
+        this.constants = constants;
         Realm.init(this.context);
     }
 
