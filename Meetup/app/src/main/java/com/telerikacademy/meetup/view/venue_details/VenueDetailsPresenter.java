@@ -2,6 +2,8 @@ package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+
+import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;
@@ -21,10 +23,12 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     private IVenue venue;
 
     private final IVenueDetailsProvider venueDetailsProvider;
+    private final ILocalData localData;
 
     @Inject
-    public VenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider) {
+    public VenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider, ILocalData localData) {
         this.venueDetailsProvider = venueDetailsProvider;
+        this.localData = localData;
     }
 
     @Override
@@ -84,6 +88,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     private Subscription subscription;
                     private boolean isFirst = true;
                     private boolean hasPhoto = false;
+                    private Bitmap pictureForRealm = null;
 
                     @Override
                     public void onSubscribe(Subscription subscription) {
@@ -100,6 +105,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.stopLoading();
                             view.startGalleryLoadingIndicator();
                             hasPhoto = true;
+                            pictureForRealm = photo;
                         }
 
                         subscription.request(ITEMS_PER_REQUEST);
@@ -119,6 +125,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         if (!hasPhoto) {
                             view.setDefaultPhoto();
                         }
+
+                        localData.saveVenue(venue, pictureForRealm);
 
                         view.stopLoading();
                         view.stopGalleryLoadingIndicator();

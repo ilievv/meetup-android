@@ -13,7 +13,11 @@ import android.widget.Filterable;
 import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.data.local.base.ILocalData;
+import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.ui.fragment.base.ISearchBar;
+
+import javax.inject.Inject;
 
 public class SearchFragment extends Fragment
         implements ISearchBar {

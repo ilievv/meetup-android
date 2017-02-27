@@ -2,6 +2,7 @@ package com.telerikacademy.meetup.config.di.component;
 
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment;
 import com.telerikacademy.meetup.ui.fragment.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.home.HomeContentFragment;
@@ -43,4 +44,6 @@ public interface ControllerComponent {
     void inject(SignUpContentFragment signUpContentFragment);
 
     void inject(ToolbarFragment toolbarFragment);
+
+    void inject(RecentVenuesFragment recentVenuesFragment);
 }

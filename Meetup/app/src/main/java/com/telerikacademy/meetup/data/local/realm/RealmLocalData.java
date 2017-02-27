@@ -48,7 +48,6 @@ public class RealmLocalData implements ILocalData {
     public void saveVenue(final IVenue venue, final Bitmap picture) {
         final IVenue venueForSave = venue;
         final Bitmap pictureForSave = picture;
-        final Context c = this.context;
 
         final Realm realm = Realm.getDefaultInstance();
 

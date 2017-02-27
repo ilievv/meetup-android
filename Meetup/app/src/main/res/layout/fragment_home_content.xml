@@ -124,11 +124,6 @@
 
             </TableLayout>
 
-            <fragment
-                android:id="@+id/fragment_recent_venues"
-                android:name="com.telerikacademy.meetup.ui.fragments.RecentVenuesFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
         </LinearLayout>
     </ScrollView>
 

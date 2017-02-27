@@ -67,6 +67,7 @@ public class ApplicationModule {
         return User.class;
     }
 
+    @Inject
     @Provides
     @ApplicationScope
     IApiConstants provideApiConstants() {
