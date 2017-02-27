@@ -81,6 +81,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     private static final int ITEMS_PER_REQUEST = 1;
 
                     private Subscription subscription;
+                    private boolean isFirst = true;
                     private boolean hasPhoto = false;
 
                     @Override
@@ -92,8 +93,14 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     @Override
                     public void onNext(Bitmap photo) {
                         view.addPhoto(photo);
-                        view.stopLoading();
-                        hasPhoto = true;
+
+                        if (isFirst) {
+                            isFirst = false;
+                            view.stopLoading();
+                            view.startGalleryLoadingIndicator();
+                            hasPhoto = true;
+                        }
+
                         subscription.request(ITEMS_PER_REQUEST);
                     }
 
@@ -101,6 +108,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     public void onError(Throwable t) {
                         view.setDefaultPhoto();
                         view.stopLoading();
+                        view.stopGalleryLoadingIndicator();
                         view.showGalleryIndicator();
                         view.showErrorMessage();
                     }
@@ -112,6 +120,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         }
 
                         view.stopLoading();
+                        view.stopGalleryLoadingIndicator();
                         view.showGalleryIndicator();
                     }
                 });

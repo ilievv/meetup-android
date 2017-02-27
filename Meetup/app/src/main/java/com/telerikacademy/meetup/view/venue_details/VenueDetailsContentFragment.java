@@ -26,6 +26,7 @@ import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import javax.inject.Inject;
 
@@ -44,6 +45,8 @@ public class VenueDetailsContentFragment extends Fragment
     private IDialog progressDialog;
     private IGallery gallery;
     private TabLayout galleryIndicator;
+    private AVLoadingIndicatorView galleryLoadingIndicator;
+
 
     public VenueDetailsContentFragment() {
     }
@@ -160,10 +163,20 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
+    public void startGalleryLoadingIndicator() {
+        galleryLoadingIndicator.smoothToShow();
+    }
+
+    @Override
+    public void stopGalleryLoadingIndicator() {
+        galleryLoadingIndicator.smoothToHide();
+    }
+
+    @Override
     public void showGalleryIndicator() {
         galleryIndicator.setVisibility(View.VISIBLE);
-
-        Animation expandIn = AnimationUtils.loadAnimation(getContext(), R.anim.expand_in);
+        Animation expandIn = AnimationUtils
+                .loadAnimation(getContext(), R.anim.expand_in);
         galleryIndicator.startAnimation(expandIn);
     }
 
@@ -192,5 +205,8 @@ public class VenueDetailsContentFragment extends Fragment
 
         galleryIndicator = (TabLayout) getActivity()
                 .findViewById(R.id.gallery_indicator);
+
+        galleryLoadingIndicator = (AVLoadingIndicatorView) getActivity()
+                .findViewById(R.id.gallery_loading_indicator);
     }
 }

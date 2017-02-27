@@ -25,6 +25,10 @@ public interface IVenueDetailsContract {
 
         void showErrorMessage();
 
+        void startGalleryLoadingIndicator();
+
+        void stopGalleryLoadingIndicator();
+
         void showGalleryIndicator();
 
         void startNavigation(Uri uri);

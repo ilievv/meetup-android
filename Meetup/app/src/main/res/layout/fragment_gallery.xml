@@ -26,6 +26,20 @@
                 app:tabGravity="center"
                 app:tabIndicatorHeight="0dp"/>
 
+        <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/gallery_loading_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                app:minWidth="34dp"
+                app:maxWidth="34dp"
+                app:minHeight="34dp"
+                app:maxHeight="34dp"
+                app:indicatorName="BallPulseIndicator"
+                app:indicatorColor="#fff"/>
+
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
