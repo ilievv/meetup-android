@@ -1,7 +1,6 @@
 package com.telerikacademy.meetup.data.local.realm;
 
 import android.graphics.Bitmap;
-
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 
 public class RecentVenue implements IRecentVenue {

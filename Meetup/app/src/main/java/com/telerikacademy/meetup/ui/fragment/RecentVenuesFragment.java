@@ -4,15 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.base.IApiConstants;
@@ -21,12 +18,9 @@ import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.ui.fragment.base.IRecentVenues;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
 
 public class RecentVenuesFragment extends Fragment implements IRecentVenues {
     @Inject
@@ -90,7 +84,7 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
         List<IRecentVenue> results = this.localData.loadRecentVenues();
         int size = results.size();
         int venuesCountForDisplay = size;
-        if(venuesCountForDisplay > this.constants.recentVenuesForDisplayCount()) {
+        if (venuesCountForDisplay > this.constants.recentVenuesForDisplayCount()) {
             venuesCountForDisplay = this.constants.recentVenuesForDisplayCount();
         }
 
@@ -103,7 +97,7 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
         }
     }
 
-    private void loadButtons(){
+    private void loadButtons() {
         this.buttons.add(button0);
         this.buttons.add(button1);
         this.buttons.add(button2);
@@ -112,7 +106,7 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
         this.buttons.add(button5);
     }
 
-    private void loadImages(){
+    private void loadImages() {
         this.images.add(image0);
         this.images.add(image1);
         this.images.add(image2);

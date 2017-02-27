@@ -1,12 +1,10 @@
 package com.telerikacademy.meetup.data.local.realm;
 
-import com.telerikacademy.meetup.data.local.base.IRecentVenue;
-
-import java.util.Date;
-
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+
+import java.util.Date;
 
 public class RealmRecentVenue extends RealmObject {
 
@@ -42,7 +40,7 @@ public class RealmRecentVenue extends RealmObject {
         this.pictureBytesArray = pictureBytes;
     }
 
-    public String getViewerUsername(){
+    public String getViewerUsername() {
         return viewerUsername;
     }
 
@@ -50,8 +48,12 @@ public class RealmRecentVenue extends RealmObject {
         this.viewerUsername = username;
     }
 
-    public Date getDateViewed() { return this.dateViewed; }
+    public Date getDateViewed() {
+        return this.dateViewed;
+    }
 
-    public void setDateViewed(Date date) { this.dateViewed = date; }
+    public void setDateViewed(Date date) {
+        this.dateViewed = date;
+    }
 
 }

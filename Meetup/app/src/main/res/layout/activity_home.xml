@@ -23,13 +23,14 @@
                 android:id="@+id/fragment_home_content"
                 android:name="com.telerikacademy.meetup.view.home.HomeContentFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
 
         <fragment
-            android:id="@+id/fragment_recent_venues"
-            android:name="com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+                android:id="@+id/fragment_recent_venues"
+                android:name="com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

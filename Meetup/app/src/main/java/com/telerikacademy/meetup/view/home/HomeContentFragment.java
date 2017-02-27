@@ -8,14 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
-import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 

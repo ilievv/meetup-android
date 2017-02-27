@@ -2,7 +2,6 @@ package com.telerikacademy.meetup.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.telerikacademy.meetup.util.base.IImageUtil;
 
 import java.io.ByteArrayOutputStream;

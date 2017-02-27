@@ -1,26 +1,17 @@
 package com.telerikacademy.meetup.view.home;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.ImageView;
-
 import butterknife.OnClick;
-
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
 import com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment;
-import com.telerikacademy.meetup.ui.fragment.SearchFragment;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -96,11 +87,11 @@ public class HomeActivity extends AppCompatActivity
                 .inject(this);
     }
 
-    private synchronized void showRecentVenues(){
+    private synchronized void showRecentVenues() {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-             recentVenuesFragment.showRecentVenues();
+                recentVenuesFragment.showRecentVenues();
             }
         });
     }
