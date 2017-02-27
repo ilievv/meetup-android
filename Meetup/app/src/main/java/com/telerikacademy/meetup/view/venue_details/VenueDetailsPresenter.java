@@ -101,6 +101,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     public void onError(Throwable t) {
                         view.setDefaultPhoto();
                         view.stopLoading();
+                        view.showGalleryIndicator();
                         view.showErrorMessage();
                     }
 
@@ -111,6 +112,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         }
 
                         view.stopLoading();
+                        view.showGalleryIndicator();
                     }
                 });
     }

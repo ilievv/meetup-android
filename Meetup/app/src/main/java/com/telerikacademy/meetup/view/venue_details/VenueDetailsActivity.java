@@ -70,7 +70,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
         content.setGallery(galleryFragment);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        Drawable actionBarBackground = getDrawable(R.drawable.gradient_black_transparent);
+        Drawable actionBarBackground = getDrawable(R.drawable.gradient_bottom_black_transparent);
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayShowTitleEnabled(false);
     }

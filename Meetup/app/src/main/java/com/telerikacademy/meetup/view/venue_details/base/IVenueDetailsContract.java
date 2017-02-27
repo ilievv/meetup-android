@@ -25,6 +25,8 @@ public interface IVenueDetailsContract {
 
         void showErrorMessage();
 
+        void showGalleryIndicator();
+
         void startNavigation(Uri uri);
     }
 

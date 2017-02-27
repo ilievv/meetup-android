@@ -9,10 +9,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -40,6 +43,7 @@ public class VenueDetailsContentFragment extends Fragment
     private IVenueDetailsContract.Presenter presenter;
     private IDialog progressDialog;
     private IGallery gallery;
+    private TabLayout galleryIndicator;
 
     public VenueDetailsContentFragment() {
     }
@@ -89,13 +93,19 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        onStart();
+        if (isNetworkAvailable()) {
+            presenter.subscribe();
+        } else {
+            stopLoading();
+            showErrorMessage();
+            getActivity().onBackPressed();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        onStop();
+        presenter.unsubscribe();
     }
 
     @Override
@@ -150,6 +160,14 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
+    public void showGalleryIndicator() {
+        galleryIndicator.setVisibility(View.VISIBLE);
+
+        Animation expandIn = AnimationUtils.loadAnimation(getContext(), R.anim.expand_in);
+        galleryIndicator.startAnimation(expandIn);
+    }
+
+    @Override
     public void startNavigation(Uri uri) {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
         mapIntent.setPackage(PACKAGE_GOOGLE_MAPS);
@@ -171,5 +189,8 @@ public class VenueDetailsContentFragment extends Fragment
                         getActivity(), getFragmentManager()
                 ))
                 .inject(this);
+
+        galleryIndicator = (TabLayout) getActivity()
+                .findViewById(R.id.gallery_indicator);
     }
 }

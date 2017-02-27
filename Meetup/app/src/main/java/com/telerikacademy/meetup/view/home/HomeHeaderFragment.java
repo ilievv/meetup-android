@@ -99,13 +99,15 @@ public class HomeHeaderFragment extends ToolbarFragment
     @Override
     public void onResume() {
         super.onResume();
-        onStart();
+        if (isNetworkAvailable()) {
+            presenter.subscribe();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        onStop();
+        presenter.unsubscribe();
     }
 
     @Override

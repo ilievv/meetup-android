@@ -1,20 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/colorPrimary"
-             tools:context="com.telerikacademy.meetup.ui.fragment.GalleryFragment">
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.telerikacademy.meetup.ui.fragment.GalleryFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
 
-    <!--<ImageView
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
-            android:layout_gravity="top"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_image"/>-->
+            android:layout_height="230dp">
 
-    <android.support.v4.view.ViewPager
-            android:id="@+id/vp_gallery"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"/>
+        <android.support.v4.view.ViewPager
+                android:id="@+id/vp_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"/>
+
+        <android.support.design.widget.TabLayout
+                android:id="@+id/gallery_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"/>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@drawable/gradient_top_black_transparent"/>
+
+    </RelativeLayout>
 
 </FrameLayout>
