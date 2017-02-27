@@ -19,21 +19,27 @@ public interface IVenueDetailsContract {
 
         void setRating(float rating);
 
+        void setType(String type);
+
         void setDefaultPhoto();
 
         void startLoading();
 
         void stopLoading();
 
-        void showErrorMessage();
-
         void startGalleryLoadingIndicator();
 
         void stopGalleryLoadingIndicator();
 
+        void startContentLoadingIndicator();
+
+        void stopContentLoadingIndicator();
+
         void showGalleryIndicator();
 
         void startNavigation(Uri uri);
+
+        void showErrorMessage();
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -53,6 +53,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
             return;
         }
 
+        view.startContentLoadingIndicator();
+
         venueDetailsProvider
                 .getById(venue.getId())
                 .subscribeOn(Schedulers.io())
@@ -63,8 +65,13 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         venueDetail = venue;
                         view.setTitle(venue.getName());
                         view.setRating(venue.getRating());
+                        if (venue.getTypes().length > 0) {
+                            view.setType(venue.getTypes()[0]);
+                        }
                     }
                 });
+
+        view.stopContentLoadingIndicator();
     }
 
     @Override

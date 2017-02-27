@@ -3,6 +3,7 @@ package com.telerikacademy.meetup.provider;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.*;
@@ -12,16 +13,26 @@ import com.telerikacademy.meetup.provider.base.VenueDetailsProvider;
 import io.reactivex.*;
 
 import javax.inject.Inject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public class GoogleVenueDetailsProvider extends VenueDetailsProvider
         implements GoogleApiClient.OnConnectionFailedListener {
 
+    private final Context context;
     private final IVenueFactory venueFactory;
     private GoogleApiClient googleApiClient;
 
     @Inject
     public GoogleVenueDetailsProvider(Context context, IVenueFactory venueFactory) {
+        this.context = context;
         this.venueFactory = venueFactory;
         buildGoogleApiClient(context);
     }
@@ -40,11 +51,12 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
         return Flowable.create(new FlowableOnSubscribe<Bitmap>() {
             @Override
             public void subscribe(FlowableEmitter<Bitmap> emitter) throws Exception {
+                PlacePhotoMetadataBuffer buffer = null;
                 try {
                     PlacePhotoMetadataResult res = Places.GeoDataApi
                             .getPlacePhotos(googleApiClient, placeId)
                             .await();
-                    PlacePhotoMetadataBuffer buffer = res.getPhotoMetadata();
+                    buffer = res.getPhotoMetadata();
 
                     for (PlacePhotoMetadata photoMetadata : buffer) {
                         Bitmap photo = photoMetadata
@@ -56,11 +68,10 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
                             emitter.onNext(photo);
                         }
                     }
-
-                    buffer.release();
                 } catch (Exception ex) {
                     emitter.onError(ex);
                 } finally {
+                    buffer.release();
                     emitter.onComplete();
                 }
             }
@@ -105,13 +116,72 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
     }
 
     private IVenueDetail parsePlace(Place place) {
-        IVenueDetail venue = venueFactory.createVenueDetail(place.getId(), place.getName().toString());
+        List<String> placeTypesList = parsePlaceTypes(place.getPlaceTypes());
+        String[] placeTypesArray = new String[placeTypesList.size()];
+        placeTypesArray = placeTypesList.toArray(placeTypesArray);
+
+        IVenueDetail venue = venueFactory.createVenueDetail(
+                place.getId(),
+                place.getName().toString(),
+                place.getAddress().toString(),
+                placeTypesArray,
+                place.getRating(),
+                place.getPhoneNumber().toString(),
+                place.getWebsiteUri()
+        );
         venue.setLatitude(place.getLatLng().latitude);
         venue.setLongitude(place.getLatLng().longitude);
-        venue.setPhoneNumber(place.getPhoneNumber().toString());
-        venue.setAddress(place.getAddress().toString());
-        venue.setWebsiteUri(place.getWebsiteUri());
-        venue.setRating(place.getRating());
+
         return venue;
+    }
+
+    @Nullable
+    private List<String> parsePlaceTypes(List<Integer> typesAsInteger) {
+        List<String> parsedTypes = new ArrayList<>();
+
+        Map<Integer, String> types = extractTypes();
+        for (Integer typeAsInteger : typesAsInteger) {
+            if (types.containsKey(typeAsInteger)) {
+                String typeName = types.get(typeAsInteger);
+                parsedTypes.add(typeName);
+            }
+        }
+
+        return parsedTypes;
+    }
+
+    private Map<Integer, String> extractTypes() {
+        final String FILE_PATH = "raw/place_types.txt";
+        final String TYPE_SEPARATOR = ",";
+
+        Map<Integer, String> types = new Hashtable<>();
+        InputStream inputStream = null;
+        BufferedReader reader = null;
+
+        try {
+            inputStream = context.getAssets().open(FILE_PATH);
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            if (inputStream != null) {
+                String currLine;
+                while ((currLine = reader.readLine()) != null) {
+                    String[] type = currLine.split(TYPE_SEPARATOR);
+                    String typeName = type[0];
+                    String typeValue = type[1];
+                    Integer typeValueAsInt = Integer.parseInt(typeValue);
+                    types.put(typeValueAsInt, typeName);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return types;
     }
 }

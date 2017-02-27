@@ -39,12 +39,16 @@ public class VenueDetailsContentFragment extends Fragment
     @Inject
     IDialogFactory dialogFactory;
 
+    @BindView(R.id.venue_details_content_loading_indicator)
+    AVLoadingIndicatorView contentLoadingIndicator;
     @BindView(R.id.tv_venue_details_title)
     TextView titleTextView;
     @BindView(R.id.tv_venue_details_rating)
     TextView ratingTextView;
     @BindView(R.id.rb_venue_details_rating)
     RatingBar ratingBar;
+    @BindView(R.id.tv_venue_details_type)
+    TextView typeTextView;
 
     private IVenueDetailsContract.Presenter presenter;
     private IDialog progressDialog;
@@ -149,6 +153,11 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
+    public void setType(String type) {
+        typeTextView.setText(type);
+    }
+
+    @Override
     public void setDefaultPhoto() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -170,11 +179,6 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
-    public void showErrorMessage() {
-        Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void startGalleryLoadingIndicator() {
         galleryLoadingIndicator.smoothToShow();
     }
@@ -182,6 +186,16 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void stopGalleryLoadingIndicator() {
         galleryLoadingIndicator.smoothToHide();
+    }
+
+    @Override
+    public void startContentLoadingIndicator() {
+        contentLoadingIndicator.smoothToShow();
+    }
+
+    @Override
+    public void stopContentLoadingIndicator() {
+        contentLoadingIndicator.smoothToHide();
     }
 
     @Override
@@ -197,6 +211,11 @@ public class VenueDetailsContentFragment extends Fragment
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
         mapIntent.setPackage(PACKAGE_GOOGLE_MAPS);
         startActivity(mapIntent);
+    }
+
+    @Override
+    public void showErrorMessage() {
+        Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
     }
 
     private boolean isNetworkAvailable() {
