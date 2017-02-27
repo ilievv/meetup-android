@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
+
         showRecentVenues();
     }
 
