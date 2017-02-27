@@ -62,6 +62,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     public void accept(IVenueDetail venue) throws Exception {
                         venueDetail = venue;
                         view.setTitle(venue.getName());
+                        view.setRating(venue.getRating());
                     }
                 });
     }

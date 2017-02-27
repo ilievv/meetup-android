@@ -25,6 +25,32 @@
                 android:textColor="@color/tertiaryText"
                 android:textSize="24sp"/>
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:id="@+id/tv_venue_details_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/tertiaryText"/>
+
+            <RatingBar
+                    android:id="@+id/rb_venue_details_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:progressTint="@color/tertiaryText"
+                    android:secondaryProgressTint="@android:color/transparent"
+                    android:progressBackgroundTint="@color/ratingBarBackground"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:numStars="5"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

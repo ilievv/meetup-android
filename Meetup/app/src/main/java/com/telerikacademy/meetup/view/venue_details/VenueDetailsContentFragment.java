@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -40,6 +41,10 @@ public class VenueDetailsContentFragment extends Fragment
 
     @BindView(R.id.tv_venue_details_title)
     TextView titleTextView;
+    @BindView(R.id.tv_venue_details_rating)
+    TextView ratingTextView;
+    @BindView(R.id.rb_venue_details_rating)
+    RatingBar ratingBar;
 
     private IVenueDetailsContract.Presenter presenter;
     private IDialog progressDialog;
@@ -134,6 +139,13 @@ public class VenueDetailsContentFragment extends Fragment
                 gallery.addPhoto(photo);
             }
         });
+    }
+
+    @Override
+    public void setRating(float rating) {
+        ratingTextView.setText(Float.toString(rating));
+        ratingBar.setVisibility(View.VISIBLE);
+        ratingBar.setRating(rating);
     }
 
     @Override

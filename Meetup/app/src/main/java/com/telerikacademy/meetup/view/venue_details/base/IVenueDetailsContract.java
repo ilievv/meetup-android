@@ -17,6 +17,8 @@ public interface IVenueDetailsContract {
 
         void addPhoto(Bitmap photo);
 
+        void setRating(float rating);
+
         void setDefaultPhoto();
 
         void startLoading();
