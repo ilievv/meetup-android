@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                recentVenuesFragment.showRecentVenues();
+                //recentVenuesFragment.showRecentVenues();
             }
         });
     }
