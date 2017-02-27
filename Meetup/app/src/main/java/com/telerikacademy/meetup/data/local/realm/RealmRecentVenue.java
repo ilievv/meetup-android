@@ -1,24 +1,22 @@
 package com.telerikacademy.meetup.data.local.realm;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 public class RealmRecentVenue extends RealmObject {
 
     @PrimaryKey
     private String id;
+    @Index
     private String name;
     private byte[] pictureBytesArray;
     private String viewerUsername;
-    //private Date dateViewed;
+    private Date dateViewed;
 
     public String getName() {
         return this.name;
@@ -52,7 +50,8 @@ public class RealmRecentVenue extends RealmObject {
         this.viewerUsername = username;
     }
 
-    /*public Date getDateViewed() { return this.dateViewed; }
+    public Date getDateViewed() { return this.dateViewed; }
 
-    public void setDateViewed(Date date) { this.dateViewed = date; }*/
+    public void setDateViewed(Date date) { this.dateViewed = date; }
+
 }

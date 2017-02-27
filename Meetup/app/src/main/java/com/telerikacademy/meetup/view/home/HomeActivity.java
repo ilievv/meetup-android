@@ -1,15 +1,12 @@
 package com.telerikacademy.meetup.view.home;
 
-import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 import com.telerikacademy.meetup.BaseApplication;
@@ -17,15 +14,12 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
-import com.telerikacademy.meetup.data.local.realm.RealmRecentVenue;
-import com.telerikacademy.meetup.data.local.realm.RecentVenue;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
-import com.telerikacademy.meetup.ui.fragments.GalleryFragment;
 import com.telerikacademy.meetup.ui.fragments.RecentVenuesFragment;
-import com.telerikacademy.meetup.util.ImageUtil;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -103,8 +97,33 @@ public class HomeActivity extends AppCompatActivity
                 .inject(this);
     }
 
-    private void showRecentVenues(){
-        localData.loadRecentVenues(this);
+    private synchronized void showRecentVenues(){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            List<IRecentVenue> results = localData.loadRecentVenues();
+                int size = results.size();
+                int venuesCountForDisplay = size;
+                if(venuesCountForDisplay > 6) {
+                    venuesCountForDisplay = 6;
+                }
+
+                for (int i = 0; i < venuesCountForDisplay; i++) {
+                    String name = results.get(i).getName();
+                    Bitmap picture = results.get(i).getPicture();
+
+                    int buttonId = getResources().getIdentifier("rv_button_" + i,
+                            "id", getPackageName());
+                    Button button = (Button)findViewById(buttonId);
+                    button.setText(name);
+
+                    int imageId = getResources().getIdentifier("rv_image_" + i,
+                            "id", getPackageName());
+                    ImageView image = (ImageView)findViewById(imageId);
+                    image.setImageBitmap(picture);
+                }
+            }
+        });
     }
 }
 

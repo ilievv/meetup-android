@@ -3,6 +3,7 @@ package com.telerikacademy.meetup.data.local.realm;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -14,6 +15,9 @@ import com.telerikacademy.meetup.util.base.IImageUtil;
 import com.telerikacademy.meetup.util.base.IUserSession;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,6 +27,7 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class RealmLocalData implements ILocalData {
 
@@ -48,10 +53,34 @@ public class RealmLocalData implements ILocalData {
         final Realm realm = Realm.getDefaultInstance();
 
         realm.executeTransactionAsync(new Realm.Transaction() {
+
+            private String generateId(String venueId, String username, String venueName) {
+                String helpString = venueId + username + venueName;
+                char[] array = helpString.toCharArray();
+                List<Character> list = new ArrayList<>();
+
+                for(int i = 0; i < array.length; i++){
+                    if(array[i] != ' '){
+                        list.add(array[i]);
+                    }
+                }
+
+                Collections.shuffle(list);
+
+                StringBuilder sb = new StringBuilder();
+
+                for(int i = 0; i < list.size(); i++){
+                    sb.append(list.get(i));
+                }
+
+                return sb.toString();
+            }
+
             @Override
             public void execute(Realm bgRealm) {
                 RealmRecentVenue recentVenue = new RealmRecentVenue();
 
+                String venueForSaveId = venueForSave.getId();
                 String name = venueForSave.getName();
                 byte[] pictureBytes = imageUtil.transformPictureToByteArray(pictureForSave);
                 String username = userSession.getUsername();
@@ -59,15 +88,16 @@ public class RealmLocalData implements ILocalData {
                     username = constants.defaultUsername();
                 }
 
-                String id = venueForSave.getId() + username;
+                Date dateViewed = new Date();
+                String id = this.generateId(venueForSaveId, name, username);
 
                 recentVenue.setId(id);
                 recentVenue.setName(name);
                 recentVenue.setPictureBytes(pictureBytes);
                 recentVenue.setViewerUsername(username);
-                //recentVenue.setDateViewed(new Date());
+                recentVenue.setDateViewed(dateViewed);
 
-                bgRealm.copyToRealmOrUpdate(recentVenue);
+                bgRealm.copyToRealm(recentVenue);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -82,7 +112,7 @@ public class RealmLocalData implements ILocalData {
     }
 
     @Override
-    public void loadRecentVenues(Activity activity) {
+    public List<IRecentVenue> loadRecentVenues() {
 
         /*RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -93,55 +123,25 @@ public class RealmLocalData implements ILocalData {
         realm.deleteAll();
         realm.commitTransaction();*/
 
+        final List<IRecentVenue> resultsForDisplay = new ArrayList<>();
         final Realm realm = Realm.getDefaultInstance();
-        final Activity activityForTransaction = activity;
 
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                String currentUsername = userSession.getUsername();
+        String currentUsername = userSession.getUsername();
+        if(currentUsername == null){
+            currentUsername = constants.defaultUsername();
+        }
 
-                if(currentUsername == null){
-                    currentUsername = constants.defaultUsername();
-                }
+        final RealmResults<RealmRecentVenue> results = realm.where(RealmRecentVenue.class)
+                .equalTo("viewerUsername", currentUsername)
+                .findAllSorted("dateViewed", Sort.DESCENDING)
+                .distinct("name");
 
-                RealmResults<RealmRecentVenue> results = bgRealm.where(RealmRecentVenue.class).equalTo("viewerUsername", currentUsername).findAll();
+        for(RealmRecentVenue r : results) {
+            IRecentVenue recentVenue =
+                    new RecentVenue(r.getName(), imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
+            resultsForDisplay.add(recentVenue);
+        }
 
-                int size = results.size();
-                int venuesCountForDisplay = size - constants.recentVenuesForDisplayCount();
-                if(venuesCountForDisplay < 0) {
-                    venuesCountForDisplay = 0;
-                }
-
-                int position = 0;
-
-                for (int i = size - 1; i >= venuesCountForDisplay; i--) {
-                    String name = results.get(i).getName();
-                    byte[] pictureBytes = results.get(i).getPictureBytes();
-
-                    int buttonId = activityForTransaction.getResources().getIdentifier("rv_button_" + position,
-                            "id", activityForTransaction.getPackageName());
-                    Button button = (Button) activityForTransaction.findViewById(buttonId);
-                    button.setText(name);
-
-                    int imageId = activityForTransaction.getResources().getIdentifier("rv_image_" + position,
-                            "id", activityForTransaction.getPackageName());
-                    ImageView image = (ImageView) activityForTransaction.findViewById(imageId);
-                    image.setImageBitmap(imageUtil.transformByteArrayToPicture(pictureBytes));
-
-                    position++;
-                }
-
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-            }
-        });
+        return resultsForDisplay;
     }
 }

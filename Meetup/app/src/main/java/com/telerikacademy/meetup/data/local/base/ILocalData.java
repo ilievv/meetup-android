@@ -11,6 +11,6 @@ import java.util.List;
 public interface ILocalData {
     void saveVenue(IVenue venue, Bitmap picture);
 
-    void loadRecentVenues(Activity activity);
+    List<IRecentVenue> loadRecentVenues();
 }
 
