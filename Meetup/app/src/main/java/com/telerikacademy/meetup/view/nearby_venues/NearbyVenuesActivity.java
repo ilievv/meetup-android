@@ -140,8 +140,8 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         progressDialog.hide();
-                        Toast.makeText(NearbyVenuesActivity.this,
-                                "An error has occured", Toast.LENGTH_SHORT).show();
+                        showErrorMessage();
+                        onBackPressed();
                     }
 
                     @Override
@@ -149,6 +149,11 @@ public class NearbyVenuesActivity extends AppCompatActivity {
                         progressDialog.hide();
                     }
                 });
+    }
+
+    private void showErrorMessage() {
+        Toast.makeText(NearbyVenuesActivity.this,
+                "An error has occured", Toast.LENGTH_SHORT).show();
     }
 
     private void injectDependencies() {

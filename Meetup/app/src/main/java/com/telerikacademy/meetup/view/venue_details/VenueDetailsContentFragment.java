@@ -74,7 +74,9 @@ public class VenueDetailsContentFragment extends Fragment
         if (isNetworkAvailable()) {
             presenter.subscribe();
         } else {
+            stopLoading();
             showErrorMessage();
+            getActivity().onBackPressed();
         }
     }
 
