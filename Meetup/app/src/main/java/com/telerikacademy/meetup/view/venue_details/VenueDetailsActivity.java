@@ -62,11 +62,11 @@ public class VenueDetailsActivity extends AppCompatActivity {
         presenter.setVenue(currentVenue);
         content.setPresenter(presenter);
         content.setGallery(galleryFragment);
-        setTitle(currentVenue.getName());
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         Drawable actionBarBackground = getDrawable(R.drawable.gradient_black_transparent);
         actionBar.setBackgroundDrawable(actionBarBackground);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     private void injectDependencies() {

@@ -7,11 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.network.base.IUserData;
-import com.telerikacademy.meetup.provider.GoogleVenuePhotoProvider;
+import com.telerikacademy.meetup.provider.GoogleVenueDetailsProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.ILocationProvider;
-import com.telerikacademy.meetup.provider.base.IVenuePhotoProvider;
+import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;
+import com.telerikacademy.meetup.provider.base.IVenueFactory;
 import com.telerikacademy.meetup.ui.components.dialog.DialogFactory;
 import com.telerikacademy.meetup.ui.components.dialog.MaterialDialog;
 import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
@@ -125,8 +126,8 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenuePhotoProvider venuePhotoProvider) {
-        return new VenueDetailsPresenter(venuePhotoProvider);
+    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider) {
+        return new VenueDetailsPresenter(venueDetailsProvider);
     }
 
     @Inject
@@ -153,7 +154,7 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IVenuePhotoProvider provideVenuePhotoProvider(Activity activity) {
-        return new GoogleVenuePhotoProvider(activity);
+    IVenueDetailsProvider provideVenueDetailsProvider(Activity activity, IVenueFactory venueFactory) {
+        return new GoogleVenueDetailsProvider(activity, venueFactory);
     }
 }

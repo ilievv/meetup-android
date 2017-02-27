@@ -5,25 +5,24 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.PlacePhotoMetadata;
-import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
-import com.google.android.gms.location.places.PlacePhotoMetadataResult;
-import com.google.android.gms.location.places.Places;
-import com.telerikacademy.meetup.provider.base.VenuePhotoProvider;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
+import com.google.android.gms.location.places.*;
+import com.telerikacademy.meetup.model.base.IVenueDetail;
+import com.telerikacademy.meetup.provider.base.IVenueFactory;
+import com.telerikacademy.meetup.provider.base.VenueDetailsProvider;
+import io.reactivex.*;
 
 import javax.inject.Inject;
+import java.util.concurrent.Callable;
 
-public class GoogleVenuePhotoProvider extends VenuePhotoProvider
+public class GoogleVenueDetailsProvider extends VenueDetailsProvider
         implements GoogleApiClient.OnConnectionFailedListener {
 
+    private final IVenueFactory venueFactory;
     private GoogleApiClient googleApiClient;
 
     @Inject
-    public GoogleVenuePhotoProvider(Context context) {
+    public GoogleVenueDetailsProvider(Context context, IVenueFactory venueFactory) {
+        this.venueFactory = venueFactory;
         buildGoogleApiClient(context);
     }
 
@@ -37,7 +36,7 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
         googleApiClient.disconnect();
     }
 
-    public Flowable<Bitmap> getPhotos(final String placeId) {
+    public Flowable<Bitmap> getPhotos(@NonNull final String placeId) {
         return Flowable.create(new FlowableOnSubscribe<Bitmap>() {
             @Override
             public void subscribe(FlowableEmitter<Bitmap> emitter) throws Exception {
@@ -68,6 +67,24 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
         }, BackpressureStrategy.BUFFER);
     }
 
+    public Observable<IVenueDetail> getById(@NonNull final String placeId) {
+        return Observable.defer(new Callable<ObservableSource<? extends IVenueDetail>>() {
+            @Override
+            public ObservableSource<? extends IVenueDetail> call() throws Exception {
+                PlaceBuffer places = Places.GeoDataApi
+                        .getPlaceById(googleApiClient, placeId)
+                        .await();
+
+                if (places.getCount() > 0) {
+                    Place place = places.get(0);
+                    return Observable.just(parsePlace(place));
+                }
+
+                return null;
+            }
+        });
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         if (getOnConnectionFailedListener() != null) {
@@ -84,5 +101,14 @@ public class GoogleVenuePhotoProvider extends VenuePhotoProvider
                     .addOnConnectionFailedListener(this)
                     .build();
         }
+    }
+
+    private IVenueDetail parsePlace(Place place) {
+        IVenueDetail venue = venueFactory.createVenueDetail(place.getId(), place.getName().toString());
+        venue.setPhoneNumber(place.getPhoneNumber().toString());
+        venue.setAddress(place.getAddress().toString());
+        venue.setWebsiteUri(place.getWebsiteUri());
+        venue.setRating(place.getRating());
+        return venue;
     }
 }

@@ -46,7 +46,6 @@ public class UserData implements IUserData {
                 .map(new Function<IHttpResponse, IUser>() {
                     @Override
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
-
                         if (iHttpResponse.getCode() == apiConstants.responseErrorCode()) {
                             throw new Error(iHttpResponse.getMessage());
                         }
@@ -75,7 +74,6 @@ public class UserData implements IUserData {
                 .map(new Function<IHttpResponse, IUser>() {
                     @Override
                     public IUser apply(IHttpResponse iHttpResponse) throws Exception {
-
                         if (iHttpResponse.getCode() == apiConstants.responseErrorCode()) {
                             throw new Error(iHttpResponse.getMessage());
                         }

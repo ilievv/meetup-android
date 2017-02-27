@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.provider.base;
 
-public abstract class VenuePhotoProvider implements IVenuePhotoProvider {
+public abstract class VenueDetailsProvider implements IVenueDetailsProvider {
 
     private IOnConnectionFailedListener onConnectionFailedListener;
 

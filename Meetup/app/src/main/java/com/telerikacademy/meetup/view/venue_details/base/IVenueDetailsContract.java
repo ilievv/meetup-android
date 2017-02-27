@@ -10,9 +10,19 @@ public interface IVenueDetailsContract {
 
     interface View extends BaseView<Presenter> {
 
+        void setTitle(CharSequence title);
+
         void setGallery(IGallery gallery);
 
         void addPhoto(Bitmap photo);
+
+        void setDefaultPhoto();
+
+        void startLoading();
+
+        void stopLoading();
+
+        void showErrorMessage();
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -22,6 +32,8 @@ public interface IVenueDetailsContract {
         void subscribe();
 
         void unsubscribe();
+
+        void loadData();
 
         void loadPhotos();
     }
