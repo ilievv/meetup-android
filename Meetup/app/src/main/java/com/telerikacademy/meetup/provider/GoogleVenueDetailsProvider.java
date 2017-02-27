@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -26,9 +26,15 @@ import java.util.concurrent.Callable;
 public class GoogleVenueDetailsProvider extends VenueDetailsProvider
         implements GoogleApiClient.OnConnectionFailedListener {
 
+    private static Map<Integer, String> venueTypeMap;
+
     private final Context context;
     private final IVenueFactory venueFactory;
     private GoogleApiClient googleApiClient;
+
+    static {
+        venueTypeMap = new HashMap<>();
+    }
 
     @Inject
     public GoogleVenueDetailsProvider(Context context, IVenueFactory venueFactory) {
@@ -151,10 +157,13 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
     }
 
     private Map<Integer, String> extractTypes() {
+        if (venueTypeMap != null || venueTypeMap.isEmpty()) {
+            return venueTypeMap;
+        }
+
         final String FILE_PATH = "raw/place_types.txt";
         final String TYPE_SEPARATOR = ",";
 
-        Map<Integer, String> types = new Hashtable<>();
         InputStream inputStream = null;
         BufferedReader reader = null;
 
@@ -168,7 +177,7 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
                     String typeName = type[0];
                     String typeValue = type[1];
                     Integer typeValueAsInt = Integer.parseInt(typeValue);
-                    types.put(typeValueAsInt, typeName);
+                    venueTypeMap.put(typeValueAsInt, typeName);
                 }
             }
         } catch (IOException e) {
@@ -182,6 +191,6 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
             }
         }
 
-        return types;
+        return venueTypeMap;
     }
 }
