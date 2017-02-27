@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.config.di.component;
 
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
+import com.telerikacademy.meetup.ui.fragment.ToolbarFragment;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.home.HomeHeaderFragment;
@@ -13,6 +13,7 @@ import com.telerikacademy.meetup.view.sign_in.SignInContentFragment;
 import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 import com.telerikacademy.meetup.view.sign_up.SignUpContentFragment;
 import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsContentFragment;
 import dagger.Subcomponent;
 
 @ControllerScope
@@ -30,6 +31,8 @@ public interface ControllerComponent {
     void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 
     void inject(VenueDetailsActivity venueDetailsActivity);
+
+    void inject(VenueDetailsContentFragment venueDetailsContentFragment);
 
     void inject(SignInActivity signInActivity);
 

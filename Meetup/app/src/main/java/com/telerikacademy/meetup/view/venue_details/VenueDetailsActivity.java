@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
-import com.telerikacademy.meetup.ui.fragments.GalleryFragment;
+import com.telerikacademy.meetup.ui.fragment.GalleryFragment;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesRecyclerAdapter;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 
@@ -46,6 +47,11 @@ public class VenueDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    @OnClick(R.id.btn_start_navigation)
+    void onStartNavigationButtonClick() {
+        presenter.onNavigationButtonClick();
+    }
+
     private void initialize() {
         currentVenue = (IVenue) getIntent()
                 .getSerializableExtra(EXTRA_CURRENT_VENUE);
@@ -62,15 +68,16 @@ public class VenueDetailsActivity extends AppCompatActivity {
         presenter.setVenue(currentVenue);
         content.setPresenter(presenter);
         content.setGallery(galleryFragment);
-        setTitle(currentVenue.getName());
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        Drawable actionBarBackground = getDrawable(R.drawable.gradient_black_transparent);
+        Drawable actionBarBackground = getDrawable(R.drawable.gradient_bottom_black_transparent);
         actionBar.setBackgroundDrawable(actionBarBackground);
+        actionBar.setDisplayShowTitleEnabled(false);
     }
 
     private void injectDependencies() {
         BaseApplication
+                .bind(this)
                 .from(this)
                 .getComponent()
                 .getControllerComponent(new ControllerModule(

@@ -8,7 +8,7 @@
         android:background="@android:color/white"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
-        tools:context=".ui.fragments.SearchFragment">
+        tools:context=".ui.fragment.SearchFragment">
 
     <ImageView
             android:id="@+id/ic_search"

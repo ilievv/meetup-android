@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.data.network;
 
+import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.data.network.base.IVenueData;
 import com.telerikacademy.meetup.model.base.IVenue;
@@ -40,29 +41,20 @@ public class VenueData implements IVenueData {
     @Override
     public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius) {
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius);
-
-        return httpRequester
-                .get(nearbySearchUrl)
-                .map(new Function<IHttpResponse, List<IVenue>>() {
-                    @Override
-                    public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
-                        String responseBody = iHttpResponse.getBody();
-                        List<Venue> venues = jsonParser
-                                .getDirectArray(responseBody, "results", Venue.class);
-
-                        return parseVenues(venues);
-                    }
-                });
+        return getNearby(nearbySearchUrl);
     }
 
     @Override
-    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, String type) {
+    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, @Nullable String type) {
         if (type == null || type.isEmpty()) {
             return getNearby(latitude, longitude, radius);
         }
 
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius, type);
+        return getNearby(nearbySearchUrl);
+    }
 
+    private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
         return httpRequester
                 .get(nearbySearchUrl)
                 .map(new Function<IHttpResponse, List<IVenue>>() {
