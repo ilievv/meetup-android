@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.telerikacademy.meetup.R;
 import android.support.v4.app.Fragment;
+
+import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.ui.fragments.base.IRecentVenues;
 
 
