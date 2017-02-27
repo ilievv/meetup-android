@@ -2,6 +2,7 @@ package com.telerikacademy.meetup.ui.fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -72,10 +73,16 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
         this.loadImages();
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        injectDependencies();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        injectDependencies();
     }
 
     @Override
