@@ -157,7 +157,7 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
     }
 
     private Map<Integer, String> extractTypes() {
-        if (venueTypeMap != null || venueTypeMap.isEmpty()) {
+        if (venueTypeMap != null && !venueTypeMap.isEmpty()) {
             return venueTypeMap;
         }
 
