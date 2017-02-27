@@ -17,9 +17,9 @@ import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.components.dialog.base.IDialog;
-import com.telerikacademy.meetup.ui.components.dialog.base.IDialogFactory;
-import com.telerikacademy.meetup.ui.fragments.ToolbarFragment;
+import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
+import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
+import com.telerikacademy.meetup.ui.fragment.ToolbarFragment;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
@@ -97,6 +97,18 @@ public class HomeHeaderFragment extends ToolbarFragment
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        onStart();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        onStop();
+    }
+
+    @Override
     public void setTitle(String title) {
         locationTitle.setText(title);
     }
@@ -146,8 +158,8 @@ public class HomeHeaderFragment extends ToolbarFragment
     }
 
     private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }

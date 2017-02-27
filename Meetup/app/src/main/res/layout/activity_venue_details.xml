@@ -15,7 +15,7 @@
 
         <fragment
                 android:id="@+id/fragment_venue_details_gallery"
-                android:name="com.telerikacademy.meetup.ui.fragments.GalleryFragment"
+                android:name="com.telerikacademy.meetup.ui.fragment.GalleryFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -28,7 +28,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btn_update_location"
+            android:id="@+id/btn_start_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -37,7 +37,7 @@
             android:clickable="true"
             android:tint="@color/colorPrimary"
             android:backgroundTint="#FEFEFE"
-            android:src="@drawable/ic_location_gps"
+            android:src="@drawable/ic_solid_navigation"
             app:layout_anchor="@id/fragment_venue_details_gallery"
             app:layout_anchorGravity="bottom|right|end"/>
 

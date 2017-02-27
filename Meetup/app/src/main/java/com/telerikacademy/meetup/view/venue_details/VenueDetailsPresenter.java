@@ -1,6 +1,7 @@
 package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     private IVenueDetailsContract.View view;
+    private IVenueDetail venueDetail;
     private IVenue venue;
 
     private final IVenueDetailsProvider venueDetailsProvider;
@@ -58,6 +60,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 .subscribe(new Consumer<IVenueDetail>() {
                     @Override
                     public void accept(IVenueDetail venue) throws Exception {
+                        venueDetail = venue;
                         view.setTitle(venue.getName());
                     }
                 });
@@ -110,5 +113,18 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         view.stopLoading();
                     }
                 });
+    }
+
+    @Override
+    public void onNavigationButtonClick() {
+        if (venueDetail == null || venueDetail.getLatitude() == -1 || venueDetail.getLongitude() == -1) {
+            return;
+        }
+
+        String uriString = String.format("google.navigation:q=%s,%s",
+                venueDetail.getLatitude(), venueDetail.getLongitude());
+        Uri uri = Uri.parse(uriString);
+
+        view.startNavigation(uri);
     }
 }

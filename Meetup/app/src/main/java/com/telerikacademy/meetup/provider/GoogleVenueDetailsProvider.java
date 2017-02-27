@@ -80,6 +80,7 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
                     return Observable.just(parsePlace(place));
                 }
 
+                places.release();
                 return null;
             }
         });
@@ -105,6 +106,8 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
 
     private IVenueDetail parsePlace(Place place) {
         IVenueDetail venue = venueFactory.createVenueDetail(place.getId(), place.getName().toString());
+        venue.setLatitude(place.getLatLng().latitude);
+        venue.setLongitude(place.getLatLng().longitude);
         venue.setPhoneNumber(place.getPhoneNumber().toString());
         venue.setAddress(place.getAddress().toString());
         venue.setWebsiteUri(place.getWebsiteUri());

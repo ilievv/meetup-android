@@ -10,13 +10,13 @@
 
     <fragment
             android:id="@+id/fragment_nearby_venues_toolbar"
-            android:name="com.telerikacademy.meetup.ui.fragments.ToolbarFragment"
+            android:name="com.telerikacademy.meetup.ui.fragment.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"/>
 
     <fragment
             android:id="@+id/fragment_nearby_venues_search_header"
-            android:name="com.telerikacademy.meetup.ui.fragments.SearchFragment"
+            android:name="com.telerikacademy.meetup.ui.fragment.SearchFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

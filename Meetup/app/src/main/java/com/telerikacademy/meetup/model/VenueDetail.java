@@ -6,6 +6,8 @@ import com.telerikacademy.meetup.model.base.IVenueDetail;
 public class VenueDetail extends Venue
         implements IVenueDetail {
 
+    private double latitude = -1;
+    private double longitude = -1;
     private String phoneNumber;
     private Uri websiteUri;
 
@@ -19,6 +21,26 @@ public class VenueDetail extends Venue
         super(id, name, address, types, rating);
         setPhoneNumber(phoneNumber);
         setWebsiteUri(websiteUri);
+    }
+
+    @Override
+    public double getLatitude() {
+        return latitude;
+    }
+
+    @Override
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    @Override
+    public double getLongitude() {
+        return longitude;
+    }
+
+    @Override
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @Override

@@ -7,7 +7,7 @@
         android:orientation="vertical"
         android:clipToPadding="false"
         android:background="@color/colorPrimary"
-        tools:context=".ui.fragments.ToolbarFragment">
+        tools:context=".ui.fragment.ToolbarFragment">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
