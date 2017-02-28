@@ -2,7 +2,7 @@ package com.telerikacademy.meetup.view.venue_details;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import com.telerikacademy.meetup.data.local.base.ILocalData;
+import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;

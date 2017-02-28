@@ -12,7 +12,7 @@ import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.data.network.base.IVenueData;
+import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;

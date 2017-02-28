@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.data.local.realm;
+package com.telerikacademy.meetup.network.local.realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Index;

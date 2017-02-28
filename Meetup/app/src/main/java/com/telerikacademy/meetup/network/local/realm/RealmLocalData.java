@@ -1,12 +1,12 @@
-package com.telerikacademy.meetup.data.local.realm;
+package com.telerikacademy.meetup.network.local.realm;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.base.IApiConstants;
-import com.telerikacademy.meetup.data.local.base.ILocalData;
-import com.telerikacademy.meetup.data.local.base.IRecentVenue;
+import com.telerikacademy.meetup.network.local.base.ILocalData;
+import com.telerikacademy.meetup.network.local.base.IRecentVenue;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.util.base.IImageUtil;
 import com.telerikacademy.meetup.util.base.IUserSession;
@@ -90,7 +90,8 @@ public class RealmLocalData implements ILocalData {
                     currentUsername = constants.defaultUsername();
                 }
 
-                final RealmResults<RealmRecentVenue> results = realm.where(RealmRecentVenue.class)
+                final RealmResults<RealmRecentVenue> results = realm
+                        .where(RealmRecentVenue.class)
                         .equalTo("viewerUsername", currentUsername)
                         .findAllSorted("dateViewed", Sort.DESCENDING)
                         .distinct("name");

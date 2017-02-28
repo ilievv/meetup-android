@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.data.local.base;
+package com.telerikacademy.meetup.network.local.base;
 
 import android.graphics.Bitmap;
 import com.telerikacademy.meetup.model.base.IVenue;

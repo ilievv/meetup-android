@@ -1,6 +1,6 @@
 package com.telerikacademy.meetup.view.sign_in;
 
-import com.telerikacademy.meetup.data.network.base.IUserData;
+import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;

@@ -1,4 +1,4 @@
-package com.telerikacademy.meetup.data.network.base;
+package com.telerikacademy.meetup.network.remote.base;
 
 import com.telerikacademy.meetup.model.base.IVenue;
 import io.reactivex.Observable;
