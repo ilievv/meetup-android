@@ -11,6 +11,7 @@ import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -43,7 +44,7 @@ public class RealmLocalData implements ILocalData {
 
                 RealmRecentVenue recentVenue = new RealmRecentVenue();
 
-                String venueForSaveId = venue.getId();
+                String venueToSaveId = venue.getId();
                 String name = venue.getName();
                 byte[] pictureBytes = imageUtil.transformPictureToByteArray(picture);
                 String username = userSession.getUsername();
@@ -52,7 +53,7 @@ public class RealmLocalData implements ILocalData {
                 }
 
                 Date dateViewed = new Date();
-                String id = generateId(venueForSaveId, name, username);
+                String id = generateId(venueToSaveId, name, username);
 
                 recentVenue.setId(id);
                 recentVenue.setName(name);
@@ -71,16 +72,6 @@ public class RealmLocalData implements ILocalData {
     }
 
     public Single<List<IRecentVenue>> getRecentVenues() {
-
-        /*RealmConfiguration config = new RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm realm = Realm.getInstance(config);
-
-        realm.beginTransaction();
-        realm.deleteAll();
-        realm.commitTransaction();*/
-
         return Single.defer(new Callable<SingleSource<List<IRecentVenue>>>() {
             @Override
             public SingleSource<List<IRecentVenue>> call() throws Exception {
@@ -121,13 +112,22 @@ public class RealmLocalData implements ILocalData {
         }
 
         Collections.shuffle(list);
-
         StringBuilder sb = new StringBuilder();
-
         for (int i = 0; i < list.size(); i++) {
             sb.append(list.get(i));
         }
 
         return sb.toString();
+    }
+
+    private void wipeData() {
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm realm = Realm.getInstance(config);
+
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
     }
 }

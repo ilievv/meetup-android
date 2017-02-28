@@ -56,7 +56,6 @@ public class VenueDetailsContentFragment extends Fragment
     private TabLayout galleryIndicator;
     private AVLoadingIndicatorView galleryLoadingIndicator;
 
-
     public VenueDetailsContentFragment() {
     }
 
@@ -201,9 +200,11 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void showGalleryIndicator() {
         galleryIndicator.setVisibility(View.VISIBLE);
-        Animation expandIn = AnimationUtils
-                .loadAnimation(getContext(), R.anim.expand_in);
-        galleryIndicator.startAnimation(expandIn);
+        if (getContext() != null) {
+            Animation expandIn = AnimationUtils
+                    .loadAnimation(getContext(), R.anim.expand_in);
+            galleryIndicator.startAnimation(expandIn);
+        }
     }
 
     @Override
@@ -215,7 +216,9 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Override
     public void showErrorMessage() {
-        Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean isNetworkAvailable() {
