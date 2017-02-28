@@ -55,5 +55,4 @@ public class RealmRecentVenue extends RealmObject {
     public void setDateViewed(Date date) {
         this.dateViewed = date;
     }
-
 }

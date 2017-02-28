@@ -8,6 +8,8 @@ import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.util.base.IImageUtil;
 import com.telerikacademy.meetup.util.base.IUserSession;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class RealmLocalData implements ILocalData {
 
@@ -32,51 +35,24 @@ public class RealmLocalData implements ILocalData {
         Realm.init(this.context);
     }
 
-    @Override
-    public void saveVenue(final IVenue venue, final Bitmap picture) {
-        final IVenue venueForSave = venue;
-        final Bitmap pictureForSave = picture;
-
-        final Realm realm = Realm.getDefaultInstance();
-
-        realm.executeTransactionAsync(new Realm.Transaction() {
-
-            private String generateId(String venueId, String username, String venueName) {
-                String helpString = venueId + username + venueName;
-                char[] array = helpString.toCharArray();
-                List<Character> list = new ArrayList<>();
-
-                for (int i = 0; i < array.length; i++) {
-                    if (array[i] != ' ') {
-                        list.add(array[i]);
-                    }
-                }
-
-                Collections.shuffle(list);
-
-                StringBuilder sb = new StringBuilder();
-
-                for (int i = 0; i < list.size(); i++) {
-                    sb.append(list.get(i));
-                }
-
-                return sb.toString();
-            }
-
+    public Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap picture) {
+        return Single.defer(new Callable<SingleSource<IVenue>>() {
             @Override
-            public void execute(Realm bgRealm) {
+            public SingleSource<IVenue> call() throws Exception {
+                final Realm realm = Realm.getDefaultInstance();
+
                 RealmRecentVenue recentVenue = new RealmRecentVenue();
 
-                String venueForSaveId = venueForSave.getId();
-                String name = venueForSave.getName();
-                byte[] pictureBytes = imageUtil.transformPictureToByteArray(pictureForSave);
+                String venueForSaveId = venue.getId();
+                String name = venue.getName();
+                byte[] pictureBytes = imageUtil.transformPictureToByteArray(picture);
                 String username = userSession.getUsername();
                 if (username == null) {
                     username = constants.defaultUsername();
                 }
 
                 Date dateViewed = new Date();
-                String id = this.generateId(venueForSaveId, name, username);
+                String id = generateId(venueForSaveId, name, username);
 
                 recentVenue.setId(id);
                 recentVenue.setName(name);
@@ -84,22 +60,17 @@ public class RealmLocalData implements ILocalData {
                 recentVenue.setViewerUsername(username);
                 recentVenue.setDateViewed(dateViewed);
 
-                bgRealm.copyToRealm(recentVenue);
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
+                realm.beginTransaction();
+                realm.copyToRealm(recentVenue);
+                realm.commitTransaction();
                 realm.close();
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
+
+                return Single.just(venue);
             }
         });
     }
 
-    @Override
-    public List<IRecentVenue> loadRecentVenues() {
+    public Single<List<IRecentVenue>> getRecentVenues() {
 
         /*RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
@@ -110,25 +81,53 @@ public class RealmLocalData implements ILocalData {
         realm.deleteAll();
         realm.commitTransaction();*/
 
-        final List<IRecentVenue> resultsForDisplay = new ArrayList<>();
-        final Realm realm = Realm.getDefaultInstance();
+        return Single.defer(new Callable<SingleSource<List<IRecentVenue>>>() {
+            @Override
+            public SingleSource<List<IRecentVenue>> call() throws Exception {
+                final List<IRecentVenue> resultsToDisplay = new ArrayList<>();
+                final Realm realm = Realm.getDefaultInstance();
 
-        String currentUsername = userSession.getUsername();
-        if (currentUsername == null) {
-            currentUsername = constants.defaultUsername();
+                String currentUsername = userSession.getUsername();
+                if (currentUsername == null) {
+                    currentUsername = constants.defaultUsername();
+                }
+
+                final RealmResults<RealmRecentVenue> results = realm.where(RealmRecentVenue.class)
+                        .equalTo("viewerUsername", currentUsername)
+                        .findAllSorted("dateViewed", Sort.DESCENDING)
+                        .distinct("name");
+
+                for (RealmRecentVenue r : results) {
+                    IRecentVenue recentVenue = new RecentVenue(r.getName(),
+                            imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
+                    resultsToDisplay.add(recentVenue);
+                }
+
+                realm.close();
+                return Single.just(resultsToDisplay);
+            }
+        });
+    }
+
+    private String generateId(String venueId, String username, String venueName) {
+        String helpString = venueId + username + venueName;
+        char[] array = helpString.toCharArray();
+        List<Character> list = new ArrayList<>();
+
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != ' ') {
+                list.add(array[i]);
+            }
         }
 
-        final RealmResults<RealmRecentVenue> results = realm.where(RealmRecentVenue.class)
-                .equalTo("viewerUsername", currentUsername)
-                .findAllSorted("dateViewed", Sort.DESCENDING)
-                .distinct("name");
+        Collections.shuffle(list);
 
-        for (RealmRecentVenue r : results) {
-            IRecentVenue recentVenue =
-                    new RecentVenue(r.getName(), imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
-            resultsForDisplay.add(recentVenue);
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
         }
 
-        return resultsForDisplay;
+        return sb.toString();
     }
 }

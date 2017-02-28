@@ -71,10 +71,9 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         if (venue.getTypes().length > 0) {
                             view.setType(venue.getTypes()[0]);
                         }
+                        view.stopContentLoadingIndicator();
                     }
                 });
-
-        view.stopContentLoadingIndicator();
     }
 
     @Override
@@ -94,7 +93,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     private Subscription subscription;
                     private boolean isFirst = true;
                     private boolean hasPhoto = false;
-                    private Bitmap pictureForRealm = null;
 
                     @Override
                     public void onSubscribe(Subscription subscription) {
@@ -111,7 +109,9 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.stopLoading();
                             view.startGalleryLoadingIndicator();
                             hasPhoto = true;
-                            pictureForRealm = photo;
+                            localData.saveVenueToRecent(venue, photo)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe();
                         }
 
                         subscription.request(ITEMS_PER_REQUEST);
@@ -131,8 +131,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         if (!hasPhoto) {
                             view.setDefaultPhoto();
                         }
-
-                        localData.saveVenue(venue, pictureForRealm);
 
                         view.stopLoading();
                         view.stopGalleryLoadingIndicator();

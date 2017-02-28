@@ -2,12 +2,13 @@ package com.telerikacademy.meetup.data.local.base;
 
 import android.graphics.Bitmap;
 import com.telerikacademy.meetup.model.base.IVenue;
+import io.reactivex.Single;
 
 import java.util.List;
 
 public interface ILocalData {
-    void saveVenue(IVenue venue, Bitmap picture);
 
-    List<IRecentVenue> loadRecentVenues();
+    Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap picture);
+
+    Single<List<IRecentVenue>> getRecentVenues();
 }
-

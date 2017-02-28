@@ -76,6 +76,10 @@ public class HomeActivity extends AppCompatActivity
         header.setPresenter(headerPresenter);
     }
 
+    private void showRecentVenues() {
+        recentVenuesFragment.showRecentVenues();
+    }
+
     private void injectDependencies() {
         BaseApplication
                 .bind(this)
@@ -86,15 +90,4 @@ public class HomeActivity extends AppCompatActivity
                 ))
                 .inject(this);
     }
-
-    private synchronized void showRecentVenues() {
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recentVenuesFragment.showRecentVenues();
-            }
-        });
-    }
 }
-
-

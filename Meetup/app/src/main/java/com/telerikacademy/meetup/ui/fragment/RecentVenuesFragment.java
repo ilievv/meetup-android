@@ -17,6 +17,9 @@ import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
 import com.telerikacademy.meetup.ui.fragment.base.IRecentVenues;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -63,8 +66,8 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
         View view = inflater.inflate(R.layout.fragment_recent_venues, container, false);
         BaseApplication.bind(this, view);
 
-        this.loadButtons();
-        this.loadImages();
+        loadButtons();
+        loadImages();
         return view;
     }
 
@@ -81,38 +84,46 @@ public class RecentVenuesFragment extends Fragment implements IRecentVenues {
 
     @Override
     public void showRecentVenues() {
-        List<IRecentVenue> results = this.localData.loadRecentVenues();
-        int size = results.size();
-        int venuesCountForDisplay = size;
-        if (venuesCountForDisplay > this.constants.recentVenuesForDisplayCount()) {
-            venuesCountForDisplay = this.constants.recentVenuesForDisplayCount();
-        }
+        localData
+                .getRecentVenues()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<IRecentVenue>>() {
+                    @Override
+                    public void accept(List<IRecentVenue> recentVenues) throws Exception {
+                        int size = recentVenues.size();
+                        int venuesCountForDisplay = size;
+                        if (venuesCountForDisplay > constants.recentVenuesForDisplayCount()) {
+                            venuesCountForDisplay = constants.recentVenuesForDisplayCount();
+                        }
 
-        for (int i = 0; i < venuesCountForDisplay; i++) {
-            String name = results.get(i).getName();
-            Bitmap picture = results.get(i).getPicture();
+                        for (int i = 0; i < venuesCountForDisplay; i++) {
+                            String name = recentVenues.get(i).getName();
+                            Bitmap picture = recentVenues.get(i).getPicture();
 
-            this.buttons.get(i).setText(name);
-            this.images.get(i).setImageBitmap(picture);
-        }
+                            buttons.get(i).setText(name);
+                            images.get(i).setImageBitmap(picture);
+                        }
+                    }
+                });
     }
 
     private void loadButtons() {
-        this.buttons.add(button0);
-        this.buttons.add(button1);
-        this.buttons.add(button2);
-        this.buttons.add(button3);
-        this.buttons.add(button4);
-        this.buttons.add(button5);
+        buttons.add(button0);
+        buttons.add(button1);
+        buttons.add(button2);
+        buttons.add(button3);
+        buttons.add(button4);
+        buttons.add(button5);
     }
 
     private void loadImages() {
-        this.images.add(image0);
-        this.images.add(image1);
-        this.images.add(image2);
-        this.images.add(image3);
-        this.images.add(image4);
-        this.images.add(image5);
+        images.add(image0);
+        images.add(image1);
+        images.add(image2);
+        images.add(image3);
+        images.add(image4);
+        images.add(image5);
     }
 
     private void injectDependencies() {

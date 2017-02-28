@@ -58,6 +58,7 @@
                         android:id="@+id/rv_image_0"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
@@ -79,6 +80,7 @@
                         android:id="@+id/rv_image_1"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
@@ -100,6 +102,7 @@
                         android:id="@+id/rv_image_2"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
@@ -121,6 +124,7 @@
                         android:id="@+id/rv_image_3"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
@@ -142,6 +146,7 @@
                         android:id="@+id/rv_image_4"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
@@ -163,6 +168,7 @@
                         android:id="@+id/rv_image_5"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_gravity="center"/>
 
                 <Button
