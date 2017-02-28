@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 
 public interface IImageUtil {
-    byte[] transformPictureToByteArray(Bitmap picture);
+    byte[] parseToByteArray(Bitmap picture);
 
     Bitmap transformByteArrayToPicture(byte[] array);
 }

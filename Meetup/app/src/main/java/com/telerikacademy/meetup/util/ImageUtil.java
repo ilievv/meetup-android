@@ -7,8 +7,9 @@ import com.telerikacademy.meetup.util.base.IImageUtil;
 import java.io.ByteArrayOutputStream;
 
 public class ImageUtil implements IImageUtil {
+
     @Override
-    public byte[] transformPictureToByteArray(Bitmap picture) {
+    public byte[] parseToByteArray(Bitmap picture) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -19,7 +20,6 @@ public class ImageUtil implements IImageUtil {
     @Override
     public Bitmap transformByteArrayToPicture(byte[] array) {
         Bitmap picture = BitmapFactory.decodeByteArray(array, 0, array.length);
-
         return picture;
     }
 }

@@ -46,9 +46,14 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        showRecentVenues();
+    }
+
+    @Override
     public ILocation getLocation() {
-        ILocation currentLocation = headerPresenter.getLocation();
-        return currentLocation;
+        return headerPresenter.getLocation();
     }
 
     @OnClick(R.id.btn_update_location)

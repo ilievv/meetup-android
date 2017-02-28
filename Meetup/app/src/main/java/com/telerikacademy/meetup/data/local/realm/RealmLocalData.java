@@ -2,6 +2,8 @@ package com.telerikacademy.meetup.data.local.realm;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.data.local.base.ILocalData;
 import com.telerikacademy.meetup.data.local.base.IRecentVenue;
@@ -36,17 +38,21 @@ public class RealmLocalData implements ILocalData {
         Realm.init(this.context);
     }
 
-    public Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap picture) {
+    public Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap photo) {
         return Single.defer(new Callable<SingleSource<IVenue>>() {
             @Override
             public SingleSource<IVenue> call() throws Exception {
                 final Realm realm = Realm.getDefaultInstance();
 
-                RealmRecentVenue recentVenue = new RealmRecentVenue();
+                Bitmap venuePhoto = photo;
+                if (venuePhoto == null) {
+                    venuePhoto = BitmapFactory.decodeResource(context.getResources(),
+                            R.drawable.no_image_available);
+                }
 
                 String venueToSaveId = venue.getId();
                 String name = venue.getName();
-                byte[] pictureBytes = imageUtil.transformPictureToByteArray(picture);
+                byte[] pictureBytes = imageUtil.parseToByteArray(venuePhoto);
                 String username = userSession.getUsername();
                 if (username == null) {
                     username = constants.defaultUsername();
@@ -55,6 +61,7 @@ public class RealmLocalData implements ILocalData {
                 Date dateViewed = new Date();
                 String id = generateId(venueToSaveId, name, username);
 
+                RealmRecentVenue recentVenue = new RealmRecentVenue();
                 recentVenue.setId(id);
                 recentVenue.setName(name);
                 recentVenue.setPictureBytes(pictureBytes);

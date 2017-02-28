@@ -91,6 +91,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     private static final int ITEMS_PER_REQUEST = 1;
 
                     private Subscription subscription;
+                    private Bitmap mainPhoto = null;
                     private boolean isFirst = true;
                     private boolean hasPhoto = false;
 
@@ -109,9 +110,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.stopLoading();
                             view.startGalleryLoadingIndicator();
                             hasPhoto = true;
-                            localData.saveVenueToRecent(venue, photo)
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe();
+                            mainPhoto = photo;
                         }
 
                         subscription.request(ITEMS_PER_REQUEST);
@@ -132,6 +131,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.setDefaultPhoto();
                         }
 
+                        localData.saveVenueToRecent(venue, mainPhoto)
+                                .subscribeOn(Schedulers.io())
+                                .subscribe();
+
                         view.stopLoading();
                         view.stopGalleryLoadingIndicator();
                         view.showGalleryIndicator();
@@ -147,8 +150,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
         String uriString = String.format("google.navigation:q=%s,%s",
                 venueDetail.getLatitude(), venueDetail.getLongitude());
-        Uri uri = Uri.parse(uriString);
-
-        view.startNavigation(uri);
+        view.startNavigation(Uri.parse(uriString));
     }
 }

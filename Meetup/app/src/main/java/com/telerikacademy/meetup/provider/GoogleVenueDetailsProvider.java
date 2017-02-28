@@ -77,7 +77,9 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
                 } catch (Exception ex) {
                     emitter.onError(ex);
                 } finally {
-                    buffer.release();
+                    if (buffer != null) {
+                        buffer.release();
+                    }
                     emitter.onComplete();
                 }
             }
@@ -94,7 +96,11 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
 
                 if (places.getCount() > 0) {
                     Place place = places.get(0);
-                    return Observable.just(parsePlace(place));
+                    Observable<IVenueDetail> result = Observable
+                            .just(parsePlace(place));
+
+                    places.release();
+                    return result;
                 }
 
                 places.release();

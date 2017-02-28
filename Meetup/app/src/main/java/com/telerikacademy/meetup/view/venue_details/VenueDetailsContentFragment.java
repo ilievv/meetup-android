@@ -161,7 +161,8 @@ public class VenueDetailsContentFragment extends Fragment
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Bitmap photo = BitmapFactory.decodeResource(getResources(), R.drawable.no_image_available);
+                Bitmap photo = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.no_image_available);
                 gallery.addPhoto(photo);
             }
         });
