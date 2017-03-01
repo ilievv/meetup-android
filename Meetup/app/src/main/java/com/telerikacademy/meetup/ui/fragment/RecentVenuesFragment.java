@@ -18,6 +18,7 @@ import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.ui.adapter.RecentVenuesAdapter;
 import com.telerikacademy.meetup.ui.fragment.base.IRecentVenues;
+import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -32,6 +33,8 @@ public class RecentVenuesFragment extends Fragment
     @Inject
     @HorizontalLayoutManager
     LinearLayoutManager layoutManager;
+    @Inject
+    IUserSession userSession;
     @Inject
     IApiConstants constants;
     @Inject
@@ -53,7 +56,7 @@ public class RecentVenuesFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
-        RecentVenuesAdapter adapter = new RecentVenuesAdapter(new ArrayList<IVenue>());
+        RecentVenuesAdapter adapter = new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
         recentVenuesRv.setLayoutManager(layoutManager);
         recentVenuesRv.setAdapter(adapter);
     }
@@ -67,7 +70,7 @@ public class RecentVenuesFragment extends Fragment
                 .subscribe(new Consumer<List<IVenue>>() {
                     @Override
                     public void accept(List<IVenue> recentVenues) throws Exception {
-                        recentVenuesRv.setAdapter(new RecentVenuesAdapter(recentVenues));
+                        recentVenuesRv.setAdapter(new RecentVenuesAdapter(userSession, recentVenues));
                     }
                 });
     }

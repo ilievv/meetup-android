@@ -2,8 +2,10 @@ package com.telerikacademy.meetup.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.base.IVenue;
+import com.telerikacademy.meetup.util.base.IUserSession;
 import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import java.util.List;
@@ -22,9 +25,11 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
     private static final String EXTRA_CURRENT_VENUE_ID =
             VenueDetailsActivity.class.getCanonicalName() + ".CURRENT_VENUE_ID";
 
-    private List<IVenue> venues;
+    private final IUserSession userSession;
+    private final List<IVenue> venues;
 
-    public RecentVenuesAdapter(List<IVenue> venues) {
+    public RecentVenuesAdapter(IUserSession userSession, List<IVenue> venues) {
+        this.userSession = userSession;
         this.venues = venues;
     }
 
@@ -32,7 +37,7 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
     public VenueHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_recent_venue_item_row, parent, false);
-        return new VenueHolder(view);
+        return new VenueHolder(view, userSession);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
     }
 
     static class VenueHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+            implements View.OnClickListener, View.OnLongClickListener {
 
         @BindView(R.id.iv_recent_venues_photo)
         ImageView venuePhoto;
@@ -56,11 +61,14 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
         @BindView(R.id.rb_recent_venues_rating)
         RatingBar venueRating;
 
+        private final IUserSession userSession;
         private IVenue venue;
 
-        public VenueHolder(View itemView) {
+        public VenueHolder(View itemView, IUserSession userSession) {
             super(itemView);
+            this.userSession = userSession;
             BaseApplication.bind(this, itemView);
+            itemView.setOnLongClickListener(this);
             itemView.setOnClickListener(this);
         }
 
@@ -73,6 +81,32 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
             showVenueIntent.putExtra(EXTRA_CURRENT_VENUE_ID, venue.getId());
 
             context.startActivity(showVenueIntent);
+        }
+
+        @Override
+        public boolean onLongClick(final View v) {
+            PopupMenu popupMenu = new PopupMenu(itemView.getContext(), itemView);
+            popupMenu.inflate(R.menu.popup_recently_viewed);
+
+            if (!userSession.isUserLoggedIn()) {
+                popupMenu.getMenu().removeItem(R.id.action_save);
+            }
+
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.action_open:
+                            onClick(v);
+                            break;
+                    }
+
+                    return false;
+                }
+            });
+
+            popupMenu.show();
+            return false;
         }
 
         void bindVenue(IVenue venue) {

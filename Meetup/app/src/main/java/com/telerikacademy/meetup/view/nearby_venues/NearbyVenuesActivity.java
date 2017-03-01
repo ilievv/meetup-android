@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,13 +74,6 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         toolbar.setNavigationDrawer(R.layout.activity_nearby_venues);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        toolbar.inflateMenu(R.menu.main, menu, getMenuInflater());
-        return true;
     }
 
     private void initialize() {

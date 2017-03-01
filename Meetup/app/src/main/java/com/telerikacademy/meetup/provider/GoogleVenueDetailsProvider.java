@@ -132,12 +132,14 @@ public class GoogleVenueDetailsProvider extends VenueDetailsProvider
         String[] placeTypesArray = new String[placeTypesList.size()];
         placeTypesArray = placeTypesList.toArray(placeTypesArray);
 
+        float placeRating = place.getRating() < 0 ? 0.0f : place.getRating();
+
         IVenueDetail venue = venueFactory.createVenueDetail(
                 place.getId(),
                 place.getName().toString(),
                 place.getAddress().toString(),
                 placeTypesArray,
-                place.getRating(),
+                placeRating,
                 place.getPhoneNumber().toString(),
                 place.getWebsiteUri()
         );
