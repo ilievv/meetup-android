@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import com.telerikacademy.meetup.util.base.IImageUtil;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ImageUtil implements IImageUtil {
 
@@ -14,12 +15,24 @@ public class ImageUtil implements IImageUtil {
         picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
+        try {
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return byteArray;
     }
 
     @Override
-    public Bitmap transformByteArrayToPicture(byte[] array) {
+    public Bitmap parseToBitmap(byte[] array) {
         Bitmap picture = BitmapFactory.decodeByteArray(array, 0, array.length);
+        return picture;
+    }
+
+    @Override
+    public Bitmap parseToBitmap(byte[] array, BitmapFactory.Options bitmapOptions) {
+        Bitmap picture = BitmapFactory.decodeByteArray(array, 0, array.length, bitmapOptions);
         return picture;
     }
 }

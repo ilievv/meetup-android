@@ -102,11 +102,14 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                     @Override
                     public void onNext(Bitmap photo) {
-                        view.addPhoto(photo);
+                        Bitmap modifiedPhoto = photo.copy(Bitmap.Config.RGB_565, true);
+                        photo.recycle();
+
+                        view.addPhoto(modifiedPhoto);
 
                         if (isFirst) {
                             isFirst = false;
-                            saveToRecent(venue, photo);
+                            saveToRecent(venue, modifiedPhoto);
                             view.stopLoading();
                             view.startGalleryLoadingIndicator();
                             hasPhoto = true;

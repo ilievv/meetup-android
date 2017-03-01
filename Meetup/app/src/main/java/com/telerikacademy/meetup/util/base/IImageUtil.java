@@ -1,13 +1,13 @@
 package com.telerikacademy.meetup.util.base;
 
 import android.graphics.Bitmap;
-
-/**
- * Created by georgivelikov on 26-Feb-17.
- */
+import android.graphics.BitmapFactory;
 
 public interface IImageUtil {
+
     byte[] parseToByteArray(Bitmap picture);
 
-    Bitmap transformByteArrayToPicture(byte[] array);
+    Bitmap parseToBitmap(byte[] array);
+
+    Bitmap parseToBitmap(byte[] array, BitmapFactory.Options bitmapOptions);
 }

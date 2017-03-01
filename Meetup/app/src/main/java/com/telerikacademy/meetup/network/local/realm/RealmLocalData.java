@@ -104,9 +104,14 @@ public class RealmLocalData implements ILocalData {
                         .findAllSorted("dateViewed", Sort.DESCENDING)
                         .distinct("name");
 
+                final BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565;
+                bitmapOptions.inJustDecodeBounds = false;
+                bitmapOptions.inSampleSize = 4;
+
                 for (RealmRecentVenue r : results) {
                     IVenue venue = venueFactory.createVenue(r.getGoogleId(), r.getName());
-                    venue.setPhoto(imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
+                    venue.setPhoto(imageUtil.parseToBitmap(r.getPictureBytes(), bitmapOptions));
                     venue.setRating(r.getRating());
                     resultsToDisplay.add(venue);
                 }
