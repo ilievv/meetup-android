@@ -2,9 +2,9 @@ package com.telerikacademy.meetup.network.remote;
 
 import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
-import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
+import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueFactory;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;

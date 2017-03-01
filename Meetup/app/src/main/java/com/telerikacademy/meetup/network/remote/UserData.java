@@ -1,8 +1,8 @@
 package com.telerikacademy.meetup.network.remote;
 
 import com.telerikacademy.meetup.config.base.IApiConstants;
-import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.model.base.IUser;
+import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.util.base.*;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
