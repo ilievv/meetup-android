@@ -18,8 +18,8 @@ import javax.inject.Inject;
 public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     private IVenueDetailsContract.View view;
-    private IVenueDetail venueDetail;
-    private IVenue venue;
+    private IVenueDetail venue;
+    private String venueId;
 
     private final IVenueDetailsProvider venueDetailsProvider;
     private final ILocalData localData;
@@ -36,8 +36,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     }
 
     @Override
-    public void setVenue(IVenue venue) {
-        this.venue = venue;
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
     @Override
@@ -52,20 +52,20 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     @Override
     public void loadData() {
-        if (venue == null) {
+        if (venueId == null || venueId.isEmpty()) {
             return;
         }
 
         view.startContentLoadingIndicator();
 
         venueDetailsProvider
-                .getById(venue.getId())
+                .getById(venueId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<IVenueDetail>() {
                     @Override
                     public void accept(IVenueDetail venue) throws Exception {
-                        venueDetail = venue;
+                        VenueDetailsPresenter.this.venue = venue;
                         view.setTitle(venue.getName());
                         view.setRating(venue.getRating());
                         if (venue.getTypes().length > 0) {
@@ -78,12 +78,12 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     @Override
     public void loadPhotos() {
-        if (venue == null) {
+        if (venueId == null || venueId.isEmpty()) {
             return;
         }
 
         venueDetailsProvider
-                .getPhotos(venue.getId())
+                .getPhotos(venueId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Bitmap>() {
@@ -143,12 +143,12 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     @Override
     public void onNavigationButtonClick() {
-        if (venueDetail == null || venueDetail.getLatitude() == -1 || venueDetail.getLongitude() == -1) {
+        if (venue == null || venue.getLatitude() == -1 || venue.getLongitude() == -1) {
             return;
         }
 
         String uriString = String.format("google.navigation:q=%s,%s",
-                venueDetail.getLatitude(), venueDetail.getLongitude());
+                venue.getLatitude(), venue.getLongitude());
         view.startNavigation(Uri.parse(uriString));
     }
 

@@ -25,6 +25,9 @@ public class NearbyVenuesAdapter
         extends RecyclerView.Adapter<NearbyVenuesAdapter.VenueHolder>
         implements Filterable {
 
+    private static final String EXTRA_CURRENT_VENUE_ID =
+            VenueDetailsActivity.class.getCanonicalName() + ".CURRENT_VENUE_ID";
+
     @BindView(R.id.tv_empty)
     TextView textViewEmpty;
 
@@ -75,9 +78,6 @@ public class NearbyVenuesAdapter
     static class VenueHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private static final String EXTRA_CURRENT_VENUE =
-                VenueHolder.class.getCanonicalName() + ".CURRENT_VENUE";
-
         @BindView(R.id.venue_name)
         TextView venueName;
         @BindView(R.id.venue_types)
@@ -101,7 +101,7 @@ public class NearbyVenuesAdapter
 
             Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
             showVenueIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            showVenueIntent.putExtra(EXTRA_CURRENT_VENUE, venue);
+            showVenueIntent.putExtra(EXTRA_CURRENT_VENUE_ID, venue.getId());
 
             context.startActivity(showVenueIntent);
         }

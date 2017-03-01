@@ -1,5 +1,7 @@
 package com.telerikacademy.meetup.ui.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +13,14 @@ import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.model.base.IVenue;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import java.util.List;
 
 public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapter.VenueHolder> {
+
+    private static final String EXTRA_CURRENT_VENUE_ID =
+            VenueDetailsActivity.class.getCanonicalName() + ".CURRENT_VENUE_ID";
 
     private List<IVenue> venues;
 
@@ -60,7 +66,13 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
 
         @Override
         public void onClick(View v) {
-            // TODO: Implement
+            Context context = itemView.getContext();
+
+            Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
+            showVenueIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            showVenueIntent.putExtra(EXTRA_CURRENT_VENUE_ID, venue.getId());
+
+            context.startActivity(showVenueIntent);
         }
 
         void bindVenue(IVenue venue) {

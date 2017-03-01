@@ -9,17 +9,15 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.ui.fragment.GalleryFragment;
-import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesAdapter;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 
 import javax.inject.Inject;
 
 public class VenueDetailsActivity extends AppCompatActivity {
 
-    private static final String EXTRA_CURRENT_VENUE =
-            NearbyVenuesAdapter.class.getCanonicalName() + ".VenueHolder.CURRENT_VENUE";
+    private static final String EXTRA_CURRENT_VENUE_ID =
+            VenueDetailsActivity.class.getCanonicalName() + ".CURRENT_VENUE_ID";
 
     @Inject
     IVenueDetailsContract.Presenter presenter;
@@ -28,8 +26,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
 
     private GalleryFragment galleryFragment;
     private VenueDetailsContentFragment content;
-
-    private IVenue currentVenue;
+    private String currentVenueId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +50,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        currentVenue = (IVenue) getIntent()
-                .getSerializableExtra(EXTRA_CURRENT_VENUE);
+        currentVenueId = getIntent().getStringExtra(EXTRA_CURRENT_VENUE_ID);
 
         content = (VenueDetailsContentFragment) fragmentManager
                 .findFragmentById(R.id.fragment_venue_details_content);
@@ -65,7 +61,7 @@ public class VenueDetailsActivity extends AppCompatActivity {
 
     private void setup() {
         presenter.setView(content);
-        presenter.setVenue(currentVenue);
+        presenter.setVenueId(currentVenueId);
         content.setPresenter(presenter);
         content.setGallery(galleryFragment);
 
