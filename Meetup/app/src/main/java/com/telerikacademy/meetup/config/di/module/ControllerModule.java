@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.ActivityContext;
 import com.telerikacademy.meetup.config.di.annotation.ControllerScope;
+import com.telerikacademy.meetup.config.di.annotation.HorizontalLayoutManager;
+import com.telerikacademy.meetup.config.di.annotation.VerticalLayoutManager;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.provider.GoogleVenueDetailsProvider;
@@ -73,8 +75,17 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    LinearLayoutManager provideLinearLayoutManager(Activity activity) {
+    @VerticalLayoutManager
+    LinearLayoutManager provideVerticalLayoutManager(Activity activity) {
         return new LinearLayoutManager(activity);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    @HorizontalLayoutManager
+    LinearLayoutManager provideHorizontalLayoutManager(Activity activity) {
+        return new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
     }
 
     @Inject

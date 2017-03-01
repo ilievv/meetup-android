@@ -1,5 +1,7 @@
 package com.telerikacademy.meetup.model.base;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public interface IVenue extends Serializable {
@@ -23,4 +25,8 @@ public interface IVenue extends Serializable {
     float getRating();
 
     void setRating(float rating);
+
+    Bitmap getPhoto();
+
+    void setPhoto(Bitmap photo);
 }

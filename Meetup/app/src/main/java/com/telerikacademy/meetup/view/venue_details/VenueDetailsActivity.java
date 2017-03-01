@@ -11,7 +11,7 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.ui.fragment.GalleryFragment;
-import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesRecyclerAdapter;
+import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesAdapter;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class VenueDetailsActivity extends AppCompatActivity {
 
     private static final String EXTRA_CURRENT_VENUE =
-            NearbyVenuesRecyclerAdapter.class.getCanonicalName() + ".VenueHolder.CURRENT_VENUE";
+            NearbyVenuesAdapter.class.getCanonicalName() + ".VenueHolder.CURRENT_VENUE";
 
     @Inject
     IVenueDetailsContract.Presenter presenter;

@@ -21,21 +21,19 @@ import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NearbyVenuesRecyclerAdapter
-        extends RecyclerView.Adapter<NearbyVenuesRecyclerAdapter.VenueHolder>
+public class NearbyVenuesAdapter
+        extends RecyclerView.Adapter<NearbyVenuesAdapter.VenueHolder>
         implements Filterable {
 
     @BindView(R.id.tv_empty)
     TextView textViewEmpty;
-
-    private static String VENUE_KEY = "venue";
 
     private List<IVenue> venues;
     private List<IVenue> filteredVenues;
 
     private VenueFilter venueFilter;
 
-    public NearbyVenuesRecyclerAdapter(List<IVenue> venues) {
+    public NearbyVenuesAdapter(List<IVenue> venues) {
         this.venues = venues;
         filteredVenues = new ArrayList<>(this.venues);
     }
@@ -50,7 +48,7 @@ public class NearbyVenuesRecyclerAdapter
     @Override
     public VenueHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rv_venue_item_row, parent, false);
+                .inflate(R.layout.rv_nearby_venue_item_row, parent, false);
         return new VenueHolder(view);
     }
 
@@ -122,11 +120,11 @@ public class NearbyVenuesRecyclerAdapter
 
     private class VenueFilter extends Filter {
 
-        private NearbyVenuesRecyclerAdapter adapter;
+        private NearbyVenuesAdapter adapter;
         private List<IVenue> originalList;
         private List<IVenue> filteredList;
 
-        private VenueFilter(NearbyVenuesRecyclerAdapter adapter, List<IVenue> venues) {
+        private VenueFilter(NearbyVenuesAdapter adapter, List<IVenue> venues) {
             super();
             this.adapter = adapter;
             originalList = venues;

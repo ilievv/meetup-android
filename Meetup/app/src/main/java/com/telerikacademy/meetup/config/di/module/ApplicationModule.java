@@ -102,9 +102,10 @@ public class ApplicationModule {
     @Inject
     @Provides
     @ApplicationScope
-    ILocalData provideLocalData(@ApplicationContext Context context, IUserSession userSession, IImageUtil imageUtil, IApiConstants constants) {
+    ILocalData provideLocalData(@ApplicationContext Context context, IUserSession userSession, IImageUtil imageUtil,
+                                IApiConstants constants, IVenueFactory venueFactory) {
 
-        return new RealmLocalData(context, userSession, imageUtil, constants);
+        return new RealmLocalData(context, userSession, imageUtil, constants, venueFactory);
     }
 
     @Inject

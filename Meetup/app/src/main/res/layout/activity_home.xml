@@ -13,23 +13,38 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <fragment
-                android:id="@+id/fragment_home_header"
-                android:name="com.telerikacademy.meetup.view.home.HomeHeaderFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+        <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
 
-        <fragment
-                android:id="@+id/fragment_home_content"
-                android:name="com.telerikacademy.meetup.view.home.HomeContentFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_vertical_margin">
 
-        <fragment
-                android:id="@+id/fragment_recent_venues"
-                android:name="com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <fragment
+                        android:id="@+id/fragment_home_header"
+                        android:name="com.telerikacademy.meetup.view.home.HomeHeaderFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <fragment
+                        android:id="@+id/fragment_home_content"
+                        android:name="com.telerikacademy.meetup.view.home.HomeContentFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                <fragment
+                        android:id="@+id/fragment_recent_venues"
+                        android:name="com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 

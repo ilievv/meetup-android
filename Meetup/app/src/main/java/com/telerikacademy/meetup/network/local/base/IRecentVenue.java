@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 
 public interface IRecentVenue {
 
+    String getId();
+
     String getName();
 
-    Bitmap getPicture();
+    Bitmap getPhoto();
 }

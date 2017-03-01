@@ -5,7 +5,7 @@
              tools:context="com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment">
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_venues"
+            android:id="@+id/rv_nearby_venues"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"

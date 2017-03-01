@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.base.IApiConstants;
-import com.telerikacademy.meetup.network.local.base.ILocalData;
-import com.telerikacademy.meetup.network.local.base.IRecentVenue;
 import com.telerikacademy.meetup.model.base.IVenue;
+import com.telerikacademy.meetup.network.local.base.ILocalData;
+import com.telerikacademy.meetup.provider.base.IVenueFactory;
 import com.telerikacademy.meetup.util.base.IImageUtil;
 import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.Single;
@@ -28,16 +28,21 @@ public class RealmLocalData implements ILocalData {
     private final IUserSession userSession;
     private final IImageUtil imageUtil;
     private final IApiConstants constants;
+    private final IVenueFactory venueFactory;
     private Context context;
 
-    public RealmLocalData(Context context, IUserSession userSession, IImageUtil imageUtil, IApiConstants constants) {
+    public RealmLocalData(Context context, IUserSession userSession, IImageUtil imageUtil,
+                          IApiConstants constants, IVenueFactory venueFactory) {
+
         this.context = context;
         this.userSession = userSession;
         this.imageUtil = imageUtil;
         this.constants = constants;
+        this.venueFactory = venueFactory;
         Realm.init(this.context);
     }
 
+    @Override
     public Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap photo) {
         return Single.defer(new Callable<SingleSource<IVenue>>() {
             @Override
@@ -50,7 +55,7 @@ public class RealmLocalData implements ILocalData {
                             R.drawable.no_image_available);
                 }
 
-                String venueToSaveId = venue.getId();
+                String googleId = venue.getId();
                 String name = venue.getName();
                 byte[] pictureBytes = imageUtil.parseToByteArray(venuePhoto);
                 String username = userSession.getUsername();
@@ -59,11 +64,13 @@ public class RealmLocalData implements ILocalData {
                 }
 
                 Date dateViewed = new Date();
-                String id = generateId(venueToSaveId, name, username);
+                String id = generateId(googleId, name, username);
 
                 RealmRecentVenue recentVenue = new RealmRecentVenue();
                 recentVenue.setId(id);
+                recentVenue.setGoogleId(googleId);
                 recentVenue.setName(name);
+                recentVenue.setRating(venue.getRating());
                 recentVenue.setPictureBytes(pictureBytes);
                 recentVenue.setViewerUsername(username);
                 recentVenue.setDateViewed(dateViewed);
@@ -78,11 +85,12 @@ public class RealmLocalData implements ILocalData {
         });
     }
 
-    public Single<List<IRecentVenue>> getRecentVenues() {
-        return Single.defer(new Callable<SingleSource<List<IRecentVenue>>>() {
+    @Override
+    public Single<List<IVenue>> getRecentVenues() {
+        return Single.defer(new Callable<SingleSource<List<IVenue>>>() {
             @Override
-            public SingleSource<List<IRecentVenue>> call() throws Exception {
-                final List<IRecentVenue> resultsToDisplay = new ArrayList<>();
+            public SingleSource<List<IVenue>> call() throws Exception {
+                final List<IVenue> resultsToDisplay = new ArrayList<>();
                 final Realm realm = Realm.getDefaultInstance();
 
                 String currentUsername = userSession.getUsername();
@@ -97,9 +105,10 @@ public class RealmLocalData implements ILocalData {
                         .distinct("name");
 
                 for (RealmRecentVenue r : results) {
-                    IRecentVenue recentVenue = new RecentVenue(r.getName(),
-                            imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
-                    resultsToDisplay.add(recentVenue);
+                    IVenue venue = venueFactory.createVenue(r.getGoogleId(), r.getName());
+                    venue.setPhoto(imageUtil.transformByteArrayToPicture(r.getPictureBytes()));
+                    venue.setRating(r.getRating());
+                    resultsToDisplay.add(venue);
                 }
 
                 realm.close();

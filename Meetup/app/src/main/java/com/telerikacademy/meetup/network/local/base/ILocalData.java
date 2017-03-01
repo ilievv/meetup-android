@@ -10,5 +10,5 @@ public interface ILocalData {
 
     Single<IVenue> saveVenueToRecent(final IVenue venue, final Bitmap picture);
 
-    Single<List<IRecentVenue>> getRecentVenues();
+    Single<List<IVenue>> getRecentVenues();
 }

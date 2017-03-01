@@ -10,14 +10,16 @@ public class RealmRecentVenue extends RealmObject {
 
     @PrimaryKey
     private String id;
+    private String googleId;
     @Index
     private String name;
-    private byte[] pictureBytesArray;
+    private float rating;
+    private byte[] pictureBytes;
     private String viewerUsername;
     private Date dateViewed;
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -25,34 +27,50 @@ public class RealmRecentVenue extends RealmObject {
     }
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
     public byte[] getPictureBytes() {
-        return this.pictureBytesArray;
+        return pictureBytes;
     }
 
     public void setPictureBytes(byte[] pictureBytes) {
-        this.pictureBytesArray = pictureBytes;
+        this.pictureBytes = pictureBytes;
     }
 
     public String getViewerUsername() {
         return viewerUsername;
     }
 
-    public void setViewerUsername(String username) {
-        this.viewerUsername = username;
+    public void setViewerUsername(String viewerUsername) {
+        this.viewerUsername = viewerUsername;
     }
 
     public Date getDateViewed() {
-        return this.dateViewed;
+        return dateViewed;
     }
 
-    public void setDateViewed(Date date) {
-        this.dateViewed = date;
+    public void setDateViewed(Date dateViewed) {
+        this.dateViewed = dateViewed;
     }
 }

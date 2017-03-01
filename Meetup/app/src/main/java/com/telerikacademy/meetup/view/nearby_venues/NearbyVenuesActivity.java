@@ -50,12 +50,12 @@ public class NearbyVenuesActivity extends AppCompatActivity {
 
     @BindView(R.id.fragment_nearby_venues_search_header)
     View searchHeaderView;
-    @BindView(R.id.rv_venues)
+    @BindView(R.id.rv_nearby_venues)
     RecyclerView venuesRecyclerView;
     @BindView(R.id.tv_empty)
     TextView emptyTextView;
 
-    private NearbyVenuesRecyclerAdapter recyclerAdapter;
+    private NearbyVenuesAdapter recyclerAdapter;
     private NearbyVenuesContentFragment content;
     private SearchFragment searchBar;
     private ToolbarFragment toolbar;
@@ -104,7 +104,7 @@ public class NearbyVenuesActivity extends AppCompatActivity {
         content.setPresenter(presenter);
         presenter.setView(content);
 
-        recyclerAdapter = new NearbyVenuesRecyclerAdapter(new ArrayList<IVenue>());
+        recyclerAdapter = new NearbyVenuesAdapter(new ArrayList<IVenue>());
         content.setAdapter(recyclerAdapter);
         searchBar.setFilter(recyclerAdapter);
     }

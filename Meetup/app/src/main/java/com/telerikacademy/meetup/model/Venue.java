@@ -1,5 +1,7 @@
 package com.telerikacademy.meetup.model;
 
+import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.model.base.IVenue;
 
 public class Venue implements IVenue {
@@ -9,6 +11,7 @@ public class Venue implements IVenue {
     private String address;
     private String[] types;
     private float rating;
+    private Bitmap photo;
 
     public Venue(String id, String name) {
         setId(id);
@@ -78,5 +81,16 @@ public class Venue implements IVenue {
     @Override
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    @Override
+    @Nullable
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    @Override
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 }

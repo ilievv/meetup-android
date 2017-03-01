@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.annotation.VerticalLayoutManager;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
@@ -25,11 +26,12 @@ public class NearbyVenuesContentFragment extends Fragment
             NearbyVenuesContentFragment.class.getCanonicalName() + ".RECYCLER_LAYOUT";
 
     @Inject
-    LinearLayoutManager linearLayoutManager;
+    @VerticalLayoutManager
+    LinearLayoutManager layoutManager;
     @Inject
     IRecyclerDecorationFactory decorationFactory;
 
-    @BindView(R.id.rv_venues)
+    @BindView(R.id.rv_nearby_venues)
     RecyclerView recyclerView;
 
     private INearbyVenuesContract.Presenter presenter;
@@ -52,9 +54,9 @@ public class NearbyVenuesContentFragment extends Fragment
         injectDependencies();
 
         recyclerView.addItemDecoration(decorationFactory.createDividerDecoration(
-                linearLayoutManager.getOrientation()
+                layoutManager.getOrientation()
         ));
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @Override

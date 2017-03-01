@@ -21,7 +21,8 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="7dp">
 
             <TextView
                     android:id="@+id/tv_venue_details_title"
