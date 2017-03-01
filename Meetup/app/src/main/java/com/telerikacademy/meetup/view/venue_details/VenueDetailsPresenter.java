@@ -91,7 +91,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     private static final int ITEMS_PER_REQUEST = 1;
 
                     private Subscription subscription;
-                    private Bitmap mainPhoto = null;
                     private boolean isFirst = true;
                     private boolean hasPhoto = false;
 
@@ -107,10 +106,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
                         if (isFirst) {
                             isFirst = false;
+                            saveToRecent(venue, photo);
                             view.stopLoading();
                             view.startGalleryLoadingIndicator();
                             hasPhoto = true;
-                            mainPhoto = photo;
                         }
 
                         subscription.request(ITEMS_PER_REQUEST);
@@ -129,11 +128,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     public void onComplete() {
                         if (!hasPhoto) {
                             view.setDefaultPhoto();
+                            saveToRecent(venue, null);
                         }
-
-                        localData.saveVenueToRecent(venue, mainPhoto)
-                                .subscribeOn(Schedulers.io())
-                                .subscribe();
 
                         view.stopLoading();
                         view.stopGalleryLoadingIndicator();
@@ -151,5 +147,11 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         String uriString = String.format("google.navigation:q=%s,%s",
                 venueDetail.getLatitude(), venueDetail.getLongitude());
         view.startNavigation(Uri.parse(uriString));
+    }
+
+    private void saveToRecent(IVenue venue, Bitmap photo) {
+        localData.saveVenueToRecent(venue, photo)
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 }
