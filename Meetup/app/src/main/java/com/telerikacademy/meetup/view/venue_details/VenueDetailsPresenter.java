@@ -152,6 +152,16 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         view.startNavigation(Uri.parse(uriString));
     }
 
+    @Override
+    public void onCallButtonClick() {
+        view.startDialer(venue.getPhoneNumber());
+    }
+
+    @Override
+    public void onWebsiteButtonClick() {
+        view.startWebsite(venue.getWebsiteUri());
+    }
+
     private void saveToRecent(IVenue venue, Bitmap photo) {
         localData.saveVenueToRecent(venue, photo)
                 .subscribeOn(Schedulers.io())

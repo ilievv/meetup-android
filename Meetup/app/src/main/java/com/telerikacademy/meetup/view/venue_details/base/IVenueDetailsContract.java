@@ -39,6 +39,10 @@ public interface IVenueDetailsContract {
         void startNavigation(Uri uri);
 
         void showErrorMessage();
+
+        void startDialer(String phoneNumber);
+
+        void startWebsite(Uri websiteUri);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -54,5 +58,9 @@ public interface IVenueDetailsContract {
         void loadPhotos();
 
         void onNavigationButtonClick();
+
+        void onCallButtonClick();
+
+        void onWebsiteButtonClick();
     }
 }

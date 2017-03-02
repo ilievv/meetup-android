@@ -8,24 +8,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-        <fragment
-                android:id="@+id/fragment_venue_details_gallery"
-                android:name="com.telerikacademy.meetup.ui.fragment.GalleryFragment"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <fragment
-                android:id="@+id/fragment_venue_details_content"
-                android:name="com.telerikacademy.meetup.view.venue_details.VenueDetailsContentFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            <fragment
+                    android:id="@+id/fragment_venue_details_gallery"
+                    android:name="com.telerikacademy.meetup.ui.fragment.GalleryFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-    </LinearLayout>
+            <fragment
+                    android:id="@+id/fragment_venue_details_content"
+                    android:name="com.telerikacademy.meetup.view.venue_details.VenueDetailsContentFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_start_navigation"

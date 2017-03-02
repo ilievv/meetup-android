@@ -20,6 +20,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
+import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
@@ -136,12 +137,14 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Override
     public synchronized void addPhoto(final Bitmap photo) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                gallery.addPhoto(photo);
-            }
-        });
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    gallery.addPhoto(photo);
+                }
+            });
+        }
     }
 
     @Override
@@ -220,6 +223,44 @@ public class VenueDetailsContentFragment extends Fragment
         if (getContext() != null) {
             Toast.makeText(getContext(), "An error has occured", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void startDialer(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            Toast.makeText(getContext(), "Phone number is not provided", Toast.LENGTH_SHORT).show();
+        }
+
+        Intent dialerIntent = new Intent(Intent.ACTION_DIAL);
+        String formattedPhoneNumber = String.format("tel:%s", phoneNumber.trim());
+        dialerIntent.setData(Uri.parse(formattedPhoneNumber));
+        startActivity(dialerIntent);
+    }
+
+    @Override
+    public void startWebsite(Uri websiteUri) {
+        if (websiteUri == null) {
+            Toast.makeText(getContext(), "Website is not provided", Toast.LENGTH_SHORT).show();
+        }
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+        browserIntent.setData(websiteUri);
+        startActivity(browserIntent);
+    }
+
+    @OnClick(R.id.btn_venue_details_call)
+    void onCallButtonClick() {
+        presenter.onCallButtonClick();
+    }
+
+    @OnClick(R.id.btn_venue_details_save)
+    void onSaveButtonClick() {
+
+    }
+
+    @OnClick(R.id.btn_venue_details_website)
+    void onWebsiteButtonClick() {
+        presenter.onWebsiteButtonClick();
     }
 
     private boolean isNetworkAvailable() {
