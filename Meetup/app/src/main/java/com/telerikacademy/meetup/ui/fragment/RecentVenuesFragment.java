@@ -19,8 +19,10 @@ import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.ui.adapter.RecentVenuesAdapter;
 import com.telerikacademy.meetup.ui.fragment.base.IRecentVenues;
 import com.telerikacademy.meetup.util.base.IUserSession;
+import com.wang.avi.AVLoadingIndicatorView;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import javax.inject.Inject;
@@ -42,6 +44,8 @@ public class RecentVenuesFragment extends Fragment
 
     @BindView(R.id.rv_recent_venues)
     RecyclerView recentVenuesRv;
+    @BindView(R.id.recent_venues_loading_indicator)
+    AVLoadingIndicatorView loadingIndicator;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +71,21 @@ public class RecentVenuesFragment extends Fragment
                 .getRecentVenues()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<IVenue>>() {
+                .subscribe(new SingleObserver<List<IVenue>>() {
                     @Override
-                    public void accept(List<IVenue> recentVenues) throws Exception {
-                        recentVenuesRv.setAdapter(new RecentVenuesAdapter(userSession, recentVenues));
+                    public void onSubscribe(Disposable d) {
+                        loadingIndicator.smoothToShow();
+                    }
+
+                    @Override
+                    public void onSuccess(List<IVenue> value) {
+                        loadingIndicator.smoothToHide();
+                        recentVenuesRv.setAdapter(new RecentVenuesAdapter(userSession, value));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingIndicator.smoothToHide();
                     }
                 });
     }
