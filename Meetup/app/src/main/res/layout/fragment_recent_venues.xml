@@ -36,7 +36,8 @@
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp">
+            android:layout_height="wrap_content"
+            android:minHeight="180dp">
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_recent_venues"
