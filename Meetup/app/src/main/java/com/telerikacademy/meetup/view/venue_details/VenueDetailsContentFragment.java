@@ -228,7 +228,8 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void startDialer(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
-            Toast.makeText(getContext(), "Phone number is not provided", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Phone number has not been provided", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Intent dialerIntent = new Intent(Intent.ACTION_DIAL);
@@ -240,7 +241,8 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void startWebsite(Uri websiteUri) {
         if (websiteUri == null) {
-            Toast.makeText(getContext(), "Website is not provided", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Website has not been provided", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Intent browserIntent = new Intent(Intent.ACTION_VIEW);
