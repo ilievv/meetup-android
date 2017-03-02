@@ -9,7 +9,6 @@ import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.ILocation;
 import com.telerikacademy.meetup.provider.base.ILocationAware;
-import com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 
@@ -27,7 +26,6 @@ public class HomeActivity extends AppCompatActivity
 
     private HomeContentFragment content;
     private HomeHeaderFragment header;
-    private RecentVenuesFragment recentVenuesFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,13 +40,11 @@ public class HomeActivity extends AppCompatActivity
     public void onStart() {
         super.onStart();
         header.setNavigationDrawer(R.layout.activity_home);
-        showRecentVenues();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showRecentVenues();
     }
 
     @Override
@@ -67,9 +63,6 @@ public class HomeActivity extends AppCompatActivity
 
         header = (HomeHeaderFragment) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
-
-        recentVenuesFragment = (RecentVenuesFragment) fragmentManager
-                .findFragmentById(R.id.fragment_recent_venues);
     }
 
     private void setup() {
@@ -78,10 +71,6 @@ public class HomeActivity extends AppCompatActivity
 
         headerPresenter.setView(header);
         header.setPresenter(headerPresenter);
-    }
-
-    private void showRecentVenues() {
-        recentVenuesFragment.showRecentVenues();
     }
 
     private void injectDependencies() {

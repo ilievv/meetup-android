@@ -105,7 +105,13 @@
                 android:text="Website"/>
 
     </LinearLayout>
-    
+
+    <fragment
+            android:id="@+id/fragment_nearby_venues_recently_viewed"
+            android:name="com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/venue_details_content_loading_indicator"
             android:layout_width="wrap_content"

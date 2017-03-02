@@ -17,7 +17,6 @@ import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.ui.adapter.RecentVenuesAdapter;
-import com.telerikacademy.meetup.ui.fragment.base.IRecentVenues;
 import com.telerikacademy.meetup.util.base.IUserSession;
 import com.wang.avi.AVLoadingIndicatorView;
 import io.reactivex.SingleObserver;
@@ -29,8 +28,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentVenuesFragment extends Fragment
-        implements IRecentVenues {
+public class RecentVenuesFragment extends Fragment {
 
     @Inject
     @HorizontalLayoutManager
@@ -63,10 +61,16 @@ public class RecentVenuesFragment extends Fragment
         RecentVenuesAdapter adapter = new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
         recentVenuesRv.setLayoutManager(layoutManager);
         recentVenuesRv.setAdapter(adapter);
+        showRecentVenues();
     }
 
     @Override
-    public void showRecentVenues() {
+    public void onResume() {
+        super.onResume();
+        showRecentVenues();
+    }
+
+    private void showRecentVenues() {
         localData
                 .getRecentVenues()
                 .subscribeOn(Schedulers.io())
