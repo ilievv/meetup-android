@@ -13,7 +13,6 @@ import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -23,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class RealmLocalData implements ILocalData {
+public class RealmData implements ILocalData {
 
     private final IUserSession userSession;
     private final IImageUtil imageUtil;
@@ -31,8 +30,8 @@ public class RealmLocalData implements ILocalData {
     private final IVenueFactory venueFactory;
     private Context context;
 
-    public RealmLocalData(Context context, IUserSession userSession, IImageUtil imageUtil,
-                          IApiConstants constants, IVenueFactory venueFactory) {
+    public RealmData(Context context, IUserSession userSession, IImageUtil imageUtil,
+                     IApiConstants constants, IVenueFactory venueFactory) {
 
         this.context = context;
         this.userSession = userSession;
@@ -122,6 +121,15 @@ public class RealmLocalData implements ILocalData {
         });
     }
 
+    @Override
+    public void clearData() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.deleteAll();
+        realm.commitTransaction();
+        realm.close();
+    }
+
     private String generateId(String venueId, String username, String venueName) {
         String helpString = venueId + username + venueName;
         char[] array = helpString.toCharArray();
@@ -140,16 +148,5 @@ public class RealmLocalData implements ILocalData {
         }
 
         return sb.toString();
-    }
-
-    private void wipeData() {
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .deleteRealmIfMigrationNeeded()
-                .build();
-        Realm realm = Realm.getInstance(config);
-
-        realm.beginTransaction();
-        realm.deleteAll();
-        realm.commitTransaction();
     }
 }

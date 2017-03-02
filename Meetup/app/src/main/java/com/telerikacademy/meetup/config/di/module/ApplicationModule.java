@@ -13,7 +13,7 @@ import com.telerikacademy.meetup.config.di.annotation.ApplicationScope;
 import com.telerikacademy.meetup.config.di.annotation.UserModel;
 import com.telerikacademy.meetup.model.gson.User;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
-import com.telerikacademy.meetup.network.local.realm.RealmLocalData;
+import com.telerikacademy.meetup.network.local.realm.RealmData;
 import com.telerikacademy.meetup.network.remote.UserData;
 import com.telerikacademy.meetup.network.remote.VenueData;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
@@ -105,7 +105,7 @@ public class ApplicationModule {
     ILocalData provideLocalData(@ApplicationContext Context context, IUserSession userSession, IImageUtil imageUtil,
                                 IApiConstants constants, IVenueFactory venueFactory) {
 
-        return new RealmLocalData(context, userSession, imageUtil, constants, venueFactory);
+        return new RealmData(context, userSession, imageUtil, constants, venueFactory);
     }
 
     @Inject
