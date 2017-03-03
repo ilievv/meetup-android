@@ -287,8 +287,6 @@ public class VenueDetailsContentFragment extends Fragment
         presenter.onReviewButtonClick();
     }
 
-
-
     @OnClick(R.id.btn_venue_details_website)
     void onWebsiteButtonClick() {
         presenter.onWebsiteButtonClick();

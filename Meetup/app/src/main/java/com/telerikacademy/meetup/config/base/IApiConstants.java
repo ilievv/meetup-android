@@ -10,11 +10,9 @@ public interface IApiConstants {
 
     String postCommentUrl();
 
-    int responseSuccesCode();
+    int responseSuccessCode();
 
     int responseErrorCode();
 
     String defaultUsername();
-
-    int recentVenuesForDisplayCount();
 }
