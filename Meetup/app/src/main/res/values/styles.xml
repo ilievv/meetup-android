@@ -83,7 +83,7 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
     </style>
 
-    <style name="AppTheme.ToolBarTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.ToolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/tertiaryText</item>
         <item name="android:textColorSecondary">@color/tertiaryText</item>
         <item name="android:background">@color/colorPrimary</item>

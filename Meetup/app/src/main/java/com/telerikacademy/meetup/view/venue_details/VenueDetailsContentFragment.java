@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +30,9 @@ import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragment.base.IGallery;
+import com.telerikacademy.meetup.util.base.IUserSession;
 import com.telerikacademy.meetup.view.review.ReviewActivity;
+import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -45,9 +48,10 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Inject
     IDialogFactory dialogFactory;
-
     @Inject
     IIntentFactory intentFactory;
+    @Inject
+    IUserSession userSession;
 
     @BindView(R.id.venue_details_content_loading_indicator)
     AVLoadingIndicatorView contentLoadingIndicator;
@@ -274,7 +278,11 @@ public class VenueDetailsContentFragment extends Fragment
 
     @OnClick(R.id.btn_venue_details_save)
     void onSaveButtonClick() {
-        // TODO: Implement
+        if (!userSession.isUserLoggedIn()) {
+            showSignInPrompt();
+        } else {
+            // TODO: Implement
+        }
     }
 
     @OnClick(R.id.btn_venue_details_review)
@@ -292,6 +300,19 @@ public class VenueDetailsContentFragment extends Fragment
                 getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
+    }
+
+    private void showSignInPrompt() {
+        Snackbar.make(getView(), "Sign in to continue", Snackbar.LENGTH_SHORT)
+                .setAction("Sign in", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent signIntent = intentFactory
+                                .createIntentToFront(SignInActivity.class);
+                        startActivity(signIntent);
+                    }
+                })
+                .show();
     }
 
     private void injectDependencies() {
