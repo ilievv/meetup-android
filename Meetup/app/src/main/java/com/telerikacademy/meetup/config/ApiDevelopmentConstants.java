@@ -4,10 +4,12 @@ import com.telerikacademy.meetup.config.base.IApiConstants;
 
 public final class ApiDevelopmentConstants implements IApiConstants {
 
-    private static final String apiUrl = "https://telerik-meetup.herokuapp.com";
-    //private static final String apiUrl = "http://10.0.2.2:8080";
+    //private static final String apiUrl = "https://telerik-meetup.herokuapp.com";
+    private static final String apiUrl = "http://10.0.2.2:8080";
     private static final String signInUrl = apiUrl + "/auth/login";
     private static final String signUpUrl = apiUrl + "/auth/register";
+    private static final String getVenueUrl = apiUrl + "/venue";
+    private static final String postCommentUrl = apiUrl + "/venue/comment";
     private static final int responseSuccessCode = 200;
     private static final int responseErrorCode = 404;
     private static final String defaultUsername = "anonymous";
@@ -21,6 +23,16 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     @Override
     public String signUpUrl() {
         return signUpUrl;
+    }
+
+    @Override
+    public String getVenueUrl() {
+        return getVenueUrl;
+    }
+
+    @Override
+    public String postCommentUrl() {
+        return postCommentUrl;
     }
 
     @Override

@@ -80,6 +80,7 @@
                 android:drawableTop="@drawable/ic_solid_phone"
                 android:drawableTint="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
+                android:textSize="11dp"
                 android:text="Call"/>
 
         <Button
@@ -91,6 +92,7 @@
                 android:drawableTop="@drawable/ic_solid_star"
                 android:drawableTint="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
+                android:textSize="11dp"
                 android:text="Save"/>
 
         <Button
@@ -102,7 +104,20 @@
                 android:drawableTop="@drawable/ic_solid_web"
                 android:drawableTint="@color/colorPrimary"
                 android:textColor="@color/colorPrimary"
+                android:textSize="11dp"
                 android:text="Website"/>
+
+        <Button
+            android:id="@+id/btn_venue_details_review"
+            style="@style/AppTheme.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_solid_web"
+            android:drawableTint="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            android:textSize="11dp"
+            android:text="Review"/>
 
     </LinearLayout>
 

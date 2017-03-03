@@ -1,11 +1,15 @@
 package com.telerikacademy.meetup.view.venue_details;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;
+import com.telerikacademy.meetup.view.review.ReviewActivity;
+import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -160,6 +164,11 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     @Override
     public void onWebsiteButtonClick() {
         view.startWebsite(venue.getWebsiteUri());
+    }
+
+    @Override
+    public void onReviewButtonClick() {
+        view.redirectToReview(venue);
     }
 
     private void saveToRecent(IVenue venue, Bitmap photo) {

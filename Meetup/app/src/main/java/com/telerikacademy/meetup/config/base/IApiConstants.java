@@ -6,6 +6,10 @@ public interface IApiConstants {
 
     String signUpUrl();
 
+    String getVenueUrl();
+
+    String postCommentUrl();
+
     int responseSuccesCode();
 
     int responseErrorCode();

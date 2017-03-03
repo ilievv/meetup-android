@@ -24,9 +24,13 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.model.base.IVenueDetail;
+import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.fragment.base.IGallery;
+import com.telerikacademy.meetup.view.review.ReviewActivity;
+import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -39,6 +43,9 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Inject
     IDialogFactory dialogFactory;
+
+    @Inject
+    IIntentFactory intentFactory;
 
     @BindView(R.id.venue_details_content_loading_indicator)
     AVLoadingIndicatorView contentLoadingIndicator;
@@ -250,6 +257,14 @@ public class VenueDetailsContentFragment extends Fragment
         startActivity(browserIntent);
     }
 
+    @Override
+    public void redirectToReview(IVenueDetail venueDetail) {
+        Intent reviewIntent = intentFactory.createIntentToFront(ReviewActivity.class);
+        reviewIntent.putExtra("Venue_Id", venueDetail.getId());
+        reviewIntent.putExtra("Venue_Name", venueDetail.getName());
+        startActivity(reviewIntent);
+    }
+
     @OnClick(R.id.btn_venue_details_call)
     void onCallButtonClick() {
         presenter.onCallButtonClick();
@@ -259,6 +274,13 @@ public class VenueDetailsContentFragment extends Fragment
     void onSaveButtonClick() {
 
     }
+
+    @OnClick(R.id.btn_venue_details_review)
+    void onReviewButtonClick() {
+        presenter.onReviewButtonClick();
+    }
+
+
 
     @OnClick(R.id.btn_venue_details_website)
     void onWebsiteButtonClick() {
