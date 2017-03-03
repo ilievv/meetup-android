@@ -2,9 +2,7 @@ package com.telerikacademy.meetup.view.venue_details.base;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-
 import com.telerikacademy.meetup.model.base.IVenue;
-import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.view.base.BasePresenter;
 import com.telerikacademy.meetup.view.base.BaseView;
@@ -47,7 +45,7 @@ public interface IVenueDetailsContract {
 
         void startWebsite(Uri websiteUri);
 
-        void redirectToReview(IVenueDetail venueDetail);
+        void redirectToReview(IVenue venue);
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.base.IVenueDetail;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
@@ -38,12 +39,8 @@ import javax.inject.Inject;
 public class VenueDetailsContentFragment extends Fragment
         implements IVenueDetailsContract.View {
 
-    private static final String EXTRA_VENUE_DETAILS_ID =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_ID";
-    private static final String EXTRA_VENUE_DETAILS_NAME =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_NAME";
-    private static final String EXTRA_VENUE_DETAILS_ADDRESS =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_ADDRESS";
+    private static final String EXTRA_VENUE =
+            VenueDetailsContentFragment.class.getCanonicalName() + ".VENUE";
 
     private static final String PACKAGE_GOOGLE_MAPS = "com.google.android.apps.maps";
 
@@ -264,11 +261,10 @@ public class VenueDetailsContentFragment extends Fragment
     }
 
     @Override
-    public void redirectToReview(IVenueDetail venueDetail) {
-        Intent reviewIntent = intentFactory.createIntentToFront(ReviewActivity.class);
-        reviewIntent.putExtra(EXTRA_VENUE_DETAILS_ID, venueDetail.getId());
-        reviewIntent.putExtra(EXTRA_VENUE_DETAILS_NAME, venueDetail.getName());
-        reviewIntent.putExtra(EXTRA_VENUE_DETAILS_ADDRESS, venueDetail.getAddress());
+    public void redirectToReview(IVenue venue) {
+        Intent reviewIntent = intentFactory
+                .createIntentToFront(ReviewActivity.class)
+                .putExtra(EXTRA_VENUE, venue);
         startActivity(reviewIntent);
     }
 

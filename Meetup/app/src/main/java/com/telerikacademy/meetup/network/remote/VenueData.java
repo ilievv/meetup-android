@@ -1,10 +1,8 @@
 package com.telerikacademy.meetup.network.remote;
 
 import android.support.annotation.Nullable;
-
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
-import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
@@ -13,18 +11,12 @@ import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
 import com.telerikacademy.meetup.util.base.IUserSession;
-
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class VenueData implements IVenueData {
 
@@ -67,35 +59,33 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public Observable<String> commentVenue(String venueId, String venueName, String venueAddress, String text) {
-        final String postCommentUrl = this.apiConstants.postCommentUrl();
-
-        String username = this.userSession.getUsername();
-        if(username == null){
+    public Single<String> submitComment(IVenue venue, String comment) {
+        String username = userSession.getUsername();
+        if (username == null) {
             username = apiConstants.defaultUsername();
         }
         Date date = new Date();
 
-        final Map<String, String> body = new HashMap<>();
-        body.put("googleId", venueId);
-        body.put("venueName", venueName);
-        body.put("venueAddress", venueAddress);
+        Map<String, String> body = new HashMap<>();
+        body.put("googleId", venue.getId());
+        body.put("venueName", venue.getName());
+        body.put("venueAddress", venue.getAddress());
         body.put("author", username);
-        body.put("text", text);
+        body.put("text", comment);
         body.put("postDate", date.toString());
 
         return httpRequester
-                .post(postCommentUrl, body)
+                .post(apiConstants.postCommentUrl(), body)
                 .map(new Function<IHttpResponse, String>() {
                     @Override
-                    public String apply(IHttpResponse iHttpResponse) throws Exception {
-                        if (iHttpResponse.getCode() == apiConstants.responseErrorCode()) {
-                            throw new Error(iHttpResponse.getMessage());
+                    public String apply(IHttpResponse response) throws Exception {
+                        if (response.getCode() == apiConstants.responseErrorCode()) {
+                            throw new Error(response.getMessage());
                         }
 
-                        return iHttpResponse.getMessage();
+                        return response.getMessage();
                     }
-                });
+                }).single("");
     }
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {

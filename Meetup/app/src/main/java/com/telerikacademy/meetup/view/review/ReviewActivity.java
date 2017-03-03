@@ -3,28 +3,22 @@ package com.telerikacademy.meetup.view.review;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.view.review.base.IReviewContract;
-import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsContentFragment;
 
 import javax.inject.Inject;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    private static final String VENUE_DETAILS_ID =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_ID";
-    private static final String VENUE_DETAILS_NAME =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_NAME";
-    private static final String VENUE_DETAILS_ADDRESS =
-            ReviewActivity.class.getCanonicalName() + ".VENUE_DETAILS_ADDRESS";
+    private static final String EXTRA_VENUE =
+            VenueDetailsContentFragment.class.getCanonicalName() + ".VENUE";
 
-    private String currentVenueId;
-    private String currentVenueName;
-    private String currentVenueAddress;
     private ReviewContentFragment content;
+    private IVenue currentVenue;
 
     @Inject
     IReviewContract.Presenter presenter;
@@ -40,9 +34,7 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        currentVenueId = getIntent().getStringExtra(VENUE_DETAILS_ID);
-        currentVenueName = getIntent().getStringExtra(VENUE_DETAILS_NAME);
-        currentVenueAddress = getIntent().getStringExtra(VENUE_DETAILS_ADDRESS);
+        currentVenue = (IVenue) getIntent().getSerializableExtra(EXTRA_VENUE);
 
         content = (ReviewContentFragment) fragmentManager
                 .findFragmentById(R.id.fragment_review_content);
@@ -50,10 +42,7 @@ public class ReviewActivity extends AppCompatActivity {
 
     private void setup() {
         presenter.setView(content);
-        presenter.setVenueId(currentVenueId);
-        presenter.setVenueName(currentVenueName);
-        presenter.setVenueAddress(currentVenueAddress);
-
+        presenter.setVenue(currentVenue);
         content.setPresenter(presenter);
     }
 

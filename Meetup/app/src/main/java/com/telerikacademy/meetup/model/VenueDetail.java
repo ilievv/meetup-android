@@ -9,7 +9,7 @@ public class VenueDetail extends Venue
     private double latitude = -1;
     private double longitude = -1;
     private String phoneNumber;
-    private Uri websiteUri;
+    private transient Uri websiteUri;
 
     public VenueDetail(String id, String name) {
         super(id, name);

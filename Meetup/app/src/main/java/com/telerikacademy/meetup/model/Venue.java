@@ -11,7 +11,7 @@ public class Venue implements IVenue {
     private String address;
     private String[] types;
     private float rating;
-    private Bitmap photo;
+    private transient Bitmap photo;
 
     public Venue(String id, String name) {
         setId(id);

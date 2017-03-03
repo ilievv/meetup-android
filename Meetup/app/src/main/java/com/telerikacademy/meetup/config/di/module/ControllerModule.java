@@ -24,7 +24,6 @@ import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.component.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
-import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
 import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;

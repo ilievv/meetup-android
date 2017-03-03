@@ -16,6 +16,7 @@
             android:supportsRtl="true"
             android:largeHeap="true"
             android:theme="@style/AppTheme">
+
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
@@ -30,30 +31,28 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.home.HomeActivity">
-        </activity>
+
+        <activity android:name=".view.home.HomeActivity"/>
+
         <activity
                 android:name=".view.nearby_venues.NearbyVenuesActivity"
                 android:launchMode="singleTop"
-                android:label="@string/label_nearby_venues">
-        </activity>
+                android:label="@string/label_nearby_venues"/>
+
         <activity
                 android:name=".view.venue_details.VenueDetailsActivity"
                 android:parentActivityName=".view.nearby_venues.NearbyVenuesActivity"
-                android:theme="@style/VenueDetailsTheme">
-        </activity>
+                android:theme="@style/VenueDetailsTheme"/>
+
         <activity
                 android:name=".view.sign_in.SignInActivity"
-                android:theme="@style/SignInTheme">
-        </activity>
+                android:theme="@style/SignInTheme"/>
+
         <activity
                 android:name=".view.sign_up.SignUpActivity"
-                android:theme="@style/SignInTheme">
-        </activity>
-        <activity
-            android:name=".view.review.ReviewActivity"
-            android:theme="@style/VenueDetailsTheme">
-        </activity>
+                android:theme="@style/SignInTheme"/>
+
+        <activity android:name=".view.review.ReviewActivity"/>
 
         <uses-library
                 android:name="com.sec.android.app.multiwindow"
@@ -74,6 +73,7 @@
         <meta-data
                 android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
                 android:resource="@dimen/app_minimumsize_h"/>
+
     </application>
 
 </manifest>

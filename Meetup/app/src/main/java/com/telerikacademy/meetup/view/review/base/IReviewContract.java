@@ -1,5 +1,6 @@
 package com.telerikacademy.meetup.view.review.base;
 
+import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.view.base.BasePresenter;
 import com.telerikacademy.meetup.view.base.BaseView;
 
@@ -7,7 +8,7 @@ import com.telerikacademy.meetup.view.base.BaseView;
 public interface IReviewContract {
     interface View extends BaseView<IReviewContract.Presenter> {
 
-        void redirectToVenueDetails(String venueId);
+        void returnToVenueDetails();
 
         void startLoading();
 
@@ -15,17 +16,13 @@ public interface IReviewContract {
 
         void notifyError(String errorMessage);
 
-        void notifySuccessful(String successMsg);
+        void notifySuccessfull(String successMsg);
     }
 
     interface Presenter extends BasePresenter<IReviewContract.View> {
 
-        void postComment(String text);
+        void submitComment(String text);
 
-        void setVenueId(String venueId);
-
-        void setVenueName(String venueName);
-
-        void setVenueAddress(String venueAddress);
+        void setVenue(IVenue venue);
     }
 }
