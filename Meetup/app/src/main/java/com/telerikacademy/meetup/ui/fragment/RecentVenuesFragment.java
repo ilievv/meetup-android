@@ -58,7 +58,9 @@ public class RecentVenuesFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
-        RecentVenuesAdapter adapter = new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
+
+        RecentVenuesAdapter adapter =
+                new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
         recentVenuesRv.setLayoutManager(layoutManager);
         recentVenuesRv.setAdapter(adapter);
         showRecentVenues();

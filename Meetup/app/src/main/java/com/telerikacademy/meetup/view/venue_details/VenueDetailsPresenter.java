@@ -168,8 +168,10 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     }
 
     private void saveToRecent(IVenue venue, Bitmap photo) {
-        localData.saveVenueToRecent(venue, photo)
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        if (venue != null) {
+            localData.saveVenueToRecent(venue, photo)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
+        }
     }
 }

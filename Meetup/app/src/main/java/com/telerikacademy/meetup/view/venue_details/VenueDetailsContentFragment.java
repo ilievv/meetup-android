@@ -279,7 +279,7 @@ public class VenueDetailsContentFragment extends Fragment
 
     @OnClick(R.id.btn_venue_details_save)
     void onSaveButtonClick() {
-
+        // TODO: Implement
     }
 
     @OnClick(R.id.btn_venue_details_review)

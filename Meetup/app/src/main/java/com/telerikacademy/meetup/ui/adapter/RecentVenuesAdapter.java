@@ -77,7 +77,7 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
             Context context = itemView.getContext();
 
             Intent showVenueIntent = new Intent(context, VenueDetailsActivity.class);
-            showVenueIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            showVenueIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             showVenueIntent.putExtra(EXTRA_CURRENT_VENUE_ID, venue.getId());
 
             context.startActivity(showVenueIntent);
