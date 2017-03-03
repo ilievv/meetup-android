@@ -8,6 +8,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.view.review.base.IReviewContract;
+import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import javax.inject.Inject;
 

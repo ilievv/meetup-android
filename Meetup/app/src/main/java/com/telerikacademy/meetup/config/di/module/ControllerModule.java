@@ -10,6 +10,7 @@ import com.telerikacademy.meetup.config.di.annotation.HorizontalLayoutManager;
 import com.telerikacademy.meetup.config.di.annotation.VerticalLayoutManager;
 import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
+import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.GoogleVenueDetailsProvider;
 import com.telerikacademy.meetup.provider.IntentFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
@@ -23,6 +24,7 @@ import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.ui.component.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
+import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
 import com.telerikacademy.meetup.util.base.IValidator;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;
@@ -147,8 +149,8 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IReviewContract.Presenter provideReviewPresenter() {
-        return new ReviewPresenter();
+    IReviewContract.Presenter provideReviewPresenter(IVenueData venueData) {
+        return new ReviewPresenter(venueData);
     }
 
     @Inject

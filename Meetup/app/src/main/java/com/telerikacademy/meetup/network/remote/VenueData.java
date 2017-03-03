@@ -1,7 +1,10 @@
 package com.telerikacademy.meetup.network.remote;
 
 import android.support.annotation.Nullable;
+
+import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
+import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
@@ -9,31 +12,40 @@ import com.telerikacademy.meetup.provider.base.IVenueFactory;
 import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
+import com.telerikacademy.meetup.util.base.IUserSession;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class VenueData implements IVenueData {
 
     private final IGoogleApiConstants googleApiConstants;
+    private final IApiConstants apiConstants;
     private final IHttpRequester httpRequester;
+    private final IUserSession userSession;
     private final IJsonParser jsonParser;
     private final IVenueFactory venueFactory;
     private final Set<String> blacklistedTypes;
 
     @Inject
     public VenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
-                     IJsonParser jsonParser, IVenueFactory venueFactory) {
+                     IJsonParser jsonParser, IVenueFactory venueFactory, IApiConstants apiConstants, IUserSession userSession) {
 
         this.googleApiConstants = googleApiConstants;
         this.httpRequester = httpRequester;
         this.jsonParser = jsonParser;
         this.venueFactory = venueFactory;
+        this.apiConstants = apiConstants;
+        this.userSession = userSession;
         blacklistedTypes = new HashSet<>();
         populateBlacklist();
     }
@@ -52,6 +64,38 @@ public class VenueData implements IVenueData {
 
         String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius, type);
         return getNearby(nearbySearchUrl);
+    }
+
+    @Override
+    public Observable<String> commentVenue(String venueId, String venueName, String venueAddress, String text) {
+        final String postCommentUrl = this.apiConstants.postCommentUrl();
+
+        String username = this.userSession.getUsername();
+        if(username == null){
+            username = apiConstants.defaultUsername();
+        }
+        Date date = new Date();
+
+        final Map<String, String> body = new HashMap<>();
+        body.put("googleId", venueId);
+        body.put("venueName", venueName);
+        body.put("venueAddress", venueAddress);
+        body.put("author", username);
+        body.put("text", text);
+        body.put("postDate", date.toString());
+
+        return httpRequester
+                .post(postCommentUrl, body)
+                .map(new Function<IHttpResponse, String>() {
+                    @Override
+                    public String apply(IHttpResponse iHttpResponse) throws Exception {
+                        if (iHttpResponse.getCode() == apiConstants.responseErrorCode()) {
+                            throw new Error(iHttpResponse.getMessage());
+                        }
+
+                        return iHttpResponse.getMessage();
+                    }
+                });
     }
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {

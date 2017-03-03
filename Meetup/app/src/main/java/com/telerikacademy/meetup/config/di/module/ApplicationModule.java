@@ -94,9 +94,9 @@ public class ApplicationModule {
     @Provides
     @ApplicationScope
     IVenueData provideVenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
-                                IJsonParser jsonParser, IVenueFactory venueFactory) {
+                                IJsonParser jsonParser, IVenueFactory venueFactory, IApiConstants apiConstants, IUserSession userSession) {
 
-        return new VenueData(googleApiConstants, httpRequester, jsonParser, venueFactory);
+        return new VenueData(googleApiConstants, httpRequester, jsonParser, venueFactory, apiConstants, userSession);
     }
 
     @Inject

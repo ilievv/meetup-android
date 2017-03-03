@@ -10,4 +10,6 @@ public interface IVenueData {
     Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius);
 
     Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, String type);
+
+    Observable<String> commentVenue(String venueId, String venueName, String venueAddress, String text);
 }
