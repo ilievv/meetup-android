@@ -17,6 +17,8 @@ public interface IReviewContract {
         void notifyError(String errorMessage);
 
         void notifySuccessfull(String successMsg);
+
+        void onSubmitButtonClick();
     }
 
     interface Presenter extends BasePresenter<IReviewContract.View> {

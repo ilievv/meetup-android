@@ -8,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
-import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
@@ -29,17 +27,11 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
     @Inject
     IDialogFactory dialogFactory;
 
+    @BindView(R.id.et_review_comment_holder)
+    EditText commentEditText;
+
     private IReviewContract.Presenter presenter;
     private IDialog progressDialog;
-
-    @BindView(R.id.review_venue_name_holder)
-    TextView venueNameHolder;
-    @BindView(R.id.review_comment_holder)
-    EditText commentHolder;
-    @BindView(R.id.review_comment_label)
-    TextView commentLabel;
-    @BindView(R.id.review_post_comment_btn)
-    Button postCommentButton;
 
     public ReviewContentFragment() {
     }
@@ -68,6 +60,11 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
+    }
+
+    @Override
+    public void setPresenter(IReviewContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Override
@@ -100,14 +97,9 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
     }
 
     @Override
-    public void setPresenter(IReviewContract.Presenter presenter) {
-        this.presenter = presenter;
-    }
-
-    @OnClick(R.id.review_post_comment_btn)
-    void onSubmitCommentButtonClick() {
-        CharSequence comment = commentHolder.getText();
-        commentHolder.setText("");
+    public void onSubmitButtonClick() {
+        CharSequence comment = commentEditText.getText();
+        commentEditText.setText("");
         presenter.submitComment(comment);
     }
 

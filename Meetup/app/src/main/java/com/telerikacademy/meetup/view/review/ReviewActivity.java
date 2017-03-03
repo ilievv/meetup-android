@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
@@ -25,9 +26,9 @@ public class ReviewActivity extends AppCompatActivity {
     @Inject
     FragmentManager fragmentManager;
 
-    private IToolbar toolbar;
-    private ReviewContentFragment content;
+    private IReviewContract.View view;
     private IVenue currentVenue;
+    private IToolbar toolbar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +40,27 @@ public class ReviewActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_solid_close);
+        toolbar.inflateMenu(R.menu.toolbar_review_menu, menu, getMenuInflater());
         toolbar.setBackButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_submit_comment:
+                view.onSubmitButtonClick();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initialize() {
@@ -54,15 +69,15 @@ public class ReviewActivity extends AppCompatActivity {
         toolbar = (IToolbar) fragmentManager
                 .findFragmentById(R.id.fragment_review_toolbar);
 
-        content = (ReviewContentFragment) fragmentManager
+        view = (IReviewContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_review_content);
     }
 
     private void setup() {
         setTitle(currentVenue.getName());
-        presenter.setView(content);
+        presenter.setView(view);
         presenter.setVenue(currentVenue);
-        content.setPresenter(presenter);
+        view.setPresenter(presenter);
     }
 
     private void injectDependencies() {
