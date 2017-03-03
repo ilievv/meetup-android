@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
     <fragment
-            android:id="@+id/fragment_nearby_venues_toolbar"
+            android:id="@+id/fragment_review_toolbar"
             android:name="com.telerikacademy.meetup.ui.fragment.ToolbarFragment"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"/>

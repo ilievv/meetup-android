@@ -19,14 +19,10 @@ import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
 import com.telerikacademy.meetup.view.review.base.IReviewContract;
-import com.telerikacademy.meetup.view.venue_details.VenueDetailsActivity;
 
 import javax.inject.Inject;
 
 public class ReviewContentFragment extends Fragment implements IReviewContract.View {
-
-    private static final String EXTRA_CURRENT_VENUE_ID =
-            VenueDetailsActivity.class.getCanonicalName() + ".CURRENT_VENUE_ID";
 
     @Inject
     IIntentFactory intentFactory;

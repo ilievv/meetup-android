@@ -10,9 +10,9 @@ public interface IToolbar {
 
     void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater menuInflater);
 
-    void setNavigationOnClickListener();
+    void setBackButton();
 
-    void setNavigationOnClickListener(View.OnClickListener onClickListener);
+    void setBackButton(View.OnClickListener onClickListener);
 
     // Might be extracted into a separate interface
     void setNavigationDrawer(@LayoutRes long selectedItem);

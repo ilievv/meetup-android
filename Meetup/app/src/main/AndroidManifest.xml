@@ -52,7 +52,9 @@
                 android:name=".view.sign_up.SignUpActivity"
                 android:theme="@style/SignInTheme"/>
 
-        <activity android:name=".view.review.ReviewActivity"/>
+        <activity
+                android:name=".view.review.ReviewActivity"
+                android:parentActivityName=".view.venue_details.VenueDetailsActivity"/>
 
         <uses-library
                 android:name="com.sec.android.app.multiwindow"

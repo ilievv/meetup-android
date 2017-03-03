@@ -77,8 +77,9 @@ public class ToolbarFragment extends Fragment
         actionBar = currentActivity.getSupportActionBar();
     }
 
-    public void setNavigationOnClickListener() {
-        setNavigationOnClickListener(new View.OnClickListener() {
+    @Override
+    public void setBackButton() {
+        setBackButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NavUtils.navigateUpFromSameTask(currentActivity);
@@ -86,18 +87,21 @@ public class ToolbarFragment extends Fragment
         });
     }
 
-    public void setNavigationOnClickListener(View.OnClickListener clickListener) {
+    @Override
+    public void setBackButton(View.OnClickListener clickListener) {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(clickListener);
     }
 
+    @Override
     public void inflateMenu(@MenuRes int menuRes, Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         currentActivity.getMenuInflater().inflate(menuRes, menu);
     }
 
+    @Override
     public void setNavigationDrawer(@LayoutRes long selectedItemId) {
         createDrawerBuilder();
 
