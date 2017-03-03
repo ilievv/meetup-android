@@ -95,7 +95,6 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
 
     @Override
     public void redirectToVenueDetails(String venueId) {
-        commentHolder.setText("");
         Intent venueDetailsIntent = intentFactory.createIntentToFront(VenueDetailsActivity.class);
         venueDetailsIntent.putExtra(EXTRA_CURRENT_VENUE_ID, venueId);
         startActivity(venueDetailsIntent);
@@ -119,9 +118,9 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
     @OnClick(R.id.review_post_comment_btn)
     void onPostCommentButtonClick() {
         String text = commentHolder.getText().toString();
+        commentHolder.setText("");
         presenter.postComment(text);
     }
-
 
     private void injectDependencies() {
         BaseApplication
