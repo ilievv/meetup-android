@@ -1,6 +1,5 @@
 package com.telerikacademy.meetup.view.review.base;
 
-import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.view.base.BasePresenter;
 import com.telerikacademy.meetup.view.base.BaseView;
 
@@ -13,6 +12,12 @@ public interface IReviewContract {
 
     interface Presenter extends BasePresenter<IReviewContract.View> {
 
-        void postComment(IVenue venue);
+        void postComment();
+
+        void setVenueId(String venueId);
+
+        void setVenueName(String venueName);
+
+        void setVenueAddress(String venueAddress);
     }
 }

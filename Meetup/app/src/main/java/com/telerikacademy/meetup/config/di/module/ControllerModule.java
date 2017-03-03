@@ -31,6 +31,8 @@ import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
 import com.telerikacademy.meetup.view.home.base.IHomeHeaderContract;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesPresenter;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
+import com.telerikacademy.meetup.view.review.ReviewPresenter;
+import com.telerikacademy.meetup.view.review.base.IReviewContract;
 import com.telerikacademy.meetup.view.sign_in.SignInPresenter;
 import com.telerikacademy.meetup.view.sign_in.base.ISignInContract;
 import com.telerikacademy.meetup.view.sign_up.SignUpPresenter;
@@ -140,6 +142,13 @@ public class ControllerModule {
     @ControllerScope
     IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider, ILocalData localData) {
         return new VenueDetailsPresenter(venueDetailsProvider, localData);
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IReviewContract.Presenter provideReviewPresenter() {
+        return new ReviewPresenter();
     }
 
     @Inject

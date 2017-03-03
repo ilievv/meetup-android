@@ -9,6 +9,8 @@ import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.home.HomeHeaderFragment;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesContentFragment;
+import com.telerikacademy.meetup.view.review.ReviewActivity;
+import com.telerikacademy.meetup.view.review.ReviewContentFragment;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
 import com.telerikacademy.meetup.view.sign_in.SignInContentFragment;
 import com.telerikacademy.meetup.view.sign_up.SignUpActivity;
@@ -41,9 +43,13 @@ public interface ControllerComponent {
 
     void inject(SignUpActivity signUpActivity);
 
+    void inject(ReviewActivity reviewActivity);
+
     void inject(SignUpContentFragment signUpContentFragment);
 
     void inject(ToolbarFragment toolbarFragment);
 
     void inject(RecentVenuesFragment recentVenuesFragment);
+
+    void inject(ReviewContentFragment reviewContentFragment);
 }

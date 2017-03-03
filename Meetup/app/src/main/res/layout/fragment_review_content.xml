@@ -10,11 +10,13 @@
     android:gravity="center">
 
     <TextView
+        android:id="@+id/review_venue_name_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Imeto na restoranta"/>
 
     <EditText
+        android:id="@+id/review_comment_holder"
         android:layout_width="match_parent"
         android:layout_height="400dp" />
 </LinearLayout>

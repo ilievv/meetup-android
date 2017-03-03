@@ -50,6 +50,10 @@
                 android:name=".view.sign_up.SignUpActivity"
                 android:theme="@style/SignInTheme">
         </activity>
+        <activity
+            android:name=".view.review.ReviewActivity"
+            android:theme="@style/VenueDetailsTheme">
+        </activity>
 
         <uses-library
                 android:name="com.sec.android.app.multiwindow"
