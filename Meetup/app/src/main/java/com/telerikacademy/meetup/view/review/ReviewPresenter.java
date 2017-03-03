@@ -23,7 +23,7 @@ public class ReviewPresenter implements IReviewContract.Presenter {
     }
 
     @Override
-    public void submitComment(String comment) {
+    public void submitComment(CharSequence comment) {
         venueData
                 .submitComment(currentVenue, comment)
                 .subscribeOn(Schedulers.io())

@@ -21,7 +21,7 @@ public interface IReviewContract {
 
     interface Presenter extends BasePresenter<IReviewContract.View> {
 
-        void submitComment(String text);
+        void submitComment(CharSequence comment);
 
         void setVenue(IVenue venue);
     }

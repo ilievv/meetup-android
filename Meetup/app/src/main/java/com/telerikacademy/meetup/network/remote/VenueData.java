@@ -59,7 +59,7 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public Single<String> submitComment(IVenue venue, String comment) {
+    public Single<String> submitComment(IVenue venue, CharSequence comment) {
         String username = userSession.getUsername();
         if (username == null) {
             username = apiConstants.defaultUsername();
@@ -71,7 +71,7 @@ public class VenueData implements IVenueData {
         body.put("venueName", venue.getName());
         body.put("venueAddress", venue.getAddress());
         body.put("author", username);
-        body.put("text", comment);
+        body.put("text", comment.toString());
         body.put("postDate", date.toString());
 
         return httpRequester

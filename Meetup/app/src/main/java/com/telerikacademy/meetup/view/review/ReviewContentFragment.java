@@ -109,10 +109,10 @@ public class ReviewContentFragment extends Fragment implements IReviewContract.V
     }
 
     @OnClick(R.id.review_post_comment_btn)
-    void onPostCommentButtonClick() {
-        String text = commentHolder.getText().toString();
+    void onSubmitCommentButtonClick() {
+        CharSequence comment = commentHolder.getText();
         commentHolder.setText("");
-        presenter.submitComment(text);
+        presenter.submitComment(comment);
     }
 
     private void injectDependencies() {

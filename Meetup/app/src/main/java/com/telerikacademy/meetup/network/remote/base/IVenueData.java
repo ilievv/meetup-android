@@ -12,5 +12,5 @@ public interface IVenueData {
 
     Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, String type);
 
-    Single<String> submitComment(IVenue venue, String text);
+    Single<String> submitComment(IVenue venue, CharSequence comment);
 }
