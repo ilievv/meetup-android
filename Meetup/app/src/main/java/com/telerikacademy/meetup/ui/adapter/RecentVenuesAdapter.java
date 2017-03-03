@@ -51,6 +51,11 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
         return venues.size();
     }
 
+    public void add(List<IVenue> venues) {
+        this.venues.addAll(venues);
+        notifyDataSetChanged();
+    }
+
     static class VenueHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
 

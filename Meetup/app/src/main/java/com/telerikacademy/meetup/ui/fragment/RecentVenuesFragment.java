@@ -45,6 +45,8 @@ public class RecentVenuesFragment extends Fragment {
     @BindView(R.id.recent_venues_loading_indicator)
     AVLoadingIndicatorView loadingIndicator;
 
+    private RecentVenuesAdapter recentVenuesAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,10 +61,10 @@ public class RecentVenuesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
 
-        RecentVenuesAdapter adapter =
-                new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
+        recentVenuesAdapter = new RecentVenuesAdapter(userSession, new ArrayList<IVenue>());
         recentVenuesRv.setLayoutManager(layoutManager);
-        recentVenuesRv.setAdapter(adapter);
+        recentVenuesRv.setAdapter(recentVenuesAdapter);
+
         showRecentVenues();
     }
 
@@ -86,7 +88,7 @@ public class RecentVenuesFragment extends Fragment {
                     @Override
                     public void onSuccess(List<IVenue> value) {
                         loadingIndicator.smoothToHide();
-                        recentVenuesRv.setAdapter(new RecentVenuesAdapter(userSession, value));
+                        recentVenuesAdapter.add(value);
                     }
 
                     @Override

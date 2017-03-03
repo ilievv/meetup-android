@@ -33,9 +33,12 @@ public class GsonParser implements IJsonParser {
                 .parse(json)
                 .getAsJsonObject();
 
-        JsonObject member = parent.getAsJsonObject(memberName);
-
-        return member.toString();
+        JsonElement memberElement = parent.get(memberName);
+        if (memberElement instanceof JsonNull) {
+            return null;
+        } else {
+            return parent.getAsJsonObject(memberName).toString();
+        }
     }
 
     @Override
@@ -45,7 +48,12 @@ public class GsonParser implements IJsonParser {
                 .parse(json)
                 .getAsJsonObject();
 
-        JsonArray memberArray = parent.getAsJsonArray(memberName);
+        JsonElement memberElement = parent.get(memberName);
+        if (memberElement instanceof JsonNull) {
+            return null;
+        }
+
+        JsonArray memberArray = memberElement.getAsJsonArray();
 
         Gson gson = new Gson();
 

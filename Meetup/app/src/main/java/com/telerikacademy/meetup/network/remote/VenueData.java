@@ -1,9 +1,12 @@
 package com.telerikacademy.meetup.network.remote;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
+import com.telerikacademy.meetup.model.base.IComment;
 import com.telerikacademy.meetup.model.base.IVenue;
+import com.telerikacademy.meetup.model.gson.Comment;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueFactory;
@@ -29,8 +32,8 @@ public class VenueData implements IVenueData {
     private final Set<String> blacklistedTypes;
 
     @Inject
-    public VenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester,
-                     IJsonParser jsonParser, IVenueFactory venueFactory, IApiConstants apiConstants, IUserSession userSession) {
+    public VenueData(IGoogleApiConstants googleApiConstants, IHttpRequester httpRequester, IJsonParser jsonParser,
+                     IVenueFactory venueFactory, IApiConstants apiConstants, IUserSession userSession) {
 
         this.googleApiConstants = googleApiConstants;
         this.httpRequester = httpRequester;
@@ -59,6 +62,30 @@ public class VenueData implements IVenueData {
     }
 
     @Override
+    public Observable<List<? extends IComment>> getComments(@NonNull String venueId) {
+        if (venueId == null || venueId.isEmpty()) {
+            return null;
+        }
+
+        String url = String.format("%s/%s", apiConstants.getVenueUrl(), venueId);
+        return httpRequester
+                .get(url)
+                .map(new Function<IHttpResponse, List<? extends IComment>>() {
+                    @Override
+                    public List<? extends IComment> apply(IHttpResponse response) throws Exception {
+                        String jsonResult = jsonParser.getDirectMember(response.getBody(), "result");
+                        String jsonVenue = jsonParser.getDirectMember(jsonResult, "venue");
+
+                        if (jsonVenue == null) {
+                            return null;
+                        }
+
+                        return jsonParser.getDirectArray(jsonVenue, "comments", Comment.class);
+                    }
+                });
+    }
+
+    @Override
     public Single<String> submitComment(IVenue venue, CharSequence comment) {
         String username = userSession.getUsername();
         if (username == null) {
@@ -82,10 +109,10 @@ public class VenueData implements IVenueData {
                         if (response.getCode() == apiConstants.responseErrorCode()) {
                             throw new Error(response.getMessage());
                         }
-
                         return response.getMessage();
                     }
-                }).single("");
+                })
+                .single("");
     }
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
@@ -93,10 +120,9 @@ public class VenueData implements IVenueData {
                 .get(nearbySearchUrl)
                 .map(new Function<IHttpResponse, List<IVenue>>() {
                     @Override
-                    public List<IVenue> apply(IHttpResponse iHttpResponse) throws Exception {
-                        String responseBody = iHttpResponse.getBody();
+                    public List<IVenue> apply(IHttpResponse response) throws Exception {
                         List<Venue> venues = jsonParser
-                                .getDirectArray(responseBody, "results", Venue.class);
+                                .getDirectArray(response.getBody(), "results", Venue.class);
 
                         return parseVenues(venues);
                     }

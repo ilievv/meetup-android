@@ -141,8 +141,10 @@ public class ControllerModule {
     @Inject
     @Provides
     @ControllerScope
-    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider, ILocalData localData) {
-        return new VenueDetailsPresenter(venueDetailsProvider, localData);
+    IVenueDetailsContract.Presenter provideVenueDetailsPresenter(IVenueDetailsProvider venueDetailsProvider,
+                                                                 IVenueData venueData, ILocalData localData) {
+
+        return new VenueDetailsPresenter(venueDetailsProvider, venueData, localData);
     }
 
     @Inject

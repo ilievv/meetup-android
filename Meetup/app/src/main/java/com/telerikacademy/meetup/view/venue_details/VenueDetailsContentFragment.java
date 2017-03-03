@@ -94,7 +94,6 @@ public class VenueDetailsContentFragment extends Fragment
 
         startLoading();
         presenter.loadData();
-        presenter.loadPhotos();
     }
 
     @Override

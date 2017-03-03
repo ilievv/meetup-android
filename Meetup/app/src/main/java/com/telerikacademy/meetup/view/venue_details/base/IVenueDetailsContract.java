@@ -58,8 +58,6 @@ public interface IVenueDetailsContract {
 
         void loadData();
 
-        void loadPhotos();
-
         void onNavigationButtonClick();
 
         void onCallButtonClick();
