@@ -13,6 +13,7 @@ import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -123,7 +124,10 @@ public class RealmData implements ILocalData {
 
     @Override
     public void clearData() {
-        Realm realm = Realm.getDefaultInstance();
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm realm = Realm.getInstance(config);
         realm.beginTransaction();
         realm.deleteAll();
         realm.commitTransaction();
