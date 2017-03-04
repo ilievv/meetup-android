@@ -4,8 +4,8 @@ import com.telerikacademy.meetup.config.base.IApiConstants;
 
 public final class ApiDevelopmentConstants implements IApiConstants {
 
-    //private static final String API_URL = "https://telerik-meetup.herokuapp.com";
-    private static final String API_URL = "http://10.0.2.2:8080";
+    private static final String API_URL = "https://telerik-meetup.herokuapp.com";
+    //private static final String API_URL = "http://10.0.2.2:8080";
     private static final String URL_SIGN_IN = API_URL + "/auth/login";
     private static final String URL_SIGN_UP = API_URL + "/auth/register";
     private static final String URL_GET_VENUES = API_URL + "/venue";

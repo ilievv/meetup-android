@@ -184,11 +184,16 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Override
     public void setSaveButtonText(Boolean isVenueSavedToUser) {
-        if(isVenueSavedToUser) {
-            saveButton.setText("SAVED");
-        } else {
-            saveButton.setText("SAVE");
-        }
+        final Boolean isVenueSaved = isVenueSavedToUser;
+        this.getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                if(isVenueSaved) {
+                    saveButton.setText("SAVED");
+                } else {
+                    saveButton.setText("SAVE");
+                }
+            }
+        });
     }
 
     @Override
