@@ -53,6 +53,10 @@ public interface IVenueDetailsContract {
         void redirectToReview(IVenue venue);
 
         void setSaveButtonText(Boolean isVenueSavedToUser);
+
+        void notifySave(String venueName);
+
+        void notifyRemove(String venueName);
     }
 
     interface Presenter extends BasePresenter<View> {

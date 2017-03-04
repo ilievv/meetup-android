@@ -310,6 +310,18 @@ public class VenueDetailsContentFragment extends Fragment
         startActivity(reviewIntent);
     }
 
+    @Override
+    public void notifySave(String venueName) {
+        String msg = String.format("You have successfully added %s to your favorite venues!", venueName);
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void notifyRemove(String venueName) {
+        String msg = String.format("You have successfully removed %s from your favorite venues!", venueName);
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
     @OnClick(R.id.btn_venue_details_call)
     void onCallButtonClick() {
         presenter.onCallButtonClick();

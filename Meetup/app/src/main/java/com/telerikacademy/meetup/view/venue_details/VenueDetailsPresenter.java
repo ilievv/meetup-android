@@ -207,6 +207,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         .subscribeOn(Schedulers.io())
                         .subscribe();
                 view.setSaveButtonText(isVenueSavedToUser);
+                view.notifyRemove(currentVenue.getName());
             }
         } else {
             if(currentVenue != null) {
@@ -215,6 +216,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         .subscribeOn(Schedulers.io())
                         .subscribe();
                 view.setSaveButtonText(isVenueSavedToUser);
+                view.notifySave(currentVenue.getName());
             }
         }
 

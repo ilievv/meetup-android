@@ -16,6 +16,8 @@ public interface IApiConstants {
 
     String removeVenueFromUserUrl();
 
+    String getUserUrl();
+
     int responseSuccessCode();
 
     int responseErrorCode();

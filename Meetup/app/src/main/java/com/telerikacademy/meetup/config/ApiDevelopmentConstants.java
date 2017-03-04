@@ -13,6 +13,7 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     private static final String URL_GET_IS_VENUE_SAVED = API_URL + "/venue/saved";
     private static final String URL_POST_SAVE_VENUE_TO_USER = API_URL + "/user/saveVenueToUser";
     private static final String URL_POST_REMOVE_VENUE_FROM_USER = API_URL + "/user/removeVenueFromUser";
+    private static final String URL_GET_USER = API_URL + "/user";
     private static final String DEFAULT_USERNAME = "anonymous";
     private static final int RESPONSE_SUCCESS_CODE = 200;
     private static final int RESPONSE_ERROR_CODE = 404;
@@ -50,6 +51,11 @@ public final class ApiDevelopmentConstants implements IApiConstants {
     @Override
     public String postCommentUrl() {
         return URL_POST_COMMENT;
+    }
+
+    @Override
+    public String getUserUrl() {
+        return URL_GET_USER;
     }
 
     @Override
