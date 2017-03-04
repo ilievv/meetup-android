@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.model.base.IComment;
-import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.Comment;
 import com.telerikacademy.meetup.model.gson.IsVenueSavedResponse;
@@ -16,14 +15,14 @@ import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
 import com.telerikacademy.meetup.util.base.IUserSession;
-
-import io.reactivex.*;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VenueData implements IVenueData {
@@ -105,7 +104,6 @@ public class VenueData implements IVenueData {
         if (username == null) {
             username = apiConstants.defaultUsername();
         }
-        Date date = new Date();
 
         Map<String, String> body = new HashMap<>();
         body.put("googleId", venue.getId());
@@ -113,7 +111,7 @@ public class VenueData implements IVenueData {
         body.put("venueAddress", venue.getAddress());
         body.put("author", username);
         body.put("text", comment.toString());
-        body.put("postDate", date.toString());
+        body.put("postDate", getCurrentDateUTC());
 
         return httpRequester
                 .post(apiConstants.postCommentUrl(), body)
@@ -123,6 +121,7 @@ public class VenueData implements IVenueData {
                         if (response.getCode() == apiConstants.responseErrorCode()) {
                             throw new Error(response.getMessage());
                         }
+
                         return response.getMessage();
                     }
                 })
@@ -156,14 +155,9 @@ public class VenueData implements IVenueData {
     }
 
     public Single<String> removeVenueFromUser(IVenue venue) {
-        String username = userSession.getUsername();
-        if (username == null) {
-            return null; // never goes here
-        }
-
         Map<String, String> body = new HashMap<>();
         body.put("googleId", venue.getId());
-        body.put("username", username);
+        body.put("username", userSession.getUsername());
 
         return httpRequester
                 .post(apiConstants.removeVenueFromUserUrl(), body)
@@ -180,12 +174,9 @@ public class VenueData implements IVenueData {
     }
 
     public Observable<Boolean> isVenueSavedToUser(IVenue venue) {
-        String username = userSession.getUsername();
-
-        // if username == null => return false?
         Map<String, String> body = new HashMap<>();
 
-        String url = String.format("%s/%s/%s", apiConstants.isVenueSavedUrl(), venue.getId(), username);
+        String url = String.format("%s/%s/%s", apiConstants.isVenueSavedUrl(), venue.getId(), userSession.getUsername());
         return httpRequester
                 .get(url, body)
                 .map(new Function<IHttpResponse, Boolean>() {
@@ -193,7 +184,7 @@ public class VenueData implements IVenueData {
                     @Override
                     public Boolean apply(IHttpResponse response) throws Exception {
                         if (response.getCode() == apiConstants.responseErrorCode()) {
-                            // anonymous User
+                            // anonymous user
                             return false;
                         }
 
@@ -203,7 +194,7 @@ public class VenueData implements IVenueData {
                         return res.isSavedToUser;
                     }
                 });
-    };
+    }
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
         return httpRequester
@@ -256,6 +247,14 @@ public class VenueData implements IVenueData {
         }
 
         return parsedVenueTypes.toArray(new String[parsedVenueTypes.size()]);
+    }
+
+    private String getCurrentDateUTC() {
+        Date currentDate = new Date();
+        DateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sourceFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String parsedDate = sourceFormat.format(currentDate);
+        return parsedDate;
     }
 
     private void populateBlacklist() {
