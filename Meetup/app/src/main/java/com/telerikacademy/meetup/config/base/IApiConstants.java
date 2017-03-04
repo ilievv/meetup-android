@@ -10,6 +10,10 @@ public interface IApiConstants {
 
     String postCommentUrl();
 
+    String isVenueSavedUrl();
+
+    String saveVenueToUserUrl();
+
     int responseSuccessCode();
 
     int responseErrorCode();

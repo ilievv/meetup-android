@@ -16,4 +16,8 @@ public interface IVenueData {
     Observable<List<? extends IComment>> getComments(String venueId);
 
     Single<String> submitComment(IVenue venue, CharSequence comment);
+
+    Single<String> saveVenueToUser(IVenue venue);
+
+    boolean isVenueSavedToUser(IVenue venue);
 }

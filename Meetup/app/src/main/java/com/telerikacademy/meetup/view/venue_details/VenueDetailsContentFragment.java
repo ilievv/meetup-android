@@ -303,7 +303,7 @@ public class VenueDetailsContentFragment extends Fragment
         if (!userSession.isUserLoggedIn()) {
             showSignInPrompt();
         } else {
-            // TODO: Implement
+            presenter.onSaveButtonClick();
         }
     }
 

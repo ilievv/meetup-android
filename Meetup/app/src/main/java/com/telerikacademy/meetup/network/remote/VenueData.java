@@ -125,6 +125,38 @@ public class VenueData implements IVenueData {
                 .single(STRING_NULL);
     }
 
+    public Single<String> saveVenueToUser(IVenue venue) {
+        String username = userSession.getUsername();
+        if (username == null) {
+            return null; // never goes here
+        }
+
+        Map<String, String> body = new HashMap<>();
+        body.put("googleId", venue.getId());
+        body.put("venueName", venue.getName());
+        body.put("venueAddress", venue.getAddress());
+        body.put("username", username);
+
+        return httpRequester
+                .post(apiConstants.saveVenueToUserUrl(), body)
+                .map(new Function<IHttpResponse, String>() {
+                    @Override
+                    public String apply(IHttpResponse response) throws Exception {
+                        if (response.getCode() == apiConstants.responseErrorCode()) {
+                            throw new Error(response.getMessage());
+                        }
+                        return response.getMessage();
+                    }
+                })
+                .single(STRING_NULL);
+    }
+
+    public boolean isVenueSavedToUser(IVenue venue) {
+        return false;
+    };
+
+
+
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
         return httpRequester
                 .get(nearbySearchUrl)

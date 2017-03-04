@@ -77,6 +77,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.setType(venue.getTypes()[0]);
                         }
 
+                        // here venue button
                         loadPhotos();
                         loadComments();
                         view.stopContentLoadingIndicator();
@@ -194,6 +195,15 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     @Override
     public void onReviewButtonClick() {
         view.redirectToReview(currentVenue);
+    }
+
+    @Override
+    public void onSaveButtonClick() {
+        if(currentVenue != null) {
+            venueData.saveVenueToUser(currentVenue)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
+        }
     }
 
     private void saveToRecent(IVenue venue, Bitmap photo) {

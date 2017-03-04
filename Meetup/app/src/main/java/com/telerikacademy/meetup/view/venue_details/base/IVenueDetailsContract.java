@@ -70,5 +70,7 @@ public interface IVenueDetailsContract {
         void onWebsiteButtonClick();
 
         void onReviewButtonClick();
+
+        void onSaveButtonClick();
     }
 }
