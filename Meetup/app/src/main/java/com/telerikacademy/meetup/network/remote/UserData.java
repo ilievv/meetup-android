@@ -2,6 +2,8 @@ package com.telerikacademy.meetup.network.remote;
 
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.model.base.IUser;
+import com.telerikacademy.meetup.model.base.IVenueShort;
+import com.telerikacademy.meetup.model.gson.favorites.VenueShort;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.util.base.*;
 import io.reactivex.Observable;
@@ -10,6 +12,7 @@ import io.reactivex.functions.Function;
 import javax.inject.Inject;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserData implements IUserData {
@@ -83,6 +86,22 @@ public class UserData implements IUserData {
                         IUser resultUser = jsonParser.fromJson(userJson, userModelType);
 
                         return resultUser;
+                    }
+                });
+    }
+
+    @Override
+    public Observable<List<? extends IVenueShort>> getSavedVenues(String username) {
+        String usersUrl = String.format("%s/%s", apiConstants.getUserUrl(), username);
+
+        return httpRequester
+                .get(usersUrl)
+                .map(new Function<IHttpResponse, List<? extends IVenueShort>>() {
+                    @Override
+                    public List<? extends IVenueShort> apply(IHttpResponse response) throws Exception {
+                        String jsonResult = jsonParser.getDirectMember(response.getBody(), "result");
+                        String jsonUser = jsonParser.getDirectMember(jsonResult, "user");
+                        return jsonParser.getDirectArray(jsonUser, "favorites", VenueShort.class);
                     }
                 });
     }

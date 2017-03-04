@@ -7,7 +7,7 @@ import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.model.base.IComment;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.Comment;
-import com.telerikacademy.meetup.model.gson.IsVenueSavedResponse;
+import com.telerikacademy.meetup.model.gson.VenueSavedResponse;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueFactory;
@@ -58,12 +58,15 @@ public class VenueData implements IVenueData {
     }
 
     @Override
-    public Observable<List<IVenue>> getNearby(double latitude, double longitude, int radius, @Nullable String type) {
+    public Observable<List<IVenue>> getNearby(double latitude, double longitude,
+                                              int radius, @Nullable String type) {
+
         if (type == null || type.isEmpty()) {
             return getNearby(latitude, longitude, radius);
         }
 
-        String nearbySearchUrl = googleApiConstants.nearbySearchUrl(latitude, longitude, radius, type);
+        String nearbySearchUrl = googleApiConstants
+                .nearbySearchUrl(latitude, longitude, radius, type);
         return getNearby(nearbySearchUrl);
     }
 
@@ -74,6 +77,7 @@ public class VenueData implements IVenueData {
         }
 
         String url = String.format("%s/%s", apiConstants.getVenueUrl(), venueId);
+
         return httpRequester
                 .get(url)
                 .map(new Function<IHttpResponse, String>() {
@@ -129,16 +133,11 @@ public class VenueData implements IVenueData {
     }
 
     public Single<String> saveVenueToUser(IVenue venue) {
-        String username = userSession.getUsername();
-        if (username == null) {
-            return null; // never goes here
-        }
-
         Map<String, String> body = new HashMap<>();
         body.put("googleId", venue.getId());
         body.put("venueName", venue.getName());
         body.put("venueAddress", venue.getAddress());
-        body.put("username", username);
+        body.put("username", userSession.getUsername());
 
         return httpRequester
                 .post(apiConstants.saveVenueToUserUrl(), body)
@@ -174,23 +173,18 @@ public class VenueData implements IVenueData {
     }
 
     public Observable<Boolean> isVenueSavedToUser(IVenue venue) {
-        Map<String, String> body = new HashMap<>();
-
         String url = String.format("%s/%s/%s", apiConstants.isVenueSavedUrl(), venue.getId(), userSession.getUsername());
         return httpRequester
-                .get(url, body)
+                .get(url)
                 .map(new Function<IHttpResponse, Boolean>() {
-
                     @Override
                     public Boolean apply(IHttpResponse response) throws Exception {
                         if (response.getCode() == apiConstants.responseErrorCode()) {
-                            // anonymous user
                             return false;
                         }
 
-                        String responseBody = response.getBody().toString();
-                        String isVenueSavedJson = jsonParser.getDirectMember(responseBody, "result");
-                        IsVenueSavedResponse res = jsonParser.fromJson(isVenueSavedJson, IsVenueSavedResponse.class);
+                        String reusltJson = jsonParser.getDirectMember(response.getBody(), "result");
+                        VenueSavedResponse res = jsonParser.fromJson(reusltJson, VenueSavedResponse.class);
                         return res.isSavedToUser;
                     }
                 });

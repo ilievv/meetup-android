@@ -21,6 +21,7 @@ import com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem
 import com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItemFactory;
 import com.telerikacademy.meetup.ui.fragment.base.IToolbar;
 import com.telerikacademy.meetup.util.base.IUserSession;
+import com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesActivity;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.nearby_venues.NearbyVenuesActivity;
 import com.telerikacademy.meetup.view.sign_in.SignInActivity;
@@ -33,9 +34,10 @@ public class ToolbarFragment extends Fragment
 
     private static final int NAV_HOME_ID = 0;
     private static final int NAV_EXPLORE_ID = 1;
+    private static final int NAV_FAVORITE_ID = 2;
     private static final int NAV_SIGN_IN_ID = 3;
     private static final int NAV_SIGN_UP_ID = 4;
-    private static final int NAV_SIGN_OUT_ID = 3;
+    private static final int NAV_SIGN_OUT_ID = 4;
     private static final int NAV_DRAWER_WIDTH = 270;
 
     @Inject
@@ -107,17 +109,28 @@ public class ToolbarFragment extends Fragment
 
         final Intent homeIntent = intentFactory.createIntentToFront(HomeActivity.class);
         final Intent nearbyVenuesIntent = intentFactory.createIntentToFront(NearbyVenuesActivity.class);
+        final Intent favoriteVenuesIntent = intentFactory.createIntentToFront(FavoriteVenuesActivity.class);
         final Intent signInIntent = intentFactory.createIntentToFront(SignInActivity.class);
         final Intent signUpIntent = intentFactory.createIntentToFront(SignUpActivity.class);
 
         if (userSession.isUserLoggedIn()) {
+            IDrawerItem itemFavorite = drawerItemFactory
+                    .createPrimaryDrawerItem()
+                    .withIdentifier(R.layout.activity_favorite_venues)
+                    .withName(R.string.nav_favorite)
+                    .withIcon(FontAwesome.Icon.faw_heart);
+
             IDrawerItem itemSignOut = drawerItemFactory
                     .createPrimaryDrawerItem()
                     .withName(R.string.nav_sign_out)
                     .withIcon(FontAwesome.Icon.faw_sign_out);
 
             navigationDrawer
-                    .withDrawerItems(itemSignOut)
+                    .withDrawerItems(
+                            itemFavorite,
+                            drawerItemFactory.createDividerDrawerItem(),
+                            itemSignOut
+                    )
                     .withOnDrawerItemClickListener(new IDrawer.OnDrawerItemClickListener() {
                         @Override
                         public boolean onClick(View view, int position) {
@@ -127,6 +140,9 @@ public class ToolbarFragment extends Fragment
                                     break;
                                 case NAV_EXPLORE_ID:
                                     startActivity(nearbyVenuesIntent);
+                                    break;
+                                case NAV_FAVORITE_ID:
+                                    startActivity(favoriteVenuesIntent);
                                     break;
                                 case NAV_SIGN_OUT_ID:
                                     userSession.clearSession();
@@ -152,6 +168,7 @@ public class ToolbarFragment extends Fragment
 
             navigationDrawer
                     .withDrawerItems(
+                            drawerItemFactory.createDividerDrawerItem(),
                             itemSignIn,
                             itemSignUp
                     )
@@ -188,7 +205,7 @@ public class ToolbarFragment extends Fragment
                 .withName(R.string.nav_home)
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
-        IDrawerItem itemNearbyVenues = drawerItemFactory
+        IDrawerItem itemNearby = drawerItemFactory
                 .createPrimaryDrawerItem()
                 .withIdentifier(R.layout.activity_nearby_venues)
                 .withName(R.string.nav_explore)
@@ -196,14 +213,9 @@ public class ToolbarFragment extends Fragment
 
         navigationDrawer
                 .withToolbar(toolbar)
-                .withActionBarDrawerToggleAnimated(true)
                 .withTranslucentStatusBar(false)
                 .withDrawerWidth(NAV_DRAWER_WIDTH)
-                .withDrawerItems(
-                        itemHome,
-                        itemNearbyVenues,
-                        drawerItemFactory.createDividerDrawerItem()
-                );
+                .withDrawerItems(itemHome, itemNearby);
     }
 
     private void injectDependencies() {

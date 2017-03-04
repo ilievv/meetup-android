@@ -30,6 +30,7 @@ public class MaterialDrawer implements IDrawer {
     @Override
     public IDrawer withDrawerItems(
             @NonNull com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem... drawerItems) {
+
         IDrawerItem[] parsedDrawerItems = parseDrawerItems(Arrays.asList(drawerItems));
         drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
@@ -38,6 +39,7 @@ public class MaterialDrawer implements IDrawer {
     @Override
     public IDrawer withDrawerItems(
             @NonNull List<com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem> drawerItems) {
+
         IDrawerItem[] parsedDrawerItems = parseDrawerItems(drawerItems);
         drawerBuilder.addDrawerItems(parsedDrawerItems);
         return this;
@@ -46,6 +48,24 @@ public class MaterialDrawer implements IDrawer {
     @Override
     public IDrawer withSelectedItem(long identifier) {
         drawerBuilder.withSelectedItem(identifier);
+        return this;
+    }
+
+    @Override
+    public IDrawer withStickyFooterItems(
+            @NonNull com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem... drawerItems) {
+
+        IDrawerItem[] parsedDrawerItems = parseDrawerItems(Arrays.asList(drawerItems));
+        drawerBuilder.addStickyDrawerItems(parsedDrawerItems);
+        return this;
+    }
+
+    @Override
+    public IDrawer withStickyFooterItems(
+            @NonNull List<com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem> drawerItems) {
+
+        IDrawerItem[] parsedDrawerItems = parseDrawerItems(drawerItems);
+        drawerBuilder.addStickyDrawerItems(parsedDrawerItems);
         return this;
     }
 
@@ -90,39 +110,44 @@ public class MaterialDrawer implements IDrawer {
         drawerBuilder.build();
     }
 
+    private IDrawerItem parseDrawerItem(
+            com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem drawerItem) {
+
+        Type drawerItemType = drawerItem.getDrawerItemType();
+
+        IDrawerItem materialDrawerItem;
+        AbstractBadgeableDrawerItem mainDrawerItem;
+
+        if (drawerItemType == PrimaryDrawerItem.class) {
+            mainDrawerItem = new com.mikepenz.materialdrawer.model.PrimaryDrawerItem();
+        } else if (drawerItemType == SecondaryDrawerItem.class) {
+            mainDrawerItem = new com.mikepenz.materialdrawer.model.SecondaryDrawerItem();
+        } else if (drawerItemType == DividerDrawerItem.class) {
+            materialDrawerItem = new com.mikepenz.materialdrawer.model.DividerDrawerItem()
+                    .withIdentifier(drawerItem.getIdentifier());
+            return materialDrawerItem;
+        } else {
+            throw new UnsupportedOperationException(drawerItemType.toString() + " not supported.");
+        }
+
+        mainDrawerItem.withIdentifier(drawerItem.getIdentifier());
+        mainDrawerItem.withName(drawerItem.getName());
+
+        if (drawerItem.getIicon() != null) {
+            mainDrawerItem.withIcon(drawerItem.getIicon());
+        } else {
+            mainDrawerItem.withIcon(drawerItem.getIcon());
+        }
+
+        return mainDrawerItem;
+    }
+
     private IDrawerItem[] parseDrawerItems(
             List<com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem> drawerItems) {
 
         List<IDrawerItem> materialDrawerItems = new ArrayList<>();
         for (com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawerItem drawerItem : drawerItems) {
-            Type drawerItemType = drawerItem.getDrawerItemType();
-
-            IDrawerItem materialDrawerItem;
-            AbstractBadgeableDrawerItem mainDrawerItem;
-
-            if (drawerItemType == PrimaryDrawerItem.class) {
-                mainDrawerItem = new com.mikepenz.materialdrawer.model.PrimaryDrawerItem();
-            } else if (drawerItemType == SecondaryDrawerItem.class) {
-                mainDrawerItem = new com.mikepenz.materialdrawer.model.SecondaryDrawerItem();
-            } else if (drawerItemType == DividerDrawerItem.class) {
-                materialDrawerItem = new com.mikepenz.materialdrawer.model.DividerDrawerItem()
-                        .withIdentifier(drawerItem.getIdentifier());
-                materialDrawerItems.add(materialDrawerItem);
-                continue;
-            } else {
-                throw new UnsupportedOperationException(drawerItemType.toString() + " not supported.");
-            }
-
-            mainDrawerItem.withIdentifier(drawerItem.getIdentifier());
-            mainDrawerItem.withName(drawerItem.getName());
-
-            if (drawerItem.getIicon() != null) {
-                mainDrawerItem.withIcon(drawerItem.getIicon());
-            } else {
-                mainDrawerItem.withIcon(drawerItem.getIcon());
-            }
-
-            materialDrawerItems.add(mainDrawerItem);
+            materialDrawerItems.add(parseDrawerItem(drawerItem));
         }
 
         return materialDrawerItems.toArray(new IDrawerItem[materialDrawerItems.size()]);

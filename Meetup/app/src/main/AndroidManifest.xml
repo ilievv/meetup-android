@@ -13,10 +13,9 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:supportsRtl="true"
             android:largeHeap="true"
+            android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyCJX1sMGpv4p9Mpww85unBMQHrIr9VM2NM"/>
@@ -31,27 +30,24 @@
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".view.home.HomeActivity"/>
-
         <activity
                 android:name=".view.nearby_venues.NearbyVenuesActivity"
-                android:launchMode="singleTop"
-                android:label="@string/label_nearby_venues"/>
-
+                android:label="@string/label_nearby_venues"
+                android:launchMode="singleTop"/>
         <activity
                 android:name=".view.venue_details.VenueDetailsActivity"
                 android:parentActivityName=".view.nearby_venues.NearbyVenuesActivity"
                 android:theme="@style/VenueDetailsTheme"/>
-
+        <activity
+                android:name=".view.favorite_venues.FavoriteVenuesActivity"
+                android:label="@string/label_favorite"/>
         <activity
                 android:name=".view.sign_in.SignInActivity"
                 android:theme="@style/SignInTheme"/>
-
         <activity
                 android:name=".view.sign_up.SignUpActivity"
                 android:theme="@style/SignInTheme"/>
-
         <activity
                 android:name=".view.review.ReviewActivity"
                 android:parentActivityName=".view.venue_details.VenueDetailsActivity"/>
@@ -75,7 +71,6 @@
         <meta-data
                 android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
                 android:resource="@dimen/app_minimumsize_h"/>
-
     </application>
 
 </manifest>

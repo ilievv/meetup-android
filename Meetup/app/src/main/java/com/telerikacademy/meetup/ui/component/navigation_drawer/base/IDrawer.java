@@ -14,6 +14,10 @@ public interface IDrawer {
 
     IDrawer withSelectedItem(long identifier);
 
+    IDrawer withStickyFooterItems(@NonNull IDrawerItem... drawerItems);
+
+    IDrawer withStickyFooterItems(@NonNull List<IDrawerItem> drawerItems);
+
     IDrawer withDrawerWidth(int drawerWidth);
 
     IDrawer withToolbar(@NonNull Toolbar toolbar);
