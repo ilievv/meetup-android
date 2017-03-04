@@ -19,5 +19,7 @@ public interface IVenueData {
 
     Single<String> saveVenueToUser(IVenue venue);
 
-    boolean isVenueSavedToUser(IVenue venue);
+    Single<String> removeVenueFromUser(IVenue venue);
+
+    Observable<Boolean> isVenueSavedToUser(IVenue venue);
 }

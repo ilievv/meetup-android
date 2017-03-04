@@ -51,6 +51,8 @@ public interface IVenueDetailsContract {
         void startWebsite(Uri websiteUri);
 
         void redirectToReview(IVenue venue);
+
+        void setSaveButtonText(Boolean isVenueSavedToUser);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -60,7 +62,7 @@ public interface IVenueDetailsContract {
         void subscribe();
 
         void unsubscribe();
-
+        
         void loadData();
 
         void onNavigationButtonClick();

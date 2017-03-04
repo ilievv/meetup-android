@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,8 @@ public class VenueDetailsContentFragment extends Fragment
     ViewGroup commentsWrapper;
     @BindView(R.id.rv_venue_details_comments)
     RecyclerView commentsRecyclerView;
+    @BindView(R.id.btn_venue_details_save)
+    Button saveButton;
 
     private IVenueDetailsContract.Presenter presenter;
     private IDialog progressDialog;
@@ -177,6 +180,15 @@ public class VenueDetailsContentFragment extends Fragment
         ratingTextView.setText(Float.toString(rating));
         ratingBar.setVisibility(View.VISIBLE);
         ratingBar.setRating(rating);
+    }
+
+    @Override
+    public void setSaveButtonText(Boolean isVenueSavedToUser) {
+        if(isVenueSavedToUser) {
+            saveButton.setText("SAVED");
+        } else {
+            saveButton.setText("SAVE");
+        }
     }
 
     @Override

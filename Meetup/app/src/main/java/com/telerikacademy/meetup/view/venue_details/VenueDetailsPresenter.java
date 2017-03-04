@@ -23,6 +23,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
     private IVenueDetailsContract.View view;
     private IVenueDetail currentVenue;
     private String currentVenueId;
+    private boolean isVenueSavedToUser = false;
 
     private final IVenueDetailsProvider venueDetailsProvider;
     private final IVenueData venueData;
@@ -77,7 +78,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                             view.setType(venue.getTypes()[0]);
                         }
 
-                        // here venue button
+                        setSaveStatus(currentVenue);
                         loadPhotos();
                         loadComments();
                         view.stopContentLoadingIndicator();
@@ -199,11 +200,24 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     @Override
     public void onSaveButtonClick() {
-        if(currentVenue != null) {
-            venueData.saveVenueToUser(currentVenue)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe();
+        if(isVenueSavedToUser) {
+            if(currentVenue != null) {
+                isVenueSavedToUser = false;
+                venueData.saveVenueToUser(currentVenue)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe();
+                view.setSaveButtonText(isVenueSavedToUser);
+            }
+        } else {
+            if(currentVenue != null) {
+                isVenueSavedToUser = true;
+                venueData.removeVenueFromUser(currentVenue)
+                        .subscribeOn(Schedulers.io())
+                        .subscribe();
+                view.setSaveButtonText(isVenueSavedToUser);
+            }
         }
+
     }
 
     private void saveToRecent(IVenue venue, Bitmap photo) {
@@ -211,6 +225,20 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
             localData.saveVenueToRecent(venue, photo)
                     .subscribeOn(Schedulers.io())
                     .subscribe();
+        }
+    }
+
+    private void setSaveStatus(IVenue currentVenue){
+        if(currentVenue != null) {
+            venueData.isVenueSavedToUser(currentVenue)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean isVenueSaved) throws Exception {
+                            isVenueSavedToUser = isVenueSaved;
+                            view.setSaveButtonText(isVenueSavedToUser);
+                        }
+                    });
         }
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.telerikacademy.meetup.config.base.IApiConstants;
 import com.telerikacademy.meetup.config.base.IGoogleApiConstants;
 import com.telerikacademy.meetup.model.base.IComment;
+import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.Comment;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
@@ -14,8 +15,10 @@ import com.telerikacademy.meetup.util.base.IHttpRequester;
 import com.telerikacademy.meetup.util.base.IHttpResponse;
 import com.telerikacademy.meetup.util.base.IJsonParser;
 import com.telerikacademy.meetup.util.base.IUserSession;
+
+import io.reactivex.*;
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.Observer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 
@@ -151,11 +154,57 @@ public class VenueData implements IVenueData {
                 .single(STRING_NULL);
     }
 
-    public boolean isVenueSavedToUser(IVenue venue) {
-        return false;
+    public Single<String> removeVenueFromUser(IVenue venue) {
+        String username = userSession.getUsername();
+        if (username == null) {
+            return null; // never goes here
+        }
+
+        Map<String, String> body = new HashMap<>();
+        body.put("googleId", venue.getId());
+        body.put("username", username);
+
+        return httpRequester
+                .post(apiConstants.removeVenueFromUserUrl(), body)
+                .map(new Function<IHttpResponse, String>() {
+                    @Override
+                    public String apply(IHttpResponse response) throws Exception {
+                        if (response.getCode() == apiConstants.responseErrorCode()) {
+                            throw new Error(response.getMessage());
+                        }
+                        return response.getMessage();
+                    }
+                })
+                .single(STRING_NULL);
+    }
+
+    public Observable<Boolean> isVenueSavedToUser(IVenue venue) {
+        String username = userSession.getUsername();
+
+        // if username == null => return false?
+        Map<String, String> body = new HashMap<>();
+        body.put("googleId", venue.getId());
+        body.put("username", username);
+
+        return httpRequester
+                .post(apiConstants.removeVenueFromUserUrl(), body)
+                .map(new Function<IHttpResponse, Boolean>() {
+
+                    @Override
+                    public Boolean apply(IHttpResponse response) throws Exception {
+                        if (response.getCode() == apiConstants.responseErrorCode()) {
+                            // anonymous User
+                            return false;
+                        }
+
+                        String responseBody = response.getBody().toString();
+                        String isVenueSavedJson = jsonParser.getDirectMember(responseBody, "result");
+                        Boolean isVenueSavedResult = Boolean.valueOf(jsonParser.getDirectMember(isVenueSavedJson, "isSavedToUser"));
+
+                        return isVenueSavedResult;
+                    }
+                });
     };
-
-
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
         return httpRequester
