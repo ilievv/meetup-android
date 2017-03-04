@@ -51,6 +51,12 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
         return venues.size();
     }
 
+    public void swap(List<IVenue> venues) {
+        this.venues.clear();
+        this.venues.addAll(venues);
+        notifyDataSetChanged();
+    }
+
     public void add(List<IVenue> venues) {
         this.venues.addAll(venues);
         notifyDataSetChanged();

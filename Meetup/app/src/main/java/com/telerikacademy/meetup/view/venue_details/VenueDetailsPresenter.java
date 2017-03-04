@@ -224,7 +224,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     }
 
-    private void saveToRecent(IVenue venue, Bitmap photo) {
+    private synchronized void saveToRecent(IVenue venue, Bitmap photo) {
         if (venue != null) {
             localData.saveVenueToRecent(venue, photo)
                     .subscribeOn(Schedulers.io())

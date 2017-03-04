@@ -88,7 +88,7 @@ public class RecentVenuesFragment extends Fragment {
                     @Override
                     public void onSuccess(List<IVenue> value) {
                         loadingIndicator.smoothToHide();
-                        recentVenuesAdapter.add(value);
+                        recentVenuesAdapter.swap(value);
                     }
 
                     @Override
