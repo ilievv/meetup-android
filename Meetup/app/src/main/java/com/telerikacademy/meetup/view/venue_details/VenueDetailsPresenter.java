@@ -203,18 +203,18 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         if(isVenueSavedToUser) {
             if(currentVenue != null) {
                 isVenueSavedToUser = false;
-                venueData.saveVenueToUser(currentVenue)
+                venueData.removeVenueFromUser(currentVenue)
                         .subscribeOn(Schedulers.io())
                         .subscribe();
-                view.setSaveButtonText(isVenueSavedToUser);
+                //view.setSaveButtonText(isVenueSavedToUser);
             }
         } else {
             if(currentVenue != null) {
                 isVenueSavedToUser = true;
-                venueData.removeVenueFromUser(currentVenue)
+                venueData.saveVenueToUser(currentVenue)
                         .subscribeOn(Schedulers.io())
                         .subscribe();
-                view.setSaveButtonText(isVenueSavedToUser);
+                //view.setSaveButtonText(isVenueSavedToUser);
             }
         }
 
@@ -236,9 +236,11 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                         @Override
                         public void accept(Boolean isVenueSaved) throws Exception {
                             isVenueSavedToUser = isVenueSaved;
-                            view.setSaveButtonText(isVenueSavedToUser);
+                            // view.setSaveButtonText(isVenueSavedToUser); should run on main thread
                         }
                     });
         }
+        //should not be here
+        view.setSaveButtonText(isVenueSavedToUser);
     }
 }

@@ -8,6 +8,7 @@ import com.telerikacademy.meetup.model.base.IComment;
 import com.telerikacademy.meetup.model.base.IUser;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.model.gson.Comment;
+import com.telerikacademy.meetup.model.gson.IsVenueSavedResponse;
 import com.telerikacademy.meetup.model.gson.nearby_search.Venue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueFactory;
@@ -198,9 +199,8 @@ public class VenueData implements IVenueData {
 
                         String responseBody = response.getBody().toString();
                         String isVenueSavedJson = jsonParser.getDirectMember(responseBody, "result");
-                        Boolean isVenueSavedResult = Boolean.valueOf(jsonParser.getDirectMember(isVenueSavedJson, "isSavedToUser"));
-
-                        return isVenueSavedResult;
+                        IsVenueSavedResponse res = jsonParser.fromJson(isVenueSavedJson, IsVenueSavedResponse.class);
+                        return res.isSavedToUser;
                     }
                 });
     };
