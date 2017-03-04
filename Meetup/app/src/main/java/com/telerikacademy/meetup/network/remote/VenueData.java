@@ -183,11 +183,10 @@ public class VenueData implements IVenueData {
 
         // if username == null => return false?
         Map<String, String> body = new HashMap<>();
-        body.put("googleId", venue.getId());
-        body.put("username", username);
 
+        String url = String.format("%s/%s/%s", apiConstants.isVenueSavedUrl(), venue.getId(), username);
         return httpRequester
-                .post(apiConstants.removeVenueFromUserUrl(), body)
+                .get(url, body)
                 .map(new Function<IHttpResponse, Boolean>() {
 
                     @Override
