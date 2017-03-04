@@ -17,6 +17,7 @@ import com.telerikacademy.meetup.util.base.IUserSession;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -67,19 +68,28 @@ public class VenueData implements IVenueData {
             return null;
         }
 
+        final String STRING_NULL = "STRING_NULL";
+
         String url = String.format("%s/%s", apiConstants.getVenueUrl(), venueId);
         return httpRequester
                 .get(url)
-                .map(new Function<IHttpResponse, List<? extends IComment>>() {
+                .map(new Function<IHttpResponse, String>() {
                     @Override
-                    public List<? extends IComment> apply(IHttpResponse response) throws Exception {
+                    public String apply(IHttpResponse response) throws Exception {
                         String jsonResult = jsonParser.getDirectMember(response.getBody(), "result");
                         String jsonVenue = jsonParser.getDirectMember(jsonResult, "venue");
-
-                        if (jsonVenue == null) {
-                            return null;
-                        }
-
+                        return jsonVenue == null ? STRING_NULL : jsonVenue;
+                    }
+                })
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(String jsonVenue) throws Exception {
+                        return jsonVenue != STRING_NULL;
+                    }
+                })
+                .map(new Function<String, List<? extends IComment>>() {
+                    @Override
+                    public List<? extends IComment> apply(String jsonVenue) throws Exception {
                         return jsonParser.getDirectArray(jsonVenue, "comments", Comment.class);
                     }
                 });
