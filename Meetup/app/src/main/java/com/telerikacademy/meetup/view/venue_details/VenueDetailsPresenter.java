@@ -9,9 +9,7 @@ import com.telerikacademy.meetup.network.local.base.ILocalData;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.provider.base.IVenueDetailsProvider;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import org.reactivestreams.Subscriber;
@@ -88,32 +86,18 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     private void loadComments() {
         if (currentVenueId == null || currentVenueId.isEmpty()) {
-            // TODO: Implement
+            view.setComments(null);
+            return;
         }
 
         venueData
                 .getComments(currentVenueId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<? extends IComment>>() {
+                .subscribe(new Consumer<List<? extends IComment>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<? extends IComment> comments) {
+                    public void accept(List<? extends IComment> comments) throws Exception {
                         view.setComments(comments);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
