@@ -102,8 +102,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(List<? extends IComment> value) {
-                        int a = 5;
+                    public void onNext(List<? extends IComment> comments) {
+                        view.setComments(comments);
                     }
 
                     @Override

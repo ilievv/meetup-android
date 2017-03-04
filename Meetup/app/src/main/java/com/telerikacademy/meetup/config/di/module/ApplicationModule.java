@@ -167,8 +167,8 @@ public class ApplicationModule {
 
     @Provides
     @ApplicationScope
-    IRecyclerDecorationFactory provideRecyclerDecorationFactory(@ApplicationContext Context context) {
-        return new RecyclerDecorationFactory(context);
+    IDecorationFactory provideRecyclerDecorationFactory(@ApplicationContext Context context) {
+        return new DecorationFactory(context);
     }
 
     @Inject

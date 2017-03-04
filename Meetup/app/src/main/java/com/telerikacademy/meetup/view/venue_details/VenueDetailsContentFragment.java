@@ -12,6 +12,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +27,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
+import com.telerikacademy.meetup.config.di.annotation.VerticalLayoutManager;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
+import com.telerikacademy.meetup.model.base.IComment;
 import com.telerikacademy.meetup.model.base.IVenue;
+import com.telerikacademy.meetup.provider.base.IDecorationFactory;
 import com.telerikacademy.meetup.provider.base.IIntentFactory;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
@@ -37,6 +43,8 @@ import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VenueDetailsContentFragment extends Fragment
         implements IVenueDetailsContract.View {
@@ -47,11 +55,16 @@ public class VenueDetailsContentFragment extends Fragment
     private static final String PACKAGE_GOOGLE_MAPS = "com.google.android.apps.maps";
 
     @Inject
+    IDecorationFactory decorationFactory;
+    @Inject
     IDialogFactory dialogFactory;
     @Inject
     IIntentFactory intentFactory;
     @Inject
     IUserSession userSession;
+    @Inject
+    @VerticalLayoutManager
+    LinearLayoutManager layoutManager;
 
     @BindView(R.id.venue_details_content_loading_indicator)
     AVLoadingIndicatorView contentLoadingIndicator;
@@ -63,10 +76,15 @@ public class VenueDetailsContentFragment extends Fragment
     RatingBar ratingBar;
     @BindView(R.id.tv_venue_details_type)
     TextView typeTextView;
+    @BindView(R.id.wrapper_venue_details_comments)
+    ViewGroup commentsWrapper;
+    @BindView(R.id.rv_venue_details_comments)
+    RecyclerView commentsRecyclerView;
 
     private IVenueDetailsContract.Presenter presenter;
     private IDialog progressDialog;
     private IGallery gallery;
+    private VenueDetailsCommentsAdapter commentsAdapter;
     private TabLayout galleryIndicator;
     private AVLoadingIndicatorView galleryLoadingIndicator;
 
@@ -86,12 +104,7 @@ public class VenueDetailsContentFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
-
-        progressDialog = dialogFactory
-                .createDialog()
-                .withContent(R.string.dialog_loading_content)
-                .withProgress();
-
+        initialize();
         startLoading();
         presenter.loadData();
     }
@@ -169,6 +182,16 @@ public class VenueDetailsContentFragment extends Fragment
     @Override
     public void setType(String type) {
         typeTextView.setText(type);
+    }
+
+    @Override
+    public void setComments(List<? extends IComment> comments) {
+        if (comments == null || comments.isEmpty()) {
+            commentsWrapper.setVisibility(View.GONE);
+        } else {
+            commentsWrapper.setVisibility(View.VISIBLE);
+            commentsAdapter.add(comments);
+        }
     }
 
     @Override
@@ -312,6 +335,20 @@ public class VenueDetailsContentFragment extends Fragment
                     }
                 })
                 .show();
+    }
+
+    private void initialize() {
+        progressDialog = dialogFactory
+                .createDialog()
+                .withContent(R.string.dialog_loading_content)
+                .withProgress();
+
+        DividerItemDecoration dividerDecoration = decorationFactory
+                .createDividerDecoration(layoutManager.getOrientation(), R.drawable.horizontal_divider);
+        commentsAdapter = new VenueDetailsCommentsAdapter(new ArrayList<IComment>());
+        commentsRecyclerView.setLayoutManager(layoutManager);
+        commentsRecyclerView.addItemDecoration(dividerDecoration);
+        commentsRecyclerView.setAdapter(commentsAdapter);
     }
 
     private void injectDependencies() {

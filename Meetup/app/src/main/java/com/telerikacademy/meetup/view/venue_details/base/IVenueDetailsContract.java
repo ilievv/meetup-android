@@ -2,10 +2,13 @@ package com.telerikacademy.meetup.view.venue_details.base;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import com.telerikacademy.meetup.model.base.IComment;
 import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.view.base.BasePresenter;
 import com.telerikacademy.meetup.view.base.BaseView;
+
+import java.util.List;
 
 public interface IVenueDetailsContract {
 
@@ -20,6 +23,8 @@ public interface IVenueDetailsContract {
         void setRating(float rating);
 
         void setType(String type);
+
+        void setComments(List<? extends IComment> comments);
 
         void setDefaultPhoto();
 

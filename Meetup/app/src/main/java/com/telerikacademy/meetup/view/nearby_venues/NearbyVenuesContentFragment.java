@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.annotation.VerticalLayoutManager;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.provider.base.IRecyclerDecorationFactory;
+import com.telerikacademy.meetup.provider.base.IDecorationFactory;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 
 import javax.inject.Inject;
@@ -29,7 +30,7 @@ public class NearbyVenuesContentFragment extends Fragment
     @VerticalLayoutManager
     LinearLayoutManager layoutManager;
     @Inject
-    IRecyclerDecorationFactory decorationFactory;
+    IDecorationFactory decorationFactory;
 
     @BindView(R.id.rv_nearby_venues)
     RecyclerView recyclerView;
@@ -53,9 +54,9 @@ public class NearbyVenuesContentFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
 
-        recyclerView.addItemDecoration(decorationFactory.createDividerDecoration(
-                layoutManager.getOrientation()
-        ));
+        DividerItemDecoration dividerDecoration = decorationFactory
+                .createDividerDecoration(layoutManager.getOrientation(), R.drawable.horizontal_divider);
+        recyclerView.addItemDecoration(dividerDecoration);
         recyclerView.setLayoutManager(layoutManager);
     }
 

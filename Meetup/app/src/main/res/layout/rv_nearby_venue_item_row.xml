@@ -1,86 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardPreventCornerOverlap="false">
+        android:foreground="?android:attr/selectableItemBackground">
 
-    <TableLayout
+    <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            app:cardPreventCornerOverlap="false">
 
-        <TableRow
+        <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="16dp">
 
-            <TextView
-                    android:id="@+id/venue_name"
-                    android:layout_width="wrap_content"
-                    android:maxWidth="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_gravity="start"
-                    android:textColor="@color/primaryText"
-                    android:textStyle="bold"
-                    android:textSize="16sp"/>
+            <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <!-- Wrapper -->
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end">
+                <TextView
+                        android:id="@+id/venue_name"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="start"
+                        android:textColor="@color/primaryText"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
 
-                <RatingBar
-                        android:id="@+id/venue_rating"
+                <!-- Wrapper -->
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:progressTint="@color/accent"
-                        android:secondaryProgressTint="@android:color/transparent"
-                        android:progressBackgroundTint="@color/ratingBarBackground"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:numStars="5"/>
+                        android:layout_weight="1"
+                        android:gravity="end">
 
-            </LinearLayout>
+                    <RatingBar
+                            android:id="@+id/venue_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:progressTint="@color/accent"
+                            android:secondaryProgressTint="@android:color/transparent"
+                            android:progressBackgroundTint="@color/ratingBarBackground"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:numStars="5"/>
 
-        </TableRow>
+                </LinearLayout>
 
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            </TableRow>
 
-            <TextView
-                    android:id="@+id/venue_types"
-                    android:layout_width="wrap_content"
-                    android:maxWidth="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="12sp"/>
+            <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </TableRow>
+                <TextView
+                        android:id="@+id/venue_types"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:textColor="@color/secondaryText"
+                        android:textSize="12sp"/>
 
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            </TableRow>
 
-            <TextView
-                    android:id="@+id/venue_address"
-                    android:layout_width="wrap_content"
-                    android:maxWidth="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_gravity="start"
-                    android:textColor="@color/secondaryText"
-                    android:textSize="12sp"
-                    android:textStyle="bold"/>
+            <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        </TableRow>
+                <TextView
+                        android:id="@+id/venue_address"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_gravity="start"
+                        android:textColor="@color/secondaryText"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
 
-    </TableLayout>
+            </TableRow>
 
-</android.support.v7.widget.CardView>
+        </TableLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

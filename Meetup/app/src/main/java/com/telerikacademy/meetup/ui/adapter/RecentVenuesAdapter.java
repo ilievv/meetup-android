@@ -114,7 +114,7 @@ public class RecentVenuesAdapter extends RecyclerView.Adapter<RecentVenuesAdapte
             return false;
         }
 
-        void bindVenue(IVenue venue) {
+        public void bindVenue(IVenue venue) {
             this.venue = venue;
             venuePhoto.setImageBitmap(venue.getPhoto());
             venueName.setText(venue.getName());
