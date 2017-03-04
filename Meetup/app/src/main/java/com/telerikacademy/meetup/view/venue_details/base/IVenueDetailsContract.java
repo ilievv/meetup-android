@@ -66,8 +66,12 @@ public interface IVenueDetailsContract {
         void subscribe();
 
         void unsubscribe();
-        
+
         void loadData();
+
+        void loadPhotos();
+
+        void loadComments();
 
         void onNavigationButtonClick();
 

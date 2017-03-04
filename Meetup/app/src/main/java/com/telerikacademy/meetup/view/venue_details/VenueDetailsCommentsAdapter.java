@@ -44,6 +44,12 @@ public class VenueDetailsCommentsAdapter extends RecyclerView.Adapter<VenueDetai
         notifyDataSetChanged();
     }
 
+    public void swap(List<? extends IComment> comments) {
+        this.comments.clear();
+        this.comments.addAll(comments);
+        notifyDataSetChanged();
+    }
+
     static class CommentHolder extends RecyclerView.ViewHolder
             implements View.OnLongClickListener {
 

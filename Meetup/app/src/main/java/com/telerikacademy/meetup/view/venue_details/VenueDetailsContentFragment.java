@@ -135,6 +135,7 @@ public class VenueDetailsContentFragment extends Fragment
         super.onResume();
         if (isNetworkAvailable()) {
             presenter.subscribe();
+            presenter.loadComments();
         } else {
             stopLoading();
             showErrorMessage();
@@ -187,7 +188,7 @@ public class VenueDetailsContentFragment extends Fragment
         final Boolean isVenueSaved = isVenueSavedToUser;
         this.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                if(isVenueSaved) {
+                if (isVenueSaved) {
                     saveButton.setText("SAVED");
                 } else {
                     saveButton.setText("SAVE");
@@ -207,7 +208,7 @@ public class VenueDetailsContentFragment extends Fragment
             commentsWrapper.setVisibility(View.GONE);
         } else {
             commentsWrapper.setVisibility(View.VISIBLE);
-            commentsAdapter.add(comments);
+            commentsAdapter.swap(comments);
         }
     }
 

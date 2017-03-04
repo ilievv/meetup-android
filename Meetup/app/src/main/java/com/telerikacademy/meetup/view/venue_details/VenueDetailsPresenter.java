@@ -86,7 +86,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 });
     }
 
-    private void loadComments() {
+    @Override
+    public void loadComments() {
         if (currentVenueId == null || currentVenueId.isEmpty()) {
             view.setComments(null);
             return;
@@ -104,7 +105,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 });
     }
 
-    private void loadPhotos() {
+    @Override
+    public void loadPhotos() {
         if (currentVenueId == null || currentVenueId.isEmpty()) {
             view.setDefaultPhoto();
             view.stopLoading();
@@ -200,8 +202,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
 
     @Override
     public void onSaveButtonClick() {
-        if(isVenueSavedToUser) {
-            if(currentVenue != null) {
+        if (isVenueSavedToUser) {
+            if (currentVenue != null) {
                 isVenueSavedToUser = false;
                 venueData.removeVenueFromUser(currentVenue)
                         .subscribeOn(Schedulers.io())
@@ -210,7 +212,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 view.notifyRemove(currentVenue.getName());
             }
         } else {
-            if(currentVenue != null) {
+            if (currentVenue != null) {
                 isVenueSavedToUser = true;
                 venueData.saveVenueToUser(currentVenue)
                         .subscribeOn(Schedulers.io())
@@ -230,8 +232,8 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
         }
     }
 
-    private void setSaveStatus(IVenue currentVenue){
-        if(currentVenue != null) {
+    private void setSaveStatus(IVenue currentVenue) {
+        if (currentVenue != null) {
             venueData.isVenueSavedToUser(currentVenue)
                     .subscribeOn(Schedulers.io())
                     .subscribe(new Consumer<Boolean>() {
