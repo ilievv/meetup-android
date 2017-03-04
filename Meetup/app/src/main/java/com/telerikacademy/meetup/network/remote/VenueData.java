@@ -24,6 +24,8 @@ import java.util.*;
 
 public class VenueData implements IVenueData {
 
+    private static final String STRING_NULL = "STRING_NULL";
+
     private final IGoogleApiConstants googleApiConstants;
     private final IApiConstants apiConstants;
     private final IHttpRequester httpRequester;
@@ -67,8 +69,6 @@ public class VenueData implements IVenueData {
         if (venueId == null || venueId.isEmpty()) {
             return null;
         }
-
-        final String STRING_NULL = "STRING_NULL";
 
         String url = String.format("%s/%s", apiConstants.getVenueUrl(), venueId);
         return httpRequester
@@ -122,7 +122,7 @@ public class VenueData implements IVenueData {
                         return response.getMessage();
                     }
                 })
-                .single("");
+                .single(STRING_NULL);
     }
 
     private Observable<List<IVenue>> getNearby(String nearbySearchUrl) {
