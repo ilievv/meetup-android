@@ -7,10 +7,12 @@ import com.telerikacademy.meetup.model.gson.favorites.VenueShort;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.util.base.*;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 
 import javax.inject.Inject;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +93,7 @@ public class UserData implements IUserData {
     }
 
     @Override
-    public Observable<List<? extends IVenueShort>> getSavedVenues(String username) {
+    public Single<List<? extends IVenueShort>> getSavedVenues(String username) {
         String usersUrl = String.format("%s/%s", apiConstants.getUserUrl(), username);
 
         return httpRequester
@@ -103,6 +105,7 @@ public class UserData implements IUserData {
                         String jsonUser = jsonParser.getDirectMember(jsonResult, "user");
                         return jsonParser.getDirectArray(jsonUser, "favorites", VenueShort.class);
                     }
-                });
+                })
+                .single(new ArrayList<IVenueShort>());
     }
 }

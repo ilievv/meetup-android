@@ -5,6 +5,7 @@ import com.telerikacademy.meetup.config.di.module.ControllerModule;
 import com.telerikacademy.meetup.ui.fragment.RecentVenuesFragment;
 import com.telerikacademy.meetup.ui.fragment.ToolbarFragment;
 import com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesActivity;
+import com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesContentFragment;
 import com.telerikacademy.meetup.view.home.HomeActivity;
 import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.home.HomeHeaderFragment;
@@ -35,6 +36,8 @@ public interface ControllerComponent {
     void inject(NearbyVenuesContentFragment nearbyVenuesContentFragment);
 
     void inject(FavoriteVenuesActivity favoriteVenuesActivity);
+
+    void inject(FavoriteVenuesContentFragment favoriteVenuesContentFragment);
 
     void inject(VenueDetailsActivity venueDetailsActivity);
 

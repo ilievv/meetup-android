@@ -62,6 +62,7 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
             return;
         }
 
+        view.startLoading();
         view.startContentLoadingIndicator();
 
         venueDetailsProvider

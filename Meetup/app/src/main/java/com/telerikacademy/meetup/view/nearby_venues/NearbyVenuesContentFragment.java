@@ -81,6 +81,7 @@ public class NearbyVenuesContentFragment extends Fragment
         this.presenter = presenter;
     }
 
+    @Override
     public void setAdapter(RecyclerView.Adapter adapter) {
         recyclerView.setAdapter(adapter);
     }

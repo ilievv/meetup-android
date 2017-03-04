@@ -15,8 +15,8 @@ import com.telerikacademy.meetup.model.base.IVenue;
 import com.telerikacademy.meetup.network.remote.base.IVenueData;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialog;
 import com.telerikacademy.meetup.ui.component.dialog.base.IDialogFactory;
-import com.telerikacademy.meetup.ui.fragment.SearchFragment;
-import com.telerikacademy.meetup.ui.fragment.ToolbarFragment;
+import com.telerikacademy.meetup.ui.fragment.base.ISearchBar;
+import com.telerikacademy.meetup.ui.fragment.base.IToolbar;
 import com.telerikacademy.meetup.view.home.HomeContentFragment;
 import com.telerikacademy.meetup.view.nearby_venues.base.INearbyVenuesContract;
 import io.reactivex.Observer;
@@ -55,9 +55,9 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     TextView emptyTextView;
 
     private NearbyVenuesAdapter recyclerAdapter;
-    private NearbyVenuesContentFragment content;
-    private SearchFragment searchBar;
-    private ToolbarFragment toolbar;
+    private INearbyVenuesContract.View content;
+    private ISearchBar searchBar;
+    private IToolbar toolbar;
     private IDialog progressDialog;
 
     @Override
@@ -77,13 +77,13 @@ public class NearbyVenuesActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        toolbar = (ToolbarFragment) fragmentManager
+        toolbar = (IToolbar) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_toolbar);
 
-        content = (NearbyVenuesContentFragment) fragmentManager.
+        content = (INearbyVenuesContract.View) fragmentManager.
                 findFragmentById(R.id.fragment_nearby_venues_content);
 
-        searchBar = (SearchFragment) fragmentManager
+        searchBar = (ISearchBar) fragmentManager
                 .findFragmentById(R.id.fragment_nearby_venues_search_header);
 
         progressDialog = dialogFactory

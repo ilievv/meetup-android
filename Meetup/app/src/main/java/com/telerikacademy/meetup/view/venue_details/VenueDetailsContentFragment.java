@@ -108,7 +108,6 @@ public class VenueDetailsContentFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         injectDependencies();
         initialize();
-        startLoading();
         presenter.loadData();
     }
 
@@ -190,12 +189,12 @@ public class VenueDetailsContentFragment extends Fragment
         }
 
         final Boolean isVenueSaved = isVenueSavedToUser;
-        this.getActivity().runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 if (isVenueSaved) {
-                    saveButton.setText("SAVED");
+                    saveButton.setText("Saved");
                 } else {
-                    saveButton.setText("SAVE");
+                    saveButton.setText("Save");
                 }
             }
         });
@@ -317,13 +316,13 @@ public class VenueDetailsContentFragment extends Fragment
 
     @Override
     public void notifySave(String venueName) {
-        String msg = String.format("You have successfully added %s to your favorite venues!", venueName);
+        String msg = String.format("%s added to your favorites", venueName);
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void notifyRemove(String venueName) {
-        String msg = String.format("You have successfully removed %s from your favorite venues!", venueName);
+        String msg = String.format("%s removed from your favorites", venueName);
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 

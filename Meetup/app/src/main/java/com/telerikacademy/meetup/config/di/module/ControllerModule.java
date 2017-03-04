@@ -25,7 +25,10 @@ import com.telerikacademy.meetup.ui.component.navigation_drawer.MaterialDrawer;
 import com.telerikacademy.meetup.ui.component.navigation_drawer.base.IDrawer;
 import com.telerikacademy.meetup.util.PermissionHandler;
 import com.telerikacademy.meetup.util.base.IPermissionHandler;
+import com.telerikacademy.meetup.util.base.IUserSession;
 import com.telerikacademy.meetup.util.base.IValidator;
+import com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesPresenter;
+import com.telerikacademy.meetup.view.favorite_venues.base.IFavoriteVenuesContract;
 import com.telerikacademy.meetup.view.home.HomeContentPresenter;
 import com.telerikacademy.meetup.view.home.HomeHeaderPresenter;
 import com.telerikacademy.meetup.view.home.base.IHomeContentContract;
@@ -122,6 +125,13 @@ public class ControllerModule {
     @ControllerScope
     INearbyVenuesContract.Presenter provideNearbyVenuesPresenter() {
         return new NearbyVenuesPresenter();
+    }
+
+    @Inject
+    @Provides
+    @ControllerScope
+    IFavoriteVenuesContract.Presenter provideFavoriteVenuesPresenter(IUserData userData, IUserSession userSession) {
+        return new FavoriteVenuesPresenter(userData, userSession);
     }
 
     @Inject
