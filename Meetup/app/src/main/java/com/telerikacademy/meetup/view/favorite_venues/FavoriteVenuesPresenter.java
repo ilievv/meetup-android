@@ -4,7 +4,7 @@ import com.telerikacademy.meetup.model.base.IVenueShort;
 import com.telerikacademy.meetup.network.remote.base.IUserData;
 import com.telerikacademy.meetup.util.base.IUserSession;
 import com.telerikacademy.meetup.view.favorite_venues.base.IFavoriteVenuesContract;
-import io.reactivex.SingleObserver;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,25 +29,31 @@ public class FavoriteVenuesPresenter implements IFavoriteVenuesContract.Presente
     }
 
     @Override
-    public void loadData() {
+    public void loadData(final boolean withLoader) {
         userData
                 .getSavedVenues(userSession.getUsername())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<List<? extends IVenueShort>>() {
+                .subscribe(new Observer<List<? extends IVenueShort>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        view.startLoading();
+                        if (withLoader) {
+                            view.startLoading();
+                        }
                     }
 
                     @Override
-                    public void onSuccess(List<? extends IVenueShort> value) {
+                    public void onNext(List<? extends IVenueShort> value) {
                         view.setVenues(value);
-                        view.stopLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        view.stopLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
                         view.stopLoading();
                     }
                 });

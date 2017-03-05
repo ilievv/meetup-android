@@ -58,7 +58,7 @@ public class SignInPresenter implements ISignInContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.notifyError(e.getMessage());
+                        view.notifyError("Invalid username or password");
                         view.stopLoading();
                     }
 

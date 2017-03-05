@@ -19,6 +19,6 @@ public interface IFavoriteVenuesContract {
 
     interface Presenter extends BasePresenter<View> {
 
-        void loadData();
+        void loadData(boolean withLoader);
     }
 }

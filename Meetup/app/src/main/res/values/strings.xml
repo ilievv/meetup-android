@@ -15,4 +15,5 @@
     <string name="dialog_loading_content">Please wait...</string>
     <string name="save">Save</string>
     <string name="open">Open</string>
+    <string name="no_saved_places">You don\'t have any saved places yet</string>
 </resources>

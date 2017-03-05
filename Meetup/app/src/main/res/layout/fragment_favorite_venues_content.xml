@@ -1,13 +1,30 @@
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesContentFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.telerikacademy.meetup.view.favorite_venues.FavoriteVenuesContentFragment">
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_favorite_venues_content"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_favorite_venues_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-</LinearLayout>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_favorite_venues_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+            android:id="@+id/tv_no_favorite_venues"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/no_saved_places"/>
+
+</FrameLayout>
