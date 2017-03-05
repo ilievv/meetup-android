@@ -24,8 +24,8 @@ public class HomeActivity extends AppCompatActivity
     @Inject
     FragmentManager fragmentManager;
 
-    private HomeContentFragment content;
-    private HomeHeaderFragment header;
+    private IHomeContentContract.View content;
+    private IHomeHeaderContract.View header;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +58,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void initialize() {
-        content = (HomeContentFragment) fragmentManager
+        content = (IHomeContentContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_home_content);
 
-        header = (HomeHeaderFragment) fragmentManager
+        header = (IHomeHeaderContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_home_header);
     }
 

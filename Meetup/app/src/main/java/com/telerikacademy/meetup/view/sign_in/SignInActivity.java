@@ -17,14 +17,14 @@ public class SignInActivity extends AppCompatActivity {
     @Inject
     FragmentManager fragmentManager;
 
-    private SignInContentFragment contentFragment;
+    private ISignInContract.View contentFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         injectDependencies();
 
-        contentFragment = (SignInContentFragment) fragmentManager
+        contentFragment = (ISignInContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_sign_in_content);
         contentFragment.setPresenter(presenter);
         presenter.setView(contentFragment);

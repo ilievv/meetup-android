@@ -3,13 +3,14 @@ package com.telerikacademy.meetup.view.venue_details;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import butterknife.OnClick;
 import com.telerikacademy.meetup.BaseApplication;
 import com.telerikacademy.meetup.R;
 import com.telerikacademy.meetup.config.di.module.ControllerModule;
-import com.telerikacademy.meetup.ui.fragment.GalleryFragment;
+import com.telerikacademy.meetup.ui.fragment.base.IGallery;
 import com.telerikacademy.meetup.view.venue_details.base.IVenueDetailsContract;
 
 import javax.inject.Inject;
@@ -24,9 +25,9 @@ public class VenueDetailsActivity extends AppCompatActivity {
     @Inject
     FragmentManager fragmentManager;
 
-    private GalleryFragment galleryFragment;
-    private VenueDetailsContentFragment content;
+    private IVenueDetailsContract.View content;
     private String currentVenueId;
+    private IGallery gallery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,10 @@ public class VenueDetailsActivity extends AppCompatActivity {
     private void initialize() {
         currentVenueId = getIntent().getStringExtra(EXTRA_CURRENT_VENUE_ID);
 
-        content = (VenueDetailsContentFragment) fragmentManager
+        content = (IVenueDetailsContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_venue_details_content);
 
-        galleryFragment = (GalleryFragment) fragmentManager
+        gallery = (IGallery) fragmentManager
                 .findFragmentById(R.id.fragment_venue_details_gallery);
     }
 
@@ -63,9 +64,9 @@ public class VenueDetailsActivity extends AppCompatActivity {
         presenter.setView(content);
         presenter.setVenueId(currentVenueId);
         content.setPresenter(presenter);
-        content.setGallery(galleryFragment);
+        content.setGallery(gallery);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         Drawable actionBarBackground = getDrawable(R.drawable.gradient_bottom_black_transparent);
         actionBar.setBackgroundDrawable(actionBarBackground);
         actionBar.setDisplayShowTitleEnabled(false);

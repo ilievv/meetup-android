@@ -17,14 +17,14 @@ public class SignUpActivity extends AppCompatActivity {
     @Inject
     ISignUpContract.Presenter presenter;
 
-    private SignUpContentFragment contentFragment;
+    private ISignUpContract.View contentFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         injectDependencies();
 
-        contentFragment = (SignUpContentFragment) fragmentManager
+        contentFragment = (ISignUpContract.View) fragmentManager
                 .findFragmentById(R.id.fragment_sign_up_content);
         contentFragment.setPresenter(presenter);
         presenter.setView(contentFragment);
