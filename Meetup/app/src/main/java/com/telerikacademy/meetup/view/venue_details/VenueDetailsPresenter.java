@@ -222,7 +222,6 @@ public class VenueDetailsPresenter implements IVenueDetailsContract.Presenter {
                 view.notifySave(currentVenue.getName());
             }
         }
-
     }
 
     private synchronized void saveToRecent(IVenue venue, Bitmap photo) {
