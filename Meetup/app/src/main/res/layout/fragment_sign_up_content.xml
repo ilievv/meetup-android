@@ -48,7 +48,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:textColor="#FFF"
-            android:background="#CC1D1D"
+            android:background="@color/primary_dark"
             android:text="@string/nav_sign_up"/>
 
     <Button

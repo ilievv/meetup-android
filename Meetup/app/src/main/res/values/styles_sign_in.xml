@@ -2,9 +2,9 @@
 <resources>
 
     <style name="SignInTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#E43F3F</item>
-        <item name="colorPrimaryDark">#CC1D1D</item>
-        <item name="colorAccent">#CDC3C3</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:editTextStyle">@style/SignInTheme.EditText</item>
         <item name="android:buttonStyle">@style/SignInTheme.Button</item>
         <item name="android:windowAnimationStyle">@style/SignInTheme.WindowAnimationTransition</item>
