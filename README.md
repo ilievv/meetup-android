@@ -1,6 +1,7 @@
 # Meetup
 
-![image](http://best.telerikacademy.com/Images/276/534672276_high.jpg)
+<img src="http://best.telerikacademy.com/Images/276/534672276_high.jpg" width="48">
+
 ![image](http://best.telerikacademy.com/Images/277/94e072277_high.jpg)
 ![image](http://best.telerikacademy.com/Images/278/a62402278_high.jpg)
 ![image](http://best.telerikacademy.com/Images/279/b73a22279_high.jpg)
