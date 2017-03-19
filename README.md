@@ -1,8 +1,8 @@
 # Meetup
 
 <img src="./Screenshots/1.jpg" width="400">
-<img src="http://best.telerikacademy.com/Images/277/94e072277_high.jpg" width="400">
-<img src="http://best.telerikacademy.com/Images/278/a62402278_high.jpg" width="400">
-<img src="http://best.telerikacademy.com/Images/279/b73a22279_high.jpg" width="400">
-<img src="http://best.telerikacademy.com/Images/280/df6d62280_high.jpg" width="400">
-<img src="http://best.telerikacademy.com/Images/281/8b8622281_high.jpg" width="400">
+<img src="./Screenshots/6.jpg" width="400">
+<img src="./Screenshots/2.jpg" width="400">
+<img src="./Screenshots/3.jpg" width="400">
+<img src="./Screenshots/4.jpg" width="400">
+<img src="./Screenshots/5.jpg" width="400">
